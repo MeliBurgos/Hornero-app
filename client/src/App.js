@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
@@ -9,11 +8,12 @@ import NotFound from "./components/NotFound";
 import Office from "./components/Office";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import NavigationBar from './components/Navbar';
 
 function App() {
   return (
     <>
-      <Navbar />
+      <NavigationBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
