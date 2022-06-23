@@ -3,20 +3,23 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import Container from "react-bootstrap/Container"
-import { useState } from 'react';
-
-import { AiOutlineUser } from "react-icons/ai"
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
-
+import Button from 'react-bootstrap/Button'
+import Container from "react-bootstrap/Container"
+import { AiOutlineUser } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { useState } from 'react'
 
+import Friends from '../commons/Friends'
+import Favorites from '../commons/Favorites';
 
 const NavigationBar = () => {
 
   const [checked, setChecked] = useState(false);
   const [toggle, setToggle] = useState(1)
-
+  
+  const [showFriends, setShowFriends] = useState(false);
+  const [showFavs, setShowFavs] = useState(false);
 
 
   return (
@@ -36,7 +39,7 @@ const NavigationBar = () => {
           <NavDropdown.Item  >Oficina 1 piso 3</NavDropdown.Item>
           <NavDropdown.Item  >Oficina 2</NavDropdown.Item>
           <NavDropdown.Divider />
-          <NavDropdown.Item  >Oficinas Favoritas</NavDropdown.Item>
+          <NavDropdown.Item onClick={()=>setShowFavs(true)} >Oficinas Favoritas</NavDropdown.Item>
         </NavDropdown>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav" >
@@ -60,11 +63,13 @@ const NavigationBar = () => {
               </ToggleButtonGroup>
             </Nav.Link>
             <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#home">Favs</Nav.Link>
+            <Nav.Link onClick={()=>setShowFriends(true)}>Amigos</Nav.Link>
             <Nav.Link href="#link">Reportar un problema</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
+      <Friends show={showFriends} setShow={setShowFriends} />
+      <Favorites show={showFavs} setShow={setShowFavs} />
     </Navbar>
   )
 }
