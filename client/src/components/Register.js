@@ -67,9 +67,9 @@ const Register = () => {
           <Form.Label>Main Office</Form.Label>
           <Form.Select aria-label="Default select example">
           <option>Open this select menu</option>
-          {mainOffice.map((office, i) => {
+          {mainOffice.map((office, i) =>
             <option value={i}>{office}</option>
-          })}
+          )}
           </Form.Select>
         </Form.Group>
 
