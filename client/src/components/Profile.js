@@ -13,7 +13,6 @@ import Favorites from '../commons/Favorites';
 const Profile = () => {
   const [showFriends, setShowFriends] = useState(false)
   const [showFavs, setShowFavs] = useState(false)
-  const [editProfile,setEditProfile] = useState(false)
 
   return (
     <div className="text-center">
@@ -28,11 +27,9 @@ const Profile = () => {
         <ListGroup.Item>
           <Stack gap={3}>
             <button onClick={()=>setShowFriends(true)} className="main-button"> <FaUserFriends /> Amigos </button>
-            <button onClick={()=>setShowFavs(true)} className="main-button-black"> <FaStar /> Favoritos </button>
+            <button onClick={()=>setShowFavs(true)} className="main-button"> <FaStar /> Favoritos </button>
+            <button className="main-button-black"> <FaPencilAlt /> Editar </button>
           </Stack>
-        </ListGroup.Item>
-        <ListGroup.Item>
-          <Button variant="light" onClick={()=>setEditProfile(!editProfile)}> <FaPencilAlt /> Editar </Button>
         </ListGroup.Item>
       </ListGroup>
       <Friends show={showFriends} setShow={setShowFriends} />
