@@ -10,6 +10,8 @@ import Friends from '../commons/Friends'
 import Favorites from '../commons/Favorites';
 
 const Profile = ({user}) => {
+  const [showFriends, setShowFriends] = useState(false)
+  const [showFavs, setShowFavs] = useState(false)
 
   let Navigate = useNavigate()
 
