@@ -1,6 +1,7 @@
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import { BsFillTrashFill } from "react-icons/bs";
+import { useNavigate } from 'react-router-dom'
 
 // Reemplazar este arreglo por un pedido al back
 const favorites = [
@@ -11,7 +12,17 @@ const favorites = [
 ];
 
 const Favorites = ({ show, setShow }) => {
-    const handleDeleteFavorite = (id)=>{console.log(`eliminar el puesto con id ${id}`)}
+  const navigate = useNavigate()
+
+  // click sobre el tacho (elimina un favorito)
+  const handleDeleteFavorite = (id) => {console.log(`eliminar el puesto con id ${id}`)}
+  
+  // click sobre un favorito (redirige a esa vista) str.replace(/-/g, ' ')
+  const handleClick = (officeName) => {
+    officeName = officeName.replace(/\s+/g, '_').toLowerCase();
+    setShow(false)
+    navigate(`/office/${officeName}`)
+  }
 
   return (
     <>
@@ -31,20 +42,17 @@ const Favorites = ({ show, setShow }) => {
             <tbody>
               {favorites.map((favorite, i) => (
                 <tr key={i}>
-                  <td>{i+1}</td>
-                  <td>{favorite.office}</td>
-                  <td>{favorite.desk}</td>
-                  <td><BsFillTrashFill size={20} onClick={()=>handleDeleteFavorite(favorite.id)}/></td>
+                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.office)}>{i+1}</td>
+                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.office)}>{favorite.office}</td>
+                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.office)}>{favorite.desk}</td>
+                  <td> <BsFillTrashFill style={{cursor:"pointer"}} size={20} onClick={()=>handleDeleteFavorite(favorite.id)}/></td>
                 </tr>
               ))}
             </tbody>
           </Table>
         </Modal.Body>
         <Modal.Footer>
-          <button
-            className="main-button"
-            onClick={()=>setShow(false)}
-          >
+          <button className="main-button" onClick={()=>setShow(false)}>
             Close
           </button>
         </Modal.Footer>

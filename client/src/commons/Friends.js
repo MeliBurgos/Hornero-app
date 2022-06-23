@@ -34,10 +34,7 @@ const Friends = ({ show, setShow }) => {
       <Modal show={show} onHide={()=>setShow(false)} centered>
         <Modal.Header>
           <Modal.Title style={{fontFamily:"heeboregular"}}>Amigos</Modal.Title>
-          <button
-            className="main-button"
-            onClick={()=>setShow(false)}
-          ><BsPlusCircle size={24}/>  Agregar </button>
+          <button className="main-button"><BsPlusCircle size={24}/>  Agregar </button>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={(e) => e.preventDefault()}>
@@ -55,8 +52,8 @@ const Friends = ({ show, setShow }) => {
                 <tr key={i}>
                   <td>{i+1}</td>
                   <td>{friend.name}</td>
-                  <td><BsFillChatTextFill size={20} onClick={()=>handleMessageFriend(friend.id)}/></td>
-                  <td><BsFillTrashFill size={20} onClick={()=>handleDeleteFriend(friend.id)}/></td>
+                  <td><BsFillChatTextFill style={{cursor:"pointer"}} size={20} onClick={()=>handleMessageFriend(friend.id)}/></td>
+                  <td><BsFillTrashFill style={{cursor:"pointer"}} size={20} onClick={()=>handleDeleteFriend(friend.id)}/></td>
                 </tr>
               ))}
             </tbody>
