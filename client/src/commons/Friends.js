@@ -16,7 +16,7 @@ const friends = [
 const Friends = ({ show, setShow }) => {
   const handleDeleteFriend = (id)=>{console.log(`eliminar el amigo con id ${id}`)}
   const handleMessageFriend = (id)=>{console.log(`enviar mensaje al amigo con id ${id}`)}
-  const searchFriend = useInput('')
+  const searchFriend = useInput()
   const [filteredFriends, setFilteredFriends] = useState([])
   const showedFriends = (searchFriend.value.length>=3) ? filteredFriends : friends
 
@@ -37,9 +37,9 @@ const Friends = ({ show, setShow }) => {
           <button className="main-button"><BsPlusCircle size={24}/>  Agregar </button>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={(e) => e.preventDefault()}>
-            <Form.Control type="text" {...searchFriend} placeholder="Buscar amigo" />
-          </Form>
+          <form onSubmit={(e) => e.preventDefault()}>
+            <input className="main-input" type="text" {...searchFriend} placeholder="Buscar amigo" />
+          </form>
           <Table style={{fontFamily:"heeboregular",fontWeigth:700}}  responsive hover size="sm">
             <thead>
               <tr>

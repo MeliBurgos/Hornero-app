@@ -22,7 +22,7 @@ const EditProfile = ({ user }) => {
   const office = useInput();
   const charge = useInput();
 
-const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     let nombre = name.value.length === 0 ? user.name : name.value;
     let apellido = surname.value.length === 0 ? user.surname : surname.value
@@ -53,7 +53,7 @@ const handleSubmit = (e) => {
           </Button>
       </Alert>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <Image style={{ width: "60%", height: 'auto' }} roundedCircle="true" thumbnail="true" src={user.photo} />
+        <Image style={{ width: "60%", height: 'auto', maxWidth: "400px" }} roundedCircle="true" thumbnail="true" src={user.photo} />
         <Card.Body>
 
           <Card.Title>
