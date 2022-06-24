@@ -1,20 +1,23 @@
+import { AiOutlineSend } from "react-icons/ai"
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image'
-import { AiOutlineSend } from "react-icons/ai"
 import Form from 'react-bootstrap/Form';
 import Alert from "react-bootstrap/Alert"
-import { useState } from 'react';
 import useInput from "../hooks/useInput";
-import {useNavigate} from "react-router-dom"
+
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux";
 
 
 const EditProfile = ({ user }) => {
 
-  let Navigate = useNavigate()
+  const Navigate = useNavigate()
+  const dispatch = useDispatch();
 
-  const [show,setShow] = useState(false)
+  const [show, setShow] = useState(false)
 
   const name = useInput();
   const surname = useInput();
@@ -29,16 +32,35 @@ const EditProfile = ({ user }) => {
     let correo = email.value.length === 0 ? user.email : email.value
     let oficina = office.value.length === 0 ? user.mainofice : office.value
     let cargo = charge.value.length === 0 ? user.charge : charge.value
+/* 
+    dispatch(
+      userUpdate({
+        name:nombre,
+        surname:apellido,
+        email:correo,
+        mainOffice:oficina,
+        charge:cargo
+      })
+    ).then(()=>setShow(true), window.scrollTo({ behavior: "smooth", top: 0, left: 0 })) */
+    
    
-  /* Hacer envio al back "name : nombre, surame : apellido etc"*/ 
-    setShow(true)
-    window.scrollTo({ behavior: "smooth", top: 0, left: 0 });
   };
 
+  const mainOffice = [
+    "La Plata",
+    "Tandil",
+    "Mar del Plata",
+    "Bahía Blanca",
+    "Rosario",
+    "Córdoba",
+    "Mendoza",
+    "Tucumán",
+    "Resistencia",
+  ];
 
   return (
     <div className="text-center mt-3">
-      
+
       <Alert variant="success" show={show} onClose={() => setShow(false)} dismissible>
         <Alert.Heading>¡Éxito!</Alert.Heading>
         <p>
@@ -46,11 +68,11 @@ const EditProfile = ({ user }) => {
         </p>
         <hr></hr>
         <Button className={"ml-2"} onClick={() => Navigate("/")} variant="outline-success">
-            Volver a tu perfil
-          </Button>
+          Volver a tu perfil
+        </Button>
         <Button onClick={() => Navigate("/profile")} variant="outline-success">
-            Volver al Home
-          </Button>
+          Volver al Home
+        </Button>
       </Alert>
       <form onSubmit={(e) => handleSubmit(e)}>
         <Image style={{ width: "60%", height: 'auto', maxWidth: "400px" }} roundedCircle="true" thumbnail="true" src={user.photo} />
@@ -76,11 +98,9 @@ const EditProfile = ({ user }) => {
             <Form.Group className="mb-3">
               <Form.Label>Oficina principal</Form.Label>
               <Form.Select onChange={office.onChange}>
-                <option>Oficina 1</option>
-                <option>Oficina 2</option>
-                <option>Oficina 3</option>
-                <option>Oficina 4</option>
-                <option>Oficina 5</option>
+                <option>Open this select menu</option>
+                {mainOffice.map((office, i) =>
+                  <option key={i} >{office}</option>)}
               </Form.Select>
             </Form.Group>
           </ListGroup.Item>
@@ -103,12 +123,6 @@ const EditProfile = ({ user }) => {
 }
 
 
-<Form.Group className="mb-3" controlId="formBasicEmail">
-  <Form.Label>Email address</Form.Label>
-  <Form.Control type="email" placeholder="Enter email" />
-  <Form.Text className="text-muted">
-    We'll never share your email with anyone else.
-  </Form.Text>
-</Form.Group>
+
 
 export default EditProfile
