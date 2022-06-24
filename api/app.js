@@ -8,7 +8,12 @@ const password = require("./config/password");
 
 const user = require("./models/Users");
 const routes = require("./routes/index");
+// import routes
+const authRoutes = require('./routes/auth');
 
+
+
+app.use('/api/auth', authRoutes);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -12,7 +12,7 @@ const Register = () => {
 
   const firstName = useInput();
   const lastName = useInput();
-  const charge = useInput();
+  const position = useInput();
   const email = useInput();
   const password = useInput();
 
@@ -23,7 +23,7 @@ const Register = () => {
       userRegister({
         firstName: firstName.value,
         lastName: lastName.value,
-        charge: charge.value,
+        position: position.value,
         email: email.value,
         password: password.value,
       })
@@ -49,18 +49,18 @@ const Register = () => {
       </Card.Body>
       <Form onSubmit={handleSubmit} align="center">
         <Form.Group className="mb-3" controlId="formBasicTextFirstName">
-          <Form.Label>First Name</Form.Label>
-          <Form.Control {...firstName} type="text" placeholder="First Name" />
+          <Form.Label>Name</Form.Label>
+          <Form.Control {...name} type="text" placeholder="Name" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextLastName">
-          <Form.Label>Last Name</Form.Label>
-          <Form.Control {...lastName} type="text" placeholder="Last Name" />
+          <Form.Label>Surname</Form.Label>
+          <Form.Control {...surname} type="text" placeholder="Surname" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextCharge">
-          <Form.Label>Charge</Form.Label>
-          <Form.Control {...charge} type="text" placeholder="Charge" />
+          <Form.Label>Position</Form.Label>
+          <Form.Control {...position} type="text" placeholder="Position" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextMainOffice">

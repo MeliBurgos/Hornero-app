@@ -16,7 +16,8 @@ router.get("/", (req, res) => {
         res.send(users).status(200);
     })
     .catch((err) => console.log(err));
-})
+});
+
 
 
 module.exports = router;
