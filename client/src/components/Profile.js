@@ -23,9 +23,6 @@ const Profile = () => {
     dispatch(getUser())
       .then((res) => user = res)
   }, [])
- 
-
-
 
 
   return (

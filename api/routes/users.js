@@ -18,5 +18,13 @@ router.get("/", (req, res) => {
     .catch((err) => console.log(err));
 })
 
+router.get("/:id", (req, res) => {
+  User.findById(req.params.id)
+  .then((user) => {
+    res.send(user).status(200);
+  })
+  .catch((err) => console.log(err))
+})
+
 
 module.exports = router;
