@@ -10,8 +10,8 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const firstName = useInput();
-  const lastName = useInput();
+  const name = useInput();
+  const surname = useInput();
   const position = useInput();
   const email = useInput();
   const password = useInput();
@@ -21,8 +21,8 @@ const Register = () => {
 
     dispatch(
       userRegister({
-        firstName: firstName.value,
-        lastName: lastName.value,
+        name: name.value,
+        surname: surname.value,
         position: position.value,
         email: email.value,
         password: password.value,
