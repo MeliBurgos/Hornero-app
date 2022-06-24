@@ -20,8 +20,7 @@ const UserSchema = new Schema({
     required: true,
   },
   telephone: {
-    type: Number,
-    required: true,
+    type: Number
   },
   position: {
     type: String,
