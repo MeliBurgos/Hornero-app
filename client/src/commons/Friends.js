@@ -1,12 +1,12 @@
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
-import Form from "react-bootstrap/Form";
 import { BsFillTrashFill, BsFillChatTextFill, BsPlusCircle } from "react-icons/bs";
 import { useEffect, useState } from "react";
 
 import useInput from "../hooks/useInput";
+import AddFriend from "./AddFriend";
 
-// Reemplazar este arreglo por un pedido al back y traerlo desde Redux
+// reemplazar friends por la lista de amigos ya agregados por el usuario logueado
 const friends = [
   { id:1, name: "Juan Perez", email: "juanperez@globant.com" },
   { id:2, name: "Maria Gutierrez", email: "mariagomez@globant.com" },
@@ -19,6 +19,7 @@ const Friends = ({ show, setShow }) => {
   const searchFriend = useInput()
   const [filteredFriends, setFilteredFriends] = useState([])
   const showedFriends = (searchFriend.value.length>=3) ? filteredFriends : friends
+  const [addFriend,setAddFriend] = useState(false)
 
   // buscar amigos
   useEffect(()=>{
@@ -28,13 +29,14 @@ const Friends = ({ show, setShow }) => {
       setFilteredFriends(newFriendList)
     }
   },[searchFriend.value])
+  if(addFriend) return <AddFriend show={show} setShow={setShow} setAddFriend={setAddFriend} friends={friends} />
 
   return (
     <>
       <Modal show={show} onHide={()=>setShow(false)} centered>
         <Modal.Header>
           <Modal.Title style={{fontFamily:"heeboregular"}}>Amigos</Modal.Title>
-          <button className="main-button"><BsPlusCircle size={24}/>  Agregar </button>
+          <button className="main-button" onClick={()=>{setAddFriend(true)}}><BsPlusCircle size={24}/>  Agregar </button>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={(e) => e.preventDefault()}>
@@ -61,7 +63,7 @@ const Friends = ({ show, setShow }) => {
         </Modal.Body>
         <Modal.Footer>
           <button
-            className="main-button"
+            className="main-button-black"
             onClick={()=>setShow(false)}
           >
             Cerrar

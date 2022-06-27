@@ -17,7 +17,7 @@ const Profile = () => {
 
   let Navigate = useNavigate()
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user)
+  let user = useSelector((state) => state.user)
   
   useEffect(() => {
     dispatch(getUser())
