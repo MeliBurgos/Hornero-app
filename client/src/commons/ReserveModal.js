@@ -1,25 +1,44 @@
+import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import { BsPlusCircle, BsDashCircle } from "react-icons/bs";
 
-const ReserveModal = ({ show, setShow }) => {
+const ReserveModal = ({ desk, show, setShow }) => {
+  const [addedToFavorites, setAddedToFavorites] = useState(false)
+
+  const handleReserve = () => {
+    // tiene que hacer la reserva en el back
+    setShow(false)
+  }
+
+  const handleRemoveFromFavorites = (deskId) => {
+    // pedido al back para eliminar 1 favorito
+    setAddedToFavorites(false)
+  }
+
+  const handleAddToFavorites = (deskId) => {
+    // pedido al back para agregar 1 favorito
+    setAddedToFavorites(true)
+  }
+
   return (
     <>
-      {/* Este es el modal para reservar un lugar de trabajo */}
-      {/* Tiene que tener la lista de dias y horarios habilitados */}
-
-      {/* MODAL DE EJEMPLO PARA MODIFICAR */}
       <Modal show={show} onHide={()=>setShow(false)} centered >
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Header>
+          <Modal.Title>{`Puesto ${desk.name}`}</Modal.Title>
+          {addedToFavorites ? <button className="main-button-black" onClick={()=>handleRemoveFromFavorites(desk.id)}>
+          <BsDashCircle size={24}/> Favoritos
+          </button> : <button className="main-button" onClick={()=>handleAddToFavorites(desk.id)}>
+          <BsPlusCircle size={24}/> Favoritos
+          </button>}
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>// selector de dias y horarios</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={()=>setShow(false)}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={()=>setShow(false)}>
-            Save Changes
-          </Button>
+          <button className="main-button-black" onClick={()=>setShow(false)}>
+            Cerrar
+          </button>
+          <button className="main-button" onClick={handleReserve}>
+            Reservar
+          </button>
         </Modal.Footer>
       </Modal>
     </>
