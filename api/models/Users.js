@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const UserSchema = new Schema({
   name: {
@@ -18,6 +19,7 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
+    minlength: [6, "La contraseña debe tener al menos 6 caracteres"],
   },
   telephone: {
     type: Number
@@ -30,7 +32,7 @@ const UserSchema = new Schema({
   },
   favOffice: {
     type: Array,
-    default: ["MDQ", "Puerto Madero", "Bahía Blanca"],
+    // default: ["MDQ", "Puerto Madero", "Bahía Blanca"],
   },
   favDesk: {
     type: Array,
@@ -55,5 +57,11 @@ UserSchema.virtual("fullName").get(function () {
   return this.name + " " + this.surname;
 });
 
+//Hash the password before saving
+UserSchema.pre("save", async function (next) {
+  const salt = await bcrypt.genSaltSync(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
 module.exports = model("User", UserSchema);

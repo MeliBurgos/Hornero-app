@@ -54,6 +54,7 @@ const Register = () => {
       </Card.Body>
       <Form onSubmit={handleSubmit} align="center">
         <Form.Group className="mb-3" controlId="formBasicTextFirstName">
+
           <Form.Label>Nombre</Form.Label>
           <Form.Control {...name} type="text" placeholder="Ingrese su Nombre" />
         </Form.Group>

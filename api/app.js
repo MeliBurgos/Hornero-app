@@ -8,6 +8,10 @@ const password = require("./config/password");
 
 const user = require("./models/Users");
 const routes = require("./routes/index");
+// import routes
+
+
+
 
 app.use(cors());
 app.use(express.json());

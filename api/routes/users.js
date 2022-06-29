@@ -13,10 +13,12 @@ router.post("/register", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+
 //login
 router.post("/login", (req, res) => {
     const user = req.body;
     console.log(req.body, "soy req.body");
+
     jwt.sign({ user }, "secretKey", {expiresIn: "30"}, (err, token) => {
         if (err) {
             res.send(err);
