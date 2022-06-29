@@ -3,7 +3,6 @@ import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert"
 import Button from "react-bootstrap/Button";
 import Calendario from "./Calendario";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 const ReserveModal = ({ show, setShow }) => {
