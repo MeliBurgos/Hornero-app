@@ -19,10 +19,10 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
-    minlength: [6, "Password must be at least 6 characters"],
+    minlength: [6, "La contraseña debe tener al menos 6 caracteres"],
   },
   telephone: {
-    type: Number,
+    type: Number
   },
   position: {
     type: String,
