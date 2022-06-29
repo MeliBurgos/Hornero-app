@@ -9,6 +9,9 @@ import Container from "react-bootstrap/Container"
 import { AiOutlineUser } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { userLogout } from '../store/user';
+import { useNavigate } from 'react-router'
 
 import Friends from '../commons/Friends'
 import Favorites from '../commons/Favorites';
@@ -17,10 +20,20 @@ const NavigationBar = () => {
 
   const [checked, setChecked] = useState(false);
   const [toggle, setToggle] = useState(1)
-  
+
   const [showFriends, setShowFriends] = useState(false);
   const [showFavs, setShowFavs] = useState(false);
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    dispatch(userLogout())
+      .then(() => {
+        localStorage.removeItem('user')
+        return navigate("/")
+      })
+  }
 
   return (
     <Navbar bg={toggle === 1 ? "light":"dark"} expand="md">
@@ -62,9 +75,12 @@ const NavigationBar = () => {
                 </ToggleButton>
               </ToggleButtonGroup>
             </Nav.Link>
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link onClick={()=>setShowFriends(true)}>Amigos</Nav.Link>
-            <Nav.Link href="#link">Reportar un problema</Nav.Link>
+            <Link to="/"><button className="menu-button">Home</button></Link>
+            <Link to="/"><button className="menu-button">Amigos</button></Link>
+            <Link to="/"><button className="menu-button">Reportar un problema</button></Link>
+            <Link to="/register"><button className="menu-button">Registrarse</button></Link>
+            <Link to="/login"><button className="menu-button">Iniciar Sesión</button></Link>
+            <Link to="/"><button className="menu-button">Cerrar Sesión</button></Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
