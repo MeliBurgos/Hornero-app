@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/Users");
+const { sendFriendMail } = require("../config/mail")
 
 router.get("/", (req, res) => {
   // modificar la siguiente linea para que busque todos los amigos de 1 usuario
@@ -37,20 +38,14 @@ router.delete("/delete/:userIdToDelete", (req, res) => {
 // para enviar el mail tiene que llegar un objeto por body = {mailTo: 'destinatario@globant.com', subject: 'Titulo del mail', emailBody:'cuerpo del mail'}
 router.post("/sendMail", (req,res) => {
     const sender = req.user.email
-    //funcion para enviar el mail
+    const mail = {
+      to: req.body.mailTo,
+      from: sender,
+      body: req.body.mailBody
+    }
+    
+    // sendFriendMail(mail) // descomentar para enviar el mail
     res.send('<p>Mensaje enviado<p>')
 })
-
-/*
-investigar como enviar un mail
-<button class="emailReplyButton" onClick="sendEmail(message)">Reply</button>
-
-sendEmail(message) {
-    var email = message.emailId;
-    var subject = message.subject;
-    var emailBody = 'Hi '+message.from;
-    document.location = "mailto:"+email+"?subject="+subject+"&body="+emailBody;
-}
-*/
 
 module.exports = router;
