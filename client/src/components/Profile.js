@@ -1,5 +1,4 @@
 import Card from 'react-bootstrap/Card';
-import Stack from 'react-bootstrap/Stack';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image'
 import { FaUserFriends, FaStar, FaPencilAlt } from "react-icons/fa"
@@ -17,7 +16,7 @@ const Profile = () => {
 
   let Navigate = useNavigate()
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user)
+  let user = useSelector((state) => state.user)
   
   useEffect(() => {
     dispatch(getUser())

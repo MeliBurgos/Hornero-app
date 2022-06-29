@@ -19,7 +19,7 @@ const Favorites = ({ show, setShow }) => {
   
   // click sobre un favorito (redirige a esa vista) str.replace(/-/g, ' ')
   const handleClick = (officeName) => {
-    officeName = officeName.replace(/\s+/g, '_').toLowerCase();
+    /* officeName = officeName.replace(/\s+/g, '_').toLowerCase(); */
     setShow(false)
     navigate(`/office/${officeName}`)
   }
