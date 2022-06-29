@@ -1,5 +1,4 @@
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link, useNavigate } from "react-router-dom";
 import useInput from "../hooks/useInput";
@@ -16,7 +15,10 @@ const Register = () => {
   const email = useInput();
   const password = useInput();
   const mainOffice = useInput();
+<<<<<<< HEAD
+=======
 
+>>>>>>> master
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,27 +60,39 @@ const Register = () => {
 
         <Form.Group className="mb-3" controlId="formBasicTextLastName">
           <Form.Label>Apellido</Form.Label>
-          <Form.Control {...surname} type="text" placeholder="Ingrese su Apellido" />
+          <Form.Control
+            {...surname}
+            type="text"
+            placeholder="Ingrese su Apellido"
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextCharge">
           <Form.Label>Cargo</Form.Label>
-          <Form.Control {...position} type="text" placeholder="Ingrese su Cargo" />
+          <Form.Control
+            {...position}
+            type="text"
+            placeholder="Ingrese su Cargo"
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextMainOffice">
           <Form.Label>Oficina Principal</Form.Label>
           <Form.Select {...mainOffice} aria-label="Default select example">
-          <option>Seleccione su oficina principal</option>
-          {mainOffices.map((office, i) =>
-            <option key={i}>{office}</option>
-          )}
+            <option>Seleccione su oficina principal</option>
+            {mainOffices.map((office, i) => (
+              <option key={i}>{office}</option>
+            ))}
           </Form.Select>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Correo electrónico</Form.Label>
-          <Form.Control {...email} type="email" placeholder="Ingrese su correo electrónico" />
+          <Form.Control
+            {...email}
+            type="email"
+            placeholder="Ingrese su correo electrónico"
+          />
           <Form.Text className="text-muted">
             Nunca compartiremos su correo electrónico con nadie más.
           </Form.Text>
@@ -86,7 +100,11 @@ const Register = () => {
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Contraseña</Form.Label>
-          <Form.Control {...password} type="password" placeholder="Ingrese su contraseña" />
+          <Form.Control
+            {...password}
+            type="password"
+            placeholder="Ingrese su contraseña"
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicLogin">
@@ -95,9 +113,9 @@ const Register = () => {
           </Form.Text>
         </Form.Group>
 
-        <Button variant="success" type="submit">
+        <button className="main-button" type="submit">
           Enviar
-        </Button>
+        </button>
       </Form>
     </>
   );

@@ -8,6 +8,9 @@ import Container from "react-bootstrap/Container"
 import { AiOutlineUser } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { userLogout } from '../store/user';
+import { useNavigate } from 'react-router'
 
 import Friends from '../commons/Friends'
 import Favorites from '../commons/Favorites';
@@ -20,6 +23,17 @@ const NavigationBar = () => {
   const [showFriends, setShowFriends] = useState(false);
   const [showFavs, setShowFavs] = useState(false);
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    dispatch(userLogout())
+      .then(() => {
+        localStorage.removeItem('user')
+        return navigate("/")
+      })
+  }
+
   const officeList = [
     "La Plata",
     "Tandil",
@@ -31,7 +45,6 @@ const NavigationBar = () => {
     "Tucumán",
     "Resistencia",
   ];
-
 
   return (
     <Navbar bg={toggle === 1 ? "light" : "dark"} expand="md">
@@ -75,6 +88,9 @@ const NavigationBar = () => {
             <Nav.Link onClick={() => setShowFriends(true)}>Amigos</Nav.Link>
             <Nav.Link href="#home" >Log Out</Nav.Link>
             <Nav.Link href="#link">Reportar un problema</Nav.Link>
+            <Link to="/register"><button className="menu-button">Registrarse</button></Link>
+            <Link to="/login"><button className="menu-button">Iniciar Sesión</button></Link>
+            <Link to="/"><button onClick={handleLogout} className="menu-button">Cerrar Sesión</button></Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

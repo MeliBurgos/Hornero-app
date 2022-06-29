@@ -1,15 +1,35 @@
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import useInput from '../hooks/useInput';
+import { useDispatch } from 'react-redux'
+import { userLogin } from '../store/user';
 
 const Login = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const email = useInput();
+  const password = useInput();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    dispatch(userLogin({
+      email: email.value,
+      password: password.value,
+    }))
+      .then(() => navigate("/"))
+  }
+
   return (
     <>
       <Card.Body>
         <Card.Title align="center">Iniciar sesión</Card.Title>
       </Card.Body>
-      <Form align="center">
+      <Form onSubmit={handleSubmit} align="center">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Correo electrónico</Form.Label>
           <Form.Control type="email" placeholder="Ingrese su correo electrónico" />
@@ -26,9 +46,9 @@ const Login = () => {
           </Form.Text>
         </Form.Group>
 
-        <Button variant="success" type="submit">
+        <button className="main-button" type="submit">
           Iniciar sesión
-        </Button>
+        </button>
       </Form>
     </>
   );
