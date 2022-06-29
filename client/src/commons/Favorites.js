@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 // Reemplazar este arreglo por un pedido al back
 const favorites = [
-  { id:1, office: "Mar del Plata", desk: "F1D20" },
+  { id:1, office: "Mar Del Plata", desk: "F1D20" },
   { id:2, office: "Bahia Blanca", desk: "F1D3" },
   { id:3, office: "CABA - Puerto Madero", desk: "F4D10" },
   { id:4, office: "CABA - Puerto Madero", desk: "F4D24" },
