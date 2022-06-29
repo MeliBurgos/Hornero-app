@@ -3,23 +3,23 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const User = require("../models/Users");
 
-router.post("/register", async (req, res) => {
-    try {
-       const user = await User.create(req.body)
-        res.send(user);
-    } catch (err) {
-        res.status(500).send(err);
-    }
+
+
+router.post("/register", (req, res) => {
+  User.create(req.body)
+    .then((user) => {
+      res.send(user).status(201);
+    })
+    .catch((err) => console.log(err));
 });
-
-
 
 
 //login
 router.post("/login", (req, res) => {
     const user = req.body;
     console.log(req.body, "soy req.body");
-    jwt.sign({ user }, "secretKey", {expiresIn: "90d"}, (err, token) => {
+
+    jwt.sign({ user }, "secretKey", {expiresIn: "30"}, (err, token) => {
         if (err) {
             res.send(err);
         } else {
@@ -83,7 +83,9 @@ router.put("/:id", (req, res) => {
     .catch((err) => console.log(err))
 });
 
-
+router.post('/logout', function(req, res, next) {
+    res.send("Logout")
+});
 
 
 

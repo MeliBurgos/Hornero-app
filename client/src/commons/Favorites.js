@@ -17,9 +17,9 @@ const Favorites = ({ show, setShow }) => {
   // click sobre el tacho (elimina un favorito)
   const handleDeleteFavorite = (id) => {console.log(`eliminar el puesto con id ${id}`)}
   
-  // click sobre un favorito (redirige a esa vista) str.replace(/-/g, ' ')
+  // click sobre un favorito (redirige a esa vista) 
   const handleClick = (officeName) => {
-    officeName = officeName.replace(/\s+/g, '_').toLowerCase();
+    /* officeName = officeName.replace(/\s+/g, '_').toLowerCase(); */
     setShow(false)
     navigate(`/office/${officeName}`)
   }
