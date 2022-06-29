@@ -1,50 +1,52 @@
 @font-face {
-    font-family: 'heeboregular';
-    src: url('./heeboFont/Heebo-VariableFont_wght.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "heeboregular";
+  src: url("./heeboFont/Heebo-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 .navLogo {
-    height: 60px;
+  height: 60px;
 }
 
 .main-text {
-    font-family: heeboregular
-}
+  font-family: heeboregular;
+} 
 
 .main-button {
-    font-family: heeboregular;
-    font-size: 14px;
-    font-weight: 700;
-    color: black;
-    background-color: #BFD732;
-    border:none;
-    border-radius: 1000px;
-    padding: 10px 25px;
-    transition: 0.3s;
+  font-family: heeboregular;
+  font-size: 14px;
+  font-weight: 700;
+  color: black;
+  background-color: #bfd732;
+  border: none;
+  border-radius: 1000px;
+  padding: 10px 25px;
+  transition: 0.3s;
 }
 
 .main-button:hover {
-    background-color: #a2b82a;
+  background-color: #a2b82a;
 }
 
 .main-button-black {
-    font-family: heeboregular, sans-serif;
-    font-weight: 700;
-    color: #BFD732;
-    background-color: #444444;
-    border:none;
-    border-radius: 1000px;
-    padding: 10px 25px;
-    transition: 0.3s;
+  font-family: heeboregular, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #bfd732;
+  background-color: #444444;
+  border: none;
+  border-radius: 1000px;
+  padding: 10px 25px;
+  transition: 0.3s;
 }
 
 .main-button-black:hover {
-    background-color: #5f5f5f;
+  background-color: #5f5f5f;
 }
 
 .main-input {
+<<<<<<< HEAD
     width: 100%;
     border-color: #444444;
     border-width: 1px;
@@ -60,3 +62,63 @@
     border:none;
     padding: 5px;
 }
+=======
+  width: 100%;
+  border-color: #444444;
+  border-width: 1px;
+  border-radius: 1000px;
+  padding: 5px 25px;
+}
+
+.str0 {
+  stroke: #606062;
+  stroke-width: 35.28;
+  stroke-miterlimit: 22.9256;
+}
+.fil0 {
+  fill: none;
+}
+.fil1 {
+  fill: #a9abae;
+}
+
+.fil1:hover{
+  fill: #666769;
+}
+
+.selected{
+  fill: #a2b82a;
+}
+
+.selected:hover{
+  fill: #a2b82a;
+}
+
+.contsvg{
+margin: auto;
+width: 80%;
+border-style: solid;
+border-radius: 3%;
+border-width: 1px;
+}
+
+.fc-button-primary{
+ font-family: heeboregular !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: black !important;
+  background-color: #bfd732 !important;
+  border: none !important;
+  border-radius: 1000px !important;
+  padding: 5% 10% !important;
+  transition: 0.3s !important;
+
+}
+/* 
+.fc-toolbar-title{
+ font-family: heeboregular !important; 
+  font-weight:bold !important ;
+  font-size: 100% !important;
+}
+ */
+>>>>>>> master
