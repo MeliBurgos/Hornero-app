@@ -35,7 +35,7 @@ router.delete("/delete/:userIdToDelete", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// para enviar el mail tiene que llegar un objeto por body = {mailTo: 'destinatario@globant.com', subject: 'Titulo del mail', emailBody:'cuerpo del mail'}
+// para enviar el mail tiene que llegar un objeto por body = {mailTo: 'destinatario@globant.com', mailBody:'cuerpo del mail'}
 router.post("/sendMail", (req,res) => {
     const sender = req.user.email
     const mail = {
