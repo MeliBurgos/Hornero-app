@@ -7,15 +7,23 @@ import Form from 'react-bootstrap/Form';
 import Alert from "react-bootstrap/Alert"
 import useInput from "../hooks/useInput";
 
-import { useState } from 'react';
+import { useState, useEffect  } from 'react';
 import { useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../store/user";
 
+const EditProfile = () => {
 
-const EditProfile = ({ user }) => {
+  let Navigate = useNavigate()
 
-  const Navigate = useNavigate()
-  const dispatch = useDispatch();
+   const dispatch = useDispatch()
+  let user = useSelector((state) => state.user)
+
+  useEffect(() => {
+    dispatch(getUser())
+      .then((res) => user = res)
+  }, [])
+
 
   const [show, setShow] = useState(false)
 
@@ -32,18 +40,20 @@ const EditProfile = ({ user }) => {
     let correo = email.value.length === 0 ? user.email : email.value
     let oficina = office.value.length === 0 ? user.mainofice : office.value
     let cargo = charge.value.length === 0 ? user.charge : charge.value
-/* 
-    dispatch(
-      userUpdate({
+
+    /* dispatch(
+      RUTADEACTUALIZARUSER({
         name:nombre,
         surname:apellido,
         email:correo,
         mainOffice:oficina,
         charge:cargo
       })
-    ).then(()=>setShow(true), window.scrollTo({ behavior: "smooth", top: 0, left: 0 })) */
+    ).then(()=>) */
     
-   
+   setShow(true)
+   window.scrollTo({ behavior: "smooth", top: 0, left: 0 })
+ 
   };
 
   const mainOffice = [
@@ -67,15 +77,15 @@ const EditProfile = ({ user }) => {
           Tus datos se actualizaron <strong>correctamente</strong>
         </p>
         <hr></hr>
-        <Button className={"ml-2"} onClick={() => Navigate("/")} variant="outline-success">
+        <Button className={"mx-2"} onClick={() => Navigate("/profile")} variant="outline-success">
           Volver a tu perfil
         </Button>
-        <Button onClick={() => Navigate("/profile")} variant="outline-success">
+        <Button onClick={() => Navigate("/")} variant="outline-success">
           Volver al Home
         </Button>
       </Alert>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <Image style={{ width: "60%", height: 'auto', maxWidth: "400px" }} roundedCircle="true" thumbnail="true" src={user.photo} />
+        <Image style={{ width: "60%", height: 'auto' }} roundedCircle="true" thumbnail="true" src={user.photo} />
         <Card.Body>
 
           <Card.Title>

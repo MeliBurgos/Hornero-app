@@ -16,7 +16,7 @@ const Register = () => {
   const email = useInput();
   const password = useInput();
   const mainOffice = useInput();
-  console.log("MAIN OFFICE", mainOffice.value)
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
