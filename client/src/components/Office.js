@@ -15,8 +15,12 @@ const Office = () => {
     DeskSetter(setShow)
   });
 
-  const officeName = useParams();
+  const {officeName} = useParams();
 
+
+  // regex para cambiar mar_del_plata ==> Mar Del Plata
+  const officeNameOk = officeName.replace(/_/g, ' ').replace(/(?: |\b)(\w)/g, function(key) { return key.toUpperCase()});
+  
   // if(noEstaLogueado) return (
   //   <>
   //   Tenes que loguearte primero

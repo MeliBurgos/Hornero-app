@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert"
 import Button from "react-bootstrap/Button";
@@ -35,6 +36,23 @@ const ReserveModal = ({ show, setShow }) => {
     }
   } */
 
+    const [addedToFavorites, setAddedToFavorites] = useState(false)
+
+  const handleReserve = () => {
+    // tiene que hacer la reserva en el back
+    setShow(false)
+  }
+
+  const handleRemoveFromFavorites = (deskId) => {
+    // pedido al back para eliminar 1 favorito
+    setAddedToFavorites(false)
+  }
+
+  const handleAddToFavorites = (deskId) => {
+    // pedido al back para agregar 1 favorito
+    setAddedToFavorites(true)
+  }
+  
   return (
     <>
       <Alert variant="danger" show={show1} onClose={() => (setShow(true), setShow1(false))} dismissible>
