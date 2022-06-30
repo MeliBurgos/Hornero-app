@@ -31,16 +31,16 @@ const UserSchema = new Schema({
     type: String,
   },
   favOffice: {
-    type: Array,
+    type: [String],
     // default: ["MDQ", "Puerto Madero", "Bahía Blanca"],
   },
   favDesk: {
-    type: Array,
+    type: [String],
     default: ["F74D2", "F1D2", "F2D2", "F3D2", "F4D2", "F5D2"],
   },
   friends: {
-    type: Array,
-    default: ["Susana", "Juan", "Pedro", "Maria", "Luis", "Jorge"],
+    type: [String],
+    default: ['62bc9c7e1c42be68f923f00d', "62bc9b99b7985994c71ec087", "62ba1cc89003e0aaed7a2ae8", "62ba0ba76d5620dff77e0c7b", "62b5cb24f3eb5cd956bdc6ae"],
   },
   imgUrl: {
     type: String,

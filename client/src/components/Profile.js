@@ -7,8 +7,8 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../store/user";
 
-import Friends from '../commons/Friends'
-import Favorites from '../commons/Favorites';
+import Friends from './Friends'
+import Favorites from './Favorites';
 
 const Profile = () => {
   const [showFriends, setShowFriends] = useState(false)

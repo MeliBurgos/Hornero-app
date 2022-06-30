@@ -2,41 +2,35 @@ import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import { BsPlusCircle } from "react-icons/bs";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import useInput from "../hooks/useInput";
-
-// reemplazar por la lista de usuarios que coinciden con los valores de busqueda
-const users = [
-    { id: 2, name: "Maria Gutierrez", email: "mariagomez@globant.com", mainOffice: "Mar Del Plata" },
-    { id: 4, name: "Federico Lopez", email: "federicolopez@globant.com", mainOffice: "Bahia Blanca"  },
-    { id: 5, name: "Maria Estefania Fernandez", email: "estefaniafernandez@globant.com", mainOffice: "Mar Del Plata"  },
-    { id: 3, name: "Maximiliano Gutierrez", email: "maxigutierrez@globant.com", mainOffice: "Mar Del Plata"  },
-    { id: 6, name: "Estevan Urquiza", email: "estevanurquiza@globant.com", mainOffice: "Bahia Blanca"  },
-    { id: 1, name: "Juan Perez", email: "juanperez@globant.com", mainOffice: "Mar Del Plata"  },
-    { id: 7, name: "Estevan Gutierrez", email: "estevangutierrez@globant.com", mainOffice: "Mar Del Plata"  },
-    { id: 8, name: "Estevan Perez", email: "estevanperez@globant.com", mainOffice: "Bahia Blanca"  },
-];
+import { addFriend, getFriends, searchFriends } from "../store/friends";
 
 const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
+    const dispatch = useDispatch()
     const searchUsers = useInput()
     const [filteredUsers, setFilteredUsers] = useState([])
     const showedUsers = (searchUsers.value.length>=3) ? filteredUsers : []
-    const friendIds = friends.map(friend => friend.id)
+    const friendIds = friends.map(friend => friend._id)
+    const user = useSelector(state=> state.user)
 
-    const handleAddFriend = (id)=>{console.log(`agregar a la lista de amigos el user con id ${id}`)}
+    const handleAddFriend = (id)=>{
+        dispatch(addFriend({id:user._id,userIdToAdd:id}))
+        .then(()=>dispatch(getFriends(user._id)))
+    }
 
     // buscar usuarios para agregar
     useEffect(()=>{
         if(searchUsers.value.length >= 3) {
-            // ACA hacer pedido al back y traer los usuarios que contengan searchUsers.value
-            // .then((users)=>setFilteredUsers(users))
-            
-            // borrar la siguiente linea
-            setFilteredUsers(users)
+            dispatch(searchFriends(searchUsers.value))
+            .then((users)=>{
+                setFilteredUsers(users.payload)
+            })
         }
     },[searchUsers.value])
 
-    return <Modal show={show} onHide={()=>{setShow(false);setAddFriend(false)}} centered>
+    return (<Modal show={show} onHide={()=>{setShow(false);setAddFriend(false)}} centered>
         <Modal.Header>
             <Modal.Title style={{fontFamily:"heeboregular"}}>Agregar Amigos</Modal.Title>
         </Modal.Header>
@@ -56,16 +50,16 @@ const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
                 {showedUsers.map((user, i) => (
                 <tr key={i}>
                     <td>{i+1}</td>
-                    <td>{user.name}</td>
+                    <td>{`${user.name} ${user.surname}`}</td>
                     <td>{user.mainOffice}</td>
-                    {friendIds.includes(user.id) ? <td/> : <td><BsPlusCircle style={{cursor:"pointer"}} size={28} onClick={()=>handleAddFriend(user.id)}/></td>}
+                    {friendIds.includes(user._id) ? <td/> : <td><BsPlusCircle style={{cursor:"pointer"}} size={28} onClick={()=>handleAddFriend(user._id)}/></td>}
                 </tr>
                 ))}
             </tbody>
             </Table>
         </Modal.Body>
         <Modal.Footer>
-            <button className="main-button" onClick={()=>setAddFriend(false)}>Volver</button>
+            <button className="main-button-black" onClick={()=>setAddFriend(false)}>Volver</button>
             <button
             className="main-button-black"
             onClick={()=>{setShow(false);setAddFriend(false)}}
@@ -73,7 +67,7 @@ const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
             Cerrar
             </button>
         </Modal.Footer>
-    </Modal>;
+    </Modal>)
 };
 
 export default AddFriend;
