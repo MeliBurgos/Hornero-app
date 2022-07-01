@@ -4,6 +4,7 @@ import Alert from "react-bootstrap/Alert"
 import Button from "react-bootstrap/Button";
 import Calendario from "./Calendario";
 import { useDispatch } from "react-redux";
+import { BsPlusCircle, BsDashCircle } from "react-icons/bs";
 
 const ReserveModal = ({ show, setShow }) => {
 
@@ -35,8 +36,7 @@ const ReserveModal = ({ show, setShow }) => {
     }
   } */
 
-    const [addedToFavorites, setAddedToFavorites] = useState(false)
-
+  const [addedToFavorites, setAddedToFavorites] = useState(false)
 
   const handleRemoveFromFavorites = (deskId) => {
     // pedido al back para eliminar 1 favorito
@@ -77,19 +77,25 @@ const ReserveModal = ({ show, setShow }) => {
       </Alert>
 
       <Modal show={show} onHide={() => setShow(false)} centered >
-        <Modal.Header closeButton>
-          <Modal.Title>Seleccione dia y hora</Modal.Title>
+        <Modal.Header>
+          <p style={{textHeight:"20px",fontWeight:"700"}} className="main-text">Seleccione dia y hora</p>
+          {addedToFavorites ? <button className="main-button-black" onClick={handleRemoveFromFavorites}>
+            <BsDashCircle size={20}/> Favorito
+          </button> :
+          <button className="main-button" onClick={handleAddToFavorites}>
+            <BsPlusCircle size={20}/> Favorito
+          </button>}
         </Modal.Header>
         <Modal.Body>
           <Calendario setReserve={setReserve} />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShow(false)}>
+          <button className="main-button-black" onClick={() => setShow(false)}>
             Close
-          </Button>
-          <Button variant="primary" onClick={() => handleReserve()}>
+          </button>
+          <button className="main-button" onClick={() => handleReserve()}>
             Reservar
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>

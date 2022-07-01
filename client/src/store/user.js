@@ -7,7 +7,8 @@ export const userRegister = createAsyncThunk("USER_REGISTER", (data) => {
 });
 
 export const getUser = createAsyncThunk("GET_USER", () => {
-    return axios.get(`/api/users/62b5cb24f3eb5cd956bdc6ae`)
+    // const userId = JSON.parse(localStorage.getItem('user'))._id
+    return axios.get(`/api/users/62bcccb407b266cf048056c5`)
         .then(user => user.data)
 })
 

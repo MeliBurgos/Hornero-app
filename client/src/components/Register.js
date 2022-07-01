@@ -16,7 +16,6 @@ const Register = () => {
   const password = useInput();
   const mainOffice = useInput();
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
