@@ -46,20 +46,20 @@
 }
 
 .main-input {
-  width: 100%;
-  border-color: #444444;
-  border-width: 1px;
-  border-radius: 1000px;
-  padding: 5px 25px;
+    width: 100%;
+    border-color: #444444;
+    border-width: 1px;
+    border-radius: 1000px;
+    padding: 5px 25px;
 }
 
-.menu-button {
-  font-family: heeboregular;
-  font-size: 14px;
-  font-weight: 700;
-  color: #444444;
-  border: none;
-  padding: 5px;
+.menu-button{
+    font-family: heeboregular;
+    font-size: 14px;
+    font-weight: 700;
+    color: #444444;
+    border:none;
+    padding: 5px;
 }
 
 .str0 {

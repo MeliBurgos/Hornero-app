@@ -1,13 +1,16 @@
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import useInput from "../hooks/useInput";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "../store/user";
+import { useEffect } from 'react'
+import { getOffices } from "../store/offices";
 
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const name = useInput();
   const surname = useInput();
@@ -15,6 +18,20 @@ const Register = () => {
   const email = useInput();
   const password = useInput();
   const mainOffice = useInput();
+
+  const user = JSON.parse(localStorage.getItem('user'))
+  let offices = useSelector((state) => state.offices)
+
+  useEffect(()=>{
+    if(user){
+      if(location.pathname === "/register"){
+        navigate("/home")
+      }
+    }
+
+    dispatch(getOffices())
+    .then((res) => offices = res)
+  },[])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,21 +45,18 @@ const Register = () => {
         password: password.value,
         mainOffice: mainOffice.value,
       })
-    ).then(() => navigate("/login"));
+    ).then(() => navigate("/"));
   };
 
-  const mainOffices = [
-    "La Plata",
-    "Tandil",
-    "Mar del Plata",
-    "Bahía Blanca",
-    "Rosario",
-    "Córdoba",
-    "Mendoza",
-    "Tucumán",
-    "Resistencia",
-  ];
-
+  const roles = [
+    "Development and Coding",
+    "Project Management",
+    "Project Design",
+    "Marketing and Communication",
+    "Human Resources",
+    "Financial Management"
+  ]
+ 
   return (
     <>
       <Card.Body>
@@ -64,25 +78,26 @@ const Register = () => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicTextCharge">
-          <Form.Label>Cargo</Form.Label>
-          <Form.Control
-            {...position}
-            type="text"
-            placeholder="Ingrese su Cargo"
-          />
+        <Form.Group className="mb-3" controlId="formBasicTextRol">
+          <Form.Label>Rol</Form.Label>
+          <Form.Select {...position} aria-label="Default select example">
+            <option>Seleccione su rol</option>
+            {roles.map((rol, i) => (
+              <option key={i}>{rol}</option>
+            ))}
+          </Form.Select>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextMainOffice">
           <Form.Label>Oficina Principal</Form.Label>
           <Form.Select {...mainOffice} aria-label="Default select example">
             <option>Seleccione su oficina principal</option>
-            {mainOffices.map((office, i) => (
-              <option key={i}>{office}</option>
+            {Object.values(offices).map((e, i) => (
+              <option key={i}>{e.name}</option>
             ))}
           </Form.Select>
         </Form.Group>
-
+        {/*Object.values(offices).map((e, i) => {console.log(e.name)}*/}
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Correo electrónico</Form.Label>
           <Form.Control
@@ -106,7 +121,7 @@ const Register = () => {
 
         <Form.Group className="mb-3" controlId="formBasicLogin">
           <Form.Text className="text-muted">
-            ¿Ya eres usuario? <Link to="/login">Iniciar Sesión</Link>
+            ¿Ya eres usuario? <Link to="/">Iniciar Sesión</Link>
           </Form.Text>
         </Form.Group>
 
