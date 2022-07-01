@@ -13,8 +13,8 @@ import { userLogout } from '../store/user';
 import { useNavigate } from 'react-router'
 import { getOffices } from "../store/offices";
 
-import Friends from '../commons/Friends'
-import Favorites from '../commons/Favorites';
+import Friends from './Friends'
+import Favorites from './Favorites';
 
 const NavigationBar = () => {
 

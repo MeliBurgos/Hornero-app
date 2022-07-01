@@ -19,7 +19,6 @@ const Register = () => {
   const password = useInput();
   const mainOffice = useInput();
 
-
   const user = JSON.parse(localStorage.getItem('user'))
   let offices = useSelector((state) => state.offices)
 
@@ -33,7 +32,6 @@ const Register = () => {
     dispatch(getOffices())
     .then((res) => offices = res)
   },[])
-
 
   const handleSubmit = (e) => {
     e.preventDefault();

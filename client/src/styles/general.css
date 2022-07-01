@@ -11,7 +11,7 @@
 
 .main-text {
   font-family: heeboregular;
-} 
+}
 
 .main-button {
   font-family: heeboregular;
@@ -62,7 +62,6 @@
     padding: 5px;
 }
 
-
 .str0 {
   stroke: #606062;
   stroke-width: 35.28;
@@ -75,28 +74,28 @@
   fill: #a9abae;
 }
 
-.fil1:hover{
+.fil1:hover {
   fill: #666769;
 }
 
-.selected{
+.selected {
   fill: #a2b82a;
 }
 
-.selected:hover{
+.selected:hover {
   fill: #a2b82a;
 }
 
-.contsvg{
-margin: auto;
-width: 80%;
-border-style: solid;
-border-radius: 3%;
-border-width: 1px;
+.contsvg {
+  margin: auto;
+  width: 80%;
+  border-style: solid;
+  border-radius: 3%;
+  border-width: 1px;
 }
 
-.fc-button-primary{
- font-family: heeboregular !important;
+.fc-button-primary {
+  font-family: heeboregular !important;
   font-size: 14px !important;
   font-weight: 700 !important;
   color: black !important;
@@ -105,7 +104,6 @@ border-width: 1px;
   border-radius: 1000px !important;
   padding: 5% 10% !important;
   transition: 0.3s !important;
-
 }
 /* 
 .fc-toolbar-title{

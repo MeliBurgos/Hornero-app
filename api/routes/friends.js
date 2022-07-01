@@ -1,56 +1,100 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/Users");
+const { sendMailToFriend } = require("../config/mail")
 
-router.get("/", (req, res) => {
-  // modificar la siguiente linea para que busque todos los amigos de 1 usuario
-  User.find()
-    /////////////////
+// Traer todos los amigos de 1 usuario
+router.get("/:userId", (req, res) => {
+  User.findById(req.params.userId)
+  .then(user => {
+    const friends = []
+    user.friends.forEach(friendId => friends.push(User.findById(friendId)))
+    return Promise.all(friends)
+  })
     .then((friends) => {
+      friends = friends.map(friend => {
+        return {
+          _id : friend._id,
+          name : friend.name,
+          surname : friend.surname,
+          email : friend.email,
+          telephone : friend.telephone,
+          position : friend.position,
+          mainOffice : friend.mainOffice,
+          imgUrl : friend.imgUrl,
+        }
+      })
       res.send(friends);
     })
     .catch((err) => console.log(err));
 });
 
-router.post("/add/:userIdToAdd", (req, res) => {
-  // modificar las siguientes linea para que agregue 1 amigo al usuario logueado
-  if (!req.user) return res.send("No hay un usuario logueado");
-  User.create()
-    /////////////////
-    .then((friends) => {
-      res.send(friends);
-    })
+// Agregar 1 amigo
+router.post("/add/:loggedUserId/:userIdToAdd", (req, res) => {
+  User.findByIdAndUpdate(req.params.loggedUserId,{
+    '$push': {
+      'friends': req.params.userIdToAdd
+    }
+  })
+    .then(() => res.sendStatus(200))
     .catch((err) => console.log(err));
 });
 
-router.delete("/delete/:userIdToDelete", (req, res) => {
-  // modificar las siguientes linea para que agregue 1 amigo a 1 usuario
-  if (!req.user) return res.send("No hay un usuario logueado");
-  User.find()
-    /////////////////
-    .then((friends) => {
-      res.send(friends);
-    })
-    .catch((err) => console.log(err));
+// Eliminar 1 amigo
+router.delete("/remove/:loggedUserId/:userIdToDelete", (req, res) => {
+  User.findByIdAndUpdate(req.params.loggedUserId,{
+    '$pull': {
+      'friends': req.params.userIdToDelete
+    }
+  })
+  .then(() => res.sendStatus(200))
+  .catch((err) => console.log(err));
 });
 
-// para enviar el mail tiene que llegar un objeto por body = {mailTo: 'destinatario@globant.com', subject: 'Titulo del mail', emailBody:'cuerpo del mail'}
+// Enviar mail a un amigo
 router.post("/sendMail", (req,res) => {
-    const sender = req.user.email
-    //funcion para enviar el mail
-    res.send('<p>Mensaje enviado<p>')
+  const mail = {
+    to: req.body.mailTo,
+    from: req.body.mailFrom,
+    body: req.body.mailBody
+  }
+  sendMailToFriend(mail)
+  res.sendStatus(200)
 })
 
-/*
-investigar como enviar un mail
-<button class="emailReplyButton" onClick="sendEmail(message)">Reply</button>
-
-sendEmail(message) {
-    var email = message.emailId;
-    var subject = message.subject;
-    var emailBody = 'Hi '+message.from;
-    document.location = "mailto:"+email+"?subject="+subject+"&body="+emailBody;
-}
-*/
+// Buscar entre todos los usuarios (para despues agregar nuevos amigos)
+router.get('/search/:searchInput', (req,res) => {
+  const search = req.params.searchInput.split(" ")
+  if(search.length <= 1) {
+    User.find({$or:[
+      {name:{$regex: new RegExp(search[0],"i")}},
+      {surname:{$regex: new RegExp(search[0],"i")}}
+    ]})
+    .then(users => {
+      users = users.map(user => {
+        return {
+          _id : user._id,
+          name : user.name,
+          surname : user.surname,
+          mainOffice : user.mainOffice,
+        }
+      })
+      res.send(users)
+    })
+  } else {
+    User.find({name:{$regex: new RegExp(search[0],"i")},surname:{$regex: new RegExp(search[1],"i")}})
+    .then(users => {
+      users = users.map(user => {
+        return {
+          _id : user._id,
+          name : user.name,
+          surname : user.surname,
+          mainOffice : user.mainOffice,
+        }
+      })
+      res.send(users)
+    })
+  }
+})
 
 module.exports = router;
