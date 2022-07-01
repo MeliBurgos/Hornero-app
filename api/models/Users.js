@@ -21,6 +21,9 @@ const UserSchema = new Schema({
     required: true,
     minlength: [6, "La contraseña debe tener al menos 6 caracteres"],
   },
+  salt: {
+    type: String,
+  },
   telephone: {
     type: Number
   },
@@ -51,17 +54,14 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  reservations: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Reservations",
+      autopopulate: true,
+    }],
 });
 
-UserSchema.virtual("fullName").get(function () {
-  return this.name + " " + this.surname;
-});
 
-//Hash the password before saving
-UserSchema.pre("save", async function (next) {
-  const salt = await bcrypt.genSaltSync(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
-});
 
 module.exports = model("User", UserSchema);
