@@ -20,6 +20,7 @@ const SendMessage = ({ show, setShow, setSendMessage, mailTo }) => {
       mailBody: message.value,
     }
     if(message.value.length){
+      console.log(mail)
       sendMailToFriend(mail)
       console.log("mensaje enviado")
       setShowGoodAlert(true)

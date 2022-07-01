@@ -23,7 +23,8 @@ router.post("/register", (req, res) => {
             const user = new User({
                 name: req.body.name,
                 surname: req.body.surname,
-                // cargo: req.body.cargo,
+                position: req.body.position,
+                mainOffice: req.body.mainOffice,
                 email: req.body.email,
                 password: hash,
             })
@@ -68,6 +69,7 @@ router.post("/login", (req, res) => {
                     return res.status(200).json({
                         message: "Autenticación correcta",
                         token: token,
+                        user: users[0]
                     });
                 }
                 return res.status(401).json({
