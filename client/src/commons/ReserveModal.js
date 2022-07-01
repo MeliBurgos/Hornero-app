@@ -63,7 +63,7 @@ const ReserveModal = ({ show, setShow }) => {
         <Alert.Heading>¡Atención!</Alert.Heading>
         <p>
           No se ha seleccionado <strong>ninguna</strong> fecha para la reserva.
-        </p>
+        </p> 
       </Alert>
 
       <Alert variant="warning" show={show2} onClose={() => setShow2(false)} dismissible>

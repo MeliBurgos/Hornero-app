@@ -47,7 +47,7 @@ const EditProfile = () => {
         surname: apellido,
         email: correo,
         mainOffice: oficina,
-        charge: cargo
+        position: cargo
       }, user._id]
     )).then(() => (setShow(true),
       window.scrollTo({ behavior: "smooth", top: 0, left: 0 })))

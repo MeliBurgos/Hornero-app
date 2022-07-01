@@ -83,7 +83,7 @@ const Register = () => {
           <Form.Select {...position} aria-label="Default select example">
             <option>Seleccione su rol</option>
             {roles.map((rol, i) => (
-              <option key={i}>{rol}</option>
+              <option key={i} value={rol}>{rol}</option>
             ))}
           </Form.Select>
         </Form.Group>
