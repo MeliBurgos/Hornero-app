@@ -4,11 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert"
 import Button from "react-bootstrap/Button";
 import Calendario from "./Calendario";
-<<<<<<< HEAD
-=======
-import { useDispatch } from "react-redux";
 import { BsPlusCircle, BsDashCircle } from "react-icons/bs";
->>>>>>> 2177e777a20f3b8d09d398eef0e5f09e5c378a06
 
 const ReserveModal = ({ show, setShow }) => {
 
@@ -44,11 +40,7 @@ const ReserveModal = ({ show, setShow }) => {
       setReserve({})
     }
 
-<<<<<<< HEAD
-    const [addedToFavorites, setAddedToFavorites] = useState(false)
-=======
   const [addedToFavorites, setAddedToFavorites] = useState(false)
->>>>>>> 2177e777a20f3b8d09d398eef0e5f09e5c378a06
 
   const handleRemoveFromFavorites = (deskId) => {
     // pedido al back para eliminar 1 favorito

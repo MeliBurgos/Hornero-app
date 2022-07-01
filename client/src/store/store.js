@@ -9,7 +9,7 @@ const store = configureStore({
         getDefaultMiddleware().concat(logger),
     reducer: {
         user: userReducer,
-        offices: OfficesReducer
+        offices: OfficesReducer,
         friends: friendsReducer
     }
 });
