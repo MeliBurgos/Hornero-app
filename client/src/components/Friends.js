@@ -28,8 +28,6 @@ const Friends = ({ show, setShow }) => {
     .then(() => dispatch(getFriends(user._id)))
   }
 
-  const handleMessageFriend = (mailTo) => setSendMessage(mailTo)
-  
   // buscar amigos
   useEffect(() => {
     if(searchFriend.value.length >= 3) {
@@ -64,7 +62,12 @@ const Friends = ({ show, setShow }) => {
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={(e) => e.preventDefault()}>
-            <input className="main-input" type="text" {...searchFriend} placeholder="Buscar amigo" />
+            <input 
+              className="main-input" 
+              type="text" 
+              {...searchFriend} 
+              placeholder="Buscar amigo" 
+            />
           </form>
           <Table style={{fontFamily:"heeboregular",fontWeigth:700}}  responsive hover size="sm">
             <thead>
@@ -78,18 +81,23 @@ const Friends = ({ show, setShow }) => {
                 <tr key={i}>
                   <td>{i+1}</td>
                   <td>{`${friend.name} ${friend.surname}`}</td>
-                  <td><BsFillChatTextFill style={{cursor:"pointer"}} size={20} onClick={()=>handleMessageFriend({fullname: `${friend.name} ${friend.surname}`, email: friend.email})}/></td>
-                  <td><BsFillTrashFill style={{cursor:"pointer"}} size={20} onClick={()=>handleDeleteFriend(friend._id)}/></td>
+                  <td><BsFillChatTextFill 
+                    style={{cursor:"pointer"}} 
+                    size={20} 
+                    onClick={()=>setSendMessage({fullname: `${friend.name} ${friend.surname}`, email: friend.email})}
+                  /></td>
+                  <td><BsFillTrashFill 
+                    style={{cursor:"pointer"}} 
+                    size={20} 
+                    onClick={()=>handleDeleteFriend(friend._id)}
+                  /></td>
                 </tr>
               )) : null}
             </tbody>
           </Table>
         </Modal.Body>
         <Modal.Footer>
-          <button
-            className="main-button-black"
-            onClick={()=>setShow(false)}
-          >
+          <button className="main-button-black" onClick={()=>setShow(false)}>
             Cerrar
           </button>
         </Modal.Footer>

@@ -52,8 +52,8 @@ const Favorites = ({ show, setShow }) => {
           </Table>
         </Modal.Body>
         <Modal.Footer>
-          <button className="main-button" onClick={()=>setShow(false)}>
-            Close
+          <button className="main-button-black" onClick={()=>setShow(false)}>
+            Cerrar
           </button>
         </Modal.Footer>
       </Modal>

@@ -39,13 +39,13 @@ const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
             <input className="main-input" type="text" {...searchUsers} placeholder="Escribe el nombre y/o apellido" />
             </form>
             <Table style={{fontFamily:"heeboregular",fontWeigth:700}}  responsive hover size="sm">
-            <thead>
+            {searchUsers.value.length>=3 && <thead>
                 <tr>
                 <th>#</th>
                 <th>Nombre</th>
                 <th>Trabaja en</th>
                 </tr>
-            </thead>
+            </thead>}
             <tbody>
                 {showedUsers.map((user, i) => (
                 <tr key={i}>
