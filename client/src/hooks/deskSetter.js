@@ -1,6 +1,6 @@
 const DeskSetter = (setShow) => {
 
-  document.querySelectorAll(".fil1").forEach((element, i) => {
+  document.querySelectorAll(".fil0").forEach((element, i) => {
     element.setAttribute(`id`, `F1D${i + 1}`)
     element.onclick = (e) => {
       const id = e.target.getAttribute("id");

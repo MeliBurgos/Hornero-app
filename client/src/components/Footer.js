@@ -8,8 +8,6 @@ const Footer = () => {
       <Image src={Logo} alt='Globant' style={{ width: "30%" }} ></Image>
       <p>Desarrollado por Pablo Barreiro, Melisa Burgos, Fabian Lopez, Matias Nasif y Benjamin Becerra</p>
       <p> © 2022 - All rights reserved. </p>
-      <hr></hr>
-
     </div>
 
   );

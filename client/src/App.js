@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import NavigationBar from './components/Navbar';
 import EditProfile from "./components/EditProfile";
+import CamTest from './components/CamTest';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <NavigationBar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/test" element={<CamTest />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />

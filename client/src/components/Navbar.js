@@ -6,7 +6,7 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
 import Container from "react-bootstrap/Container"
 import { AiOutlineUser } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { userLogout } from '../store/user';
@@ -34,6 +34,11 @@ const NavigationBar = () => {
       })
   }
 
+  const handleClick = (officeName) => {
+    officeName = officeName.replace(/\s+/g, '_').toLowerCase();
+    navigate(`/office/${officeName}`)
+  }
+
   const officeList = [
     "La Plata",
     "Tandil",
@@ -47,7 +52,8 @@ const NavigationBar = () => {
   ];
 
   return (
-    <Navbar bg={toggle === 1 ? "light" : "dark"} expand="md">
+    <>
+     <Navbar bg={toggle === 1 ? "light" : "dark"} expand="md">
       <Container>
         <Link to={checked ? "/" : "/profile"}>
           <ToggleButton
@@ -61,7 +67,7 @@ const NavigationBar = () => {
         <NavDropdown align="center" title="Oficinas" id="basic-nav-dropdown">
           <NavDropdown.Item onClick={() => setShowFavs(true)} >Oficinas Favoritas</NavDropdown.Item>
           <NavDropdown.Divider />
-          {officeList.map((office,i) => <NavDropdown.Item key={i} >{office}</NavDropdown.Item>)}
+          {officeList.map((office,i) => <NavDropdown.Item key={i} onClick={()=>handleClick(office)} >{office}</NavDropdown.Item>)}
         </NavDropdown>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" >
@@ -97,6 +103,7 @@ const NavigationBar = () => {
       <Friends show={showFriends} setShow={setShowFriends} />
       <Favorites show={showFavs} setShow={setShowFavs} />
     </Navbar>
+    </>
   )
 }
 

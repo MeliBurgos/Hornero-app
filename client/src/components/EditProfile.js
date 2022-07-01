@@ -7,16 +7,16 @@ import Form from 'react-bootstrap/Form';
 import Alert from "react-bootstrap/Alert"
 import useInput from "../hooks/useInput";
 
-import { useState, useEffect  } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../store/user";
+import { getUser, userUpdate } from "../store/user";
 
 const EditProfile = () => {
 
   let Navigate = useNavigate()
 
-   const dispatch = useDispatch()
+  const dispatch = useDispatch()
   let user = useSelector((state) => state.user)
 
   useEffect(() => {
@@ -41,19 +41,18 @@ const EditProfile = () => {
     let oficina = office.value.length === 0 ? user.mainofice : office.value
     let cargo = charge.value.length === 0 ? user.charge : charge.value
 
-    /* dispatch(
-      RUTADEACTUALIZARUSER({
-        name:nombre,
-        surname:apellido,
-        email:correo,
-        mainOffice:oficina,
-        charge:cargo
-      })
-    ).then(()=>) */
-    
-   setShow(true)
-   window.scrollTo({ behavior: "smooth", top: 0, left: 0 })
- 
+    dispatch(userUpdate(
+      [{
+        name: nombre,
+        surname: apellido,
+        email: correo,
+        mainOffice: oficina,
+        charge: cargo
+      }, user._id]
+    )).then(() => (setShow(true),
+      window.scrollTo({ behavior: "smooth", top: 0, left: 0 })))
+      .catch(err => console.log(err))
+
   };
 
   const mainOffice = [
