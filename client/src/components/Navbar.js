@@ -12,8 +12,8 @@ import { useDispatch } from 'react-redux'
 import { userLogout } from '../store/user';
 import { useNavigate } from 'react-router'
 
-import Friends from '../commons/Friends'
-import Favorites from '../commons/Favorites';
+import Friends from './Friends'
+import Favorites from './Favorites';
 
 const NavigationBar = () => {
 

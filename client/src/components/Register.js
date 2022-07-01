@@ -15,10 +15,6 @@ const Register = () => {
   const email = useInput();
   const password = useInput();
   const mainOffice = useInput();
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 
   const handleSubmit = (e) => {
     e.preventDefault();

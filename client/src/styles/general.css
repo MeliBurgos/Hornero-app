@@ -46,7 +46,6 @@
 }
 
 .main-input {
-<<<<<<< HEAD
     width: 100%;
     border-color: #444444;
     border-width: 1px;
@@ -61,13 +60,6 @@
     color: #444444;
     border:none;
     padding: 5px;
-}
-=======
-  width: 100%;
-  border-color: #444444;
-  border-width: 1px;
-  border-radius: 1000px;
-  padding: 5px 25px;
 }
 
 .str0 {
@@ -121,4 +113,3 @@ border-width: 1px;
   font-size: 100% !important;
 }
  */
->>>>>>> master
