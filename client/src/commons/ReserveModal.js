@@ -3,7 +3,6 @@ import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert"
 import Button from "react-bootstrap/Button";
 import Calendario from "./Calendario";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 const ReserveModal = ({ show, setShow }) => {
@@ -37,11 +36,6 @@ const ReserveModal = ({ show, setShow }) => {
   } */
 
     const [addedToFavorites, setAddedToFavorites] = useState(false)
-
-  const handleReserve = () => {
-    // tiene que hacer la reserva en el back
-    setShow(false)
-  }
 
   const handleRemoveFromFavorites = (deskId) => {
     // pedido al back para eliminar 1 favorito

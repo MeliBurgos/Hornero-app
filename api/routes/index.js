@@ -10,14 +10,4 @@ router.use("/favorites", favorites);
 router.use("/friends", friends);
 
 
-
-
-
-
-
-
-
-
-
-
 module.exports = router;
