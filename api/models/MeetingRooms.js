@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose")
-const Floors= mongoose("Floors")
 
 const MeetingRooms= new Schema({
     name: {
@@ -10,8 +9,12 @@ const MeetingRooms= new Schema({
         default: "Libre",
     },
     office: [{
-        type: Schema.Types.ObjectId, ref: ""
-    }]
+        type: Schema.Types.ObjectId, ref: "Offices"
+    }],
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'Users',
+    },
 })
 
 module.exports= model("Rooms", { MeetingRooms })
