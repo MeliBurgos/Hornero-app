@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import useInput from "../hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "../store/user";
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { getOffices } from "../store/offices";
 
 const Register = () => {
@@ -14,10 +14,10 @@ const Register = () => {
 
   const name = useInput();
   const surname = useInput();
-  const position = useInput();
   const email = useInput();
   const password = useInput();
-  const mainOffice = useInput();
+  const [position, setPosition] = useState('');
+  const [mainOffice, setMainOffice] = useState('');
 
   const user = JSON.parse(localStorage.getItem('user'))
   let offices = useSelector((state) => state.offices)
@@ -40,10 +40,10 @@ const Register = () => {
       userRegister({
         name: name.value,
         surname: surname.value,
-        position: position.value,
         email: email.value,
         password: password.value,
-        mainOffice: mainOffice.value,
+        position: position,
+        mainOffice: mainOffice,
       })
     ).then(() => navigate("/"));
   };
@@ -80,17 +80,17 @@ const Register = () => {
 
         <Form.Group className="mb-3" controlId="formBasicTextRol">
           <Form.Label>Rol</Form.Label>
-          <Form.Select {...position} aria-label="Default select example">
+          <Form.Select onChange={(e)=>setPosition(e.target.value)} aria-label="Default select example">
             <option>Seleccione su rol</option>
             {roles.map((rol, i) => (
-              <option key={i}>{rol}</option>
+              <option key={i} value={rol}>{rol}</option>
             ))}
           </Form.Select>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextMainOffice">
           <Form.Label>Oficina Principal</Form.Label>
-          <Form.Select {...mainOffice} aria-label="Default select example">
+          <Form.Select onChange={(e)=>setMainOffice(e.target.value)} aria-label="Default select example">
             <option>Seleccione su oficina principal</option>
             {Object.values(offices).map((e, i) => (
               <option key={i}>{e.name}</option>

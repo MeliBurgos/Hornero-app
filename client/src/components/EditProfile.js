@@ -31,7 +31,7 @@ const EditProfile = () => {
   const surname = useInput();
   const email = useInput();
   const office = useInput();
-  const charge = useInput();
+  const position = useInput();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,7 +39,7 @@ const EditProfile = () => {
     let apellido = surname.value.length === 0 ? user.surname : surname.value
     let correo = email.value.length === 0 ? user.email : email.value
     let oficina = office.value.length === 0 ? user.mainofice : office.value
-    let cargo = charge.value.length === 0 ? user.charge : charge.value
+    let rol = position.value.length === 0 ? user.position : position.value
 
     dispatch(userUpdate(
       [{
@@ -47,7 +47,7 @@ const EditProfile = () => {
         surname: apellido,
         email: correo,
         mainOffice: oficina,
-        charge: cargo
+        position: rol
       }, user._id]
     )).then(() => (setShow(true),
       window.scrollTo({ behavior: "smooth", top: 0, left: 0 })))
@@ -115,8 +115,8 @@ const EditProfile = () => {
           </ListGroup.Item>
           <ListGroup.Item>
             <Form.Group className="mb-3">
-              <Form.Label>Cargo</Form.Label>
-              <Form.Control type="text" placeholder={user.charge} onChange={charge.onChange} />
+              <Form.Label>Rol</Form.Label>
+              <Form.Control type="text" placeholder={user.position} onChange={position.onChange} />
             </Form.Group>
           </ListGroup.Item>
 
