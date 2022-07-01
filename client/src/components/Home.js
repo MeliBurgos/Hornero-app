@@ -8,8 +8,6 @@ import { getUser } from "../store/user";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from 'react'
 
-
-
 const Home = () => {
   const dispatch = useDispatch()
   let user = useSelector((state) => state.user)

@@ -6,14 +6,15 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
 import Container from "react-bootstrap/Container"
 import { AiOutlineUser } from "react-icons/ai";
-import { Link} from "react-router-dom";
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { userLogout } from '../store/user';
 import { useNavigate } from 'react-router'
+import { getOffices } from "../store/offices";
 
-import Friends from '../commons/Friends'
-import Favorites from '../commons/Favorites';
+import Friends from './Friends'
+import Favorites from './Favorites';
 
 const NavigationBar = () => {
 
@@ -25,6 +26,15 @@ const NavigationBar = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const user = JSON.parse(localStorage.getItem('user'))
+  let offices = useSelector((state) => state.offices)
+
+  useEffect(()=>{
+    dispatch(getOffices())
+    .then((res) => offices = res)
+  },[])
 
   const handleLogout = () => {
     dispatch(userLogout())
@@ -34,26 +44,11 @@ const NavigationBar = () => {
       })
   }
 
-  const handleClick = (officeName) => {
-    officeName = officeName.replace(/\s+/g, '_').toLowerCase();
-    navigate(`/office/${officeName}`)
-  }
-
-  const officeList = [
-    "La Plata",
-    "Tandil",
-    "Mar del Plata",
-    "Bahía Blanca",
-    "Rosario",
-    "Córdoba",
-    "Mendoza",
-    "Tucumán",
-    "Resistencia",
-  ];
-
   return (
     <>
-     <Navbar bg={toggle === 1 ? "light" : "dark"} expand="md">
+    {
+    (!user) ? "" :
+    <Navbar bg={toggle === 1 ? "light" : "dark"} expand="md">
       <Container>
         <Link to={checked ? "/" : "/profile"}>
           <ToggleButton
@@ -67,7 +62,10 @@ const NavigationBar = () => {
         <NavDropdown align="center" title="Oficinas" id="basic-nav-dropdown">
           <NavDropdown.Item onClick={() => setShowFavs(true)} >Oficinas Favoritas</NavDropdown.Item>
           <NavDropdown.Divider />
-          {officeList.map((office,i) => <NavDropdown.Item key={i} onClick={()=>handleClick(office)} >{office}</NavDropdown.Item>)}
+          {Object.values(offices).map((e, i) => (
+          <NavDropdown.Item key={i} >{e.name}</NavDropdown.Item>
+          )
+          )}
         </NavDropdown>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" >
@@ -90,19 +88,16 @@ const NavigationBar = () => {
                 </ToggleButton>
               </ToggleButtonGroup>
             </Nav.Link>
-            <Nav.Link href="#home">Home</Nav.Link>
+            <Nav.Link href="/home">Home</Nav.Link>
             <Nav.Link onClick={() => setShowFriends(true)}>Amigos</Nav.Link>
-            <Nav.Link href="#home" >Log Out</Nav.Link>
+            <Nav.Link onClick={handleLogout} href="/" >Log Out</Nav.Link>
             <Nav.Link href="#link">Reportar un problema</Nav.Link>
-            <Link to="/register"><button className="menu-button">Registrarse</button></Link>
-            <Link to="/login"><button className="menu-button">Iniciar Sesión</button></Link>
-            <Link to="/"><button onClick={handleLogout} className="menu-button">Cerrar Sesión</button></Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
       <Friends show={showFriends} setShow={setShowFriends} />
       <Favorites show={showFavs} setShow={setShowFavs} />
-    </Navbar>
+    </Navbar>}
     </>
   )
 }
