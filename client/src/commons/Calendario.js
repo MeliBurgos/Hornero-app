@@ -5,12 +5,14 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
+let newDate = new Date()
+let date = newDate.toLocaleString('sv').replace(" ","T")
 // reemplazar esto por un pedido al back con los eventos de un escritorio en especifico
 let F1D13 = {
   events: [{
     title: 'Event1',
     start: '2022-06-27T12:30:00',
-    end: '2022-06-28T17:00:00',
+    end: '2022-06-27T17:00:00',
     allDay: false
   }, {
     title: 'Event2',
@@ -23,15 +25,21 @@ let F1D13 = {
     allDay: false
   }, {
     title: 'Event4',
-    start: '2022-06-30T14:30:00',
-    end: '2022-06-28T18:00:00',
+    start: '2022-06-30T09:30:00',
+    end: '2022-06-30T12:00:00',
     allDay: false
-  }],
+  }, {
+        start: '2000-04-24T14:30:00',
+        end: date,
+        overlap: false,
+        display: 'background',
+        color: '#808080'
+      } 
+],
   color: '#bfd732',
   textColor: 'black'
 
 }
-
 
 
 export default class Calendario extends React.Component {
@@ -57,25 +65,27 @@ export default class Calendario extends React.Component {
           startTime: '9:00',
           endTime: '18:00',
         }}
-        nowIndicator={true}
-        contentHeight={400}
-        navLinks={true}
-        selectable={true}
-        longPressDelay={1000}
-        selectOverlap={false}
-        allDaySlot={false}
-        unselectAuto={false}
-      />
+          nowIndicator = { true}
+          contentHeight = { 400}
+          navLinks = { true}
+          selectable = { true}
+          longPressDelay = { 1000}
+          selectOverlap = { false}
+          allDaySlot = { false}
+          unselectAuto = { false}
+          scrollTime = {'09:00:00'}
+          scrollTimeReset={false}
+            />
     )
-  }
+}
 
 
-  handleDateSelect = (info) => {
-    this.props.setReserve(info)
-  }
+handleDateSelect = (info) => {
+  this.props.setReserve(info)
+}
 
-  handleUnselect = () => {
-    this.props.setReserve({})
- }
+handleUnselect = () => {
+  this.props.setReserve({})
+}
 
 }

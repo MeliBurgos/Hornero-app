@@ -31,6 +31,11 @@ const NavigationBar = () => {
   const user = JSON.parse(localStorage.getItem('user'))
   let offices = useSelector((state) => state.offices)
 
+   const handleClick = (officeName) => {
+    officeName = officeName.replace(/\s+/g, '_').toLowerCase();
+    navigate(`/office/${officeName}`)
+  }
+
   useEffect(()=>{
     dispatch(getOffices())
     .then((res) => offices = res)
@@ -63,7 +68,7 @@ const NavigationBar = () => {
           <NavDropdown.Item onClick={() => setShowFavs(true)} >Oficinas Favoritas</NavDropdown.Item>
           <NavDropdown.Divider />
           {Object.values(offices).map((e, i) => (
-          <NavDropdown.Item key={i} >{e.name}</NavDropdown.Item>
+          <NavDropdown.Item onClick={()=> handleClick(e.name)} key={i} >{e.name}</NavDropdown.Item>
           )
           )}
         </NavDropdown>

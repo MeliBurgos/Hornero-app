@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert"
 import Button from "react-bootstrap/Button";
 import Calendario from "./Calendario";
-import { useDispatch } from "react-redux";
 import { BsPlusCircle, BsDashCircle } from "react-icons/bs";
 
 const ReserveModal = ({ show, setShow }) => {
@@ -25,8 +25,8 @@ const ReserveModal = ({ show, setShow }) => {
     }
   }
 
-  let reserveConfirmation /* = async () => {
-    try {
+  let reserveConfirmation = /*aysnc*/ () => {
+   /*  try {
       const res = await dispatch( RUTADELBACK (reserve))
       setShow2(false)
       setShow3(true)
@@ -34,7 +34,11 @@ const ReserveModal = ({ show, setShow }) => {
     } catch (error) {
       console.log(error)
     }
-  } */
+   */ 
+    setShow2(false)
+      setShow3(true)
+      setReserve({})
+    }
 
   const [addedToFavorites, setAddedToFavorites] = useState(false)
 
@@ -48,6 +52,11 @@ const ReserveModal = ({ show, setShow }) => {
     setAddedToFavorites(true)
   }
   
+ const dateFormater = () => {
+    let newDate = new Date(reserve.start)
+     return newDate.toLocaleDateString('es-ES',{ weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' })
+    }
+
   return (
     <>
       <Alert variant="danger" show={show1} onClose={() => (setShow(true), setShow1(false))} dismissible>
@@ -60,7 +69,7 @@ const ReserveModal = ({ show, setShow }) => {
       <Alert variant="warning" show={show2} onClose={() => setShow2(false)} dismissible>
         <Alert.Heading>Confrimación:</Alert.Heading>
         <p>
-          Esta seguro que quiere reservar para <strong>{`${reserve.start}`}</strong> ?
+          Esta seguro que quiere reservar para <strong>{`${dateFormater()}`}</strong> ?
         </p>
         <hr></hr>
         <Button className={"mx-2"} onClick={() => (reserveConfirmation())} variant="outline-dark">

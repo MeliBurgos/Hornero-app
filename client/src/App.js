@@ -11,6 +11,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import NavigationBar from './components/Navbar';
 import EditProfile from "./components/EditProfile";
+import CamTest from './components/CamTest';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/" element={<Login />} />
+        <Route path="/test" element={<CamTest />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/editprofile" element={<EditProfile />} />
