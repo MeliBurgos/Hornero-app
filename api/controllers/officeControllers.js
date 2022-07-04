@@ -30,11 +30,12 @@ const OfficeController = {
     let deletedOffice = await OfficeSchema.findByIdAndRemove(req.params.id);
     res.json(deletedOffice);
   },
-  //busca todos los escritorios de una oficina con autopopulate
-  getAllDesks: async (req, res) => {
-    let found = await OfficeSchema.findById(req.params.id).populate("desks");
-    res.json(found);
-  },
+  
+  //busca todos los pisos de una oficina
+  getAllFloors: async (req, res) => {
+    let found= await OfficeSchema.findById(req.params.id).populate("floor")
+    res.json(found)
+  }
 };
 
 module.exports = OfficeController;

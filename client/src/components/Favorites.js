@@ -2,20 +2,37 @@ import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import { BsFillTrashFill } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from "react";
 
-// Reemplazar este arreglo por un pedido al back
-const favorites = [
-  { id:1, office: "Mar Del Plata", desk: "F1D20" },
-  { id:2, office: "Bahia Blanca", desk: "F1D3" },
-  { id:3, office: "CABA - Puerto Madero", desk: "F4D10" },
-  { id:4, office: "CABA - Puerto Madero", desk: "F4D24" },
-];
+import { getFavorites, removeFavorite } from "../store/favorites"
+
+// // Reemplazar este arreglo por un pedido al back
+// const favorites = [
+//   { id:1, office: "Mar Del Plata", desk: "F1D20" },
+//   { id:2, office: "Bahia Blanca", desk: "F1D3" },
+//   { id:3, office: "CABA - Puerto Madero", desk: "F4D10" },
+//   { id:4, office: "CABA - Puerto Madero", desk: "F4D24" },
+// ];
 
 const Favorites = ({ show, setShow }) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const favorites = useSelector(state => state.favorites)
+
+  useEffect(()=>{
+    dispatch(getFavorites())
+  },[])
 
   // click sobre el tacho (elimina un favorito)
-  const handleDeleteFavorite = (id) => {console.log(`eliminar el puesto con id ${id}`)}
+  const handleDeleteFavorite = async (favorite) => {
+    try {
+      await dispatch(removeFavorite(favorite))
+      dispatch(getFavorites())
+    } catch (err) {
+      console.log(err)
+    }
+  }
   
   // click sobre un favorito (redirige a esa vista) 
   const handleClick = (officeName) => {
@@ -40,12 +57,12 @@ const Favorites = ({ show, setShow }) => {
               </tr>
             </thead>
             <tbody>
-              {favorites.map((favorite, i) => (
+              {favorites[0] && favorites.map((favorite, i) => (
                 <tr key={i}>
-                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.office)}>{i+1}</td>
-                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.office)}>{favorite.office}</td>
-                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.office)}>{favorite.desk}</td>
-                  <td> <BsFillTrashFill style={{cursor:"pointer"}} size={20} onClick={()=>handleDeleteFavorite(favorite.id)}/></td>
+                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.split(":")[0])}>{i+1}</td>
+                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.split(":")[0])}>{favorite.split(":")[0]}</td>
+                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.split(":")[0])}>{favorite.split(":")[1]}</td>
+                  <td> <BsFillTrashFill style={{cursor:"pointer"}} size={20} onClick={()=>handleDeleteFavorite(favorite)}/></td>
                 </tr>
               ))}
             </tbody>

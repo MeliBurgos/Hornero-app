@@ -1,22 +1,20 @@
 import { createAsyncThunk, createReducer } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-export const getFriends = createAsyncThunk("GET_FRIENDS", (id) => {
-    // const userId = JSON.parse(localStorage.getItem('user'))._id
-    return axios.get(`/api/friends/${id}`)
+export const getFriends = createAsyncThunk("GET_FRIENDS", () => {
+    const userId = JSON.parse(localStorage.getItem('user')).user._id
+    return axios.get(`/api/friends/${userId}`)
         .then(res => res.data)
 })
 
-export const addFriend = createAsyncThunk("ADD_FRIEND", (ids) => {
-    // const userId = JSON.parse(localStorage.getItem('user'))._id
-    const {id,userIdToAdd} = ids
-    return axios.post(`/api/friends/add/${id}/${userIdToAdd}`)
+export const addFriend = createAsyncThunk("ADD_FRIEND", (userIdToAdd) => {
+    const userId = JSON.parse(localStorage.getItem('user')).user._id
+    return axios.post(`/api/friends/add/${userId}/${userIdToAdd}`)
 })
 
-export const removeFriend = createAsyncThunk("REMOVE_FRIEND", (ids) => {
-    // const userId = JSON.parse(localStorage.getItem('user'))._id
-    const {id,userIdToDelete} = ids
-    return axios.delete(`/api/friends/remove/${id}/${userIdToDelete}`)
+export const removeFriend = createAsyncThunk("REMOVE_FRIEND", (userIdToDelete) => {
+    const userId = JSON.parse(localStorage.getItem('user')).user._id
+    return axios.delete(`/api/friends/remove/${userId}/${userIdToDelete}`)
 })
 
 export const sendMailToFriend = createAsyncThunk("SEND_MAIL_TO_FRIEND", (mailData) => {

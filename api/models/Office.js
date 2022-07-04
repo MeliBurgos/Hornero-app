@@ -1,9 +1,6 @@
-// const { Schema, model } = require("mongoose");
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const autopopulate = require("mongoose-autopopulate");
 
-//traer referencia de los desks de una oficina
 
 const OfficeSchema = new Schema({
   name: {
@@ -13,18 +10,20 @@ const OfficeSchema = new Schema({
   address: {
     type: String,
   },
-  //traer los desks de una oficina
-  desks: [
+  //traer los pisos de una oficina
+  /* floor: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Desk",
-      autopopulate: true,
+      ref: "Floor",
+    },
+  ], */
+  reservation: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Reservations",
     },
   ],
 });
 
-
-
-OfficeSchema.plugin(autopopulate);
-
 module.exports = mongoose.model("Office", OfficeSchema);
+
