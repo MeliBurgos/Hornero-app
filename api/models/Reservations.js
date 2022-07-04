@@ -43,4 +43,23 @@ const ReservationsSchema = new Schema(
   { timestamps: true }
 );
 
+ReservationsSchema.findOrCreate = function (conditions, doc, callback) {
+  const self = this;
+  self.findOne(conditions, function (err, result) {
+    if (err) {
+      return callback(err);
+    }
+    if (result) {
+      return callback(null, result);
+    }
+    self.create(doc, function (err, result) {
+      if (err) {
+        return callback(err);
+      }
+      return callback(null, result);
+    });
+  });
+}
+
+
 module.exports = model("Reservations", { ReservationsSchema });
