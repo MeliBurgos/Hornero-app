@@ -1,20 +1,26 @@
-const { Schema, model } = require("mongoose")
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const MeetingRooms= new Schema({
-    name: {
-        type: String,
+const MeetingRoomsSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    default: "available",
+  },
+  floor: {
+    type: Schema.Types.ObjectId,
+    ref: "Floor",
+    required: true
+  },
+  reservation: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Reservations",
     },
-    status: {
-        type: String,
-        default: "Libre",
-    },
-    office: [{
-        type: Schema.Types.ObjectId, ref: "Offices"
-    }],
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'Users',
-    },
-})
+  ],
+});
 
-module.exports= model("Rooms", { MeetingRooms })
+module.exports = mongoose.model("Rooms", MeetingRoomsSchema);

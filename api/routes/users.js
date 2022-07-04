@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/Users");
 const bcrypt = require("bcrypt");
 const secret = require("./secret.json");
+const ReservationsSchema = require("../models/Reservations")
 
 router.post("/register", (req, res) => {
   User.find({ email: req.body.email })
@@ -115,5 +116,7 @@ router.put("/:id", (req, res) => {
 router.post("/logout", function (req, res, next) {
   res.send("Logout");
 });
+
+
 
 module.exports = router;
