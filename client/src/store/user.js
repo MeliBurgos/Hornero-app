@@ -12,8 +12,8 @@ export const userUpdate = createAsyncThunk("USER_UPDATE", (data) => {
 });
 
 export const getUser = createAsyncThunk("GET_USER", () => {
-    // const userId = JSON.parse(localStorage.getItem('user'))._id
-    return axios.get(`/api/users/62bcccb407b266cf048056c5`)
+    const userId = JSON.parse(localStorage.getItem('user')).user._id
+    return axios.get(`/api/users/${userId}`)
         .then(user => user.data)
 })
 
@@ -21,7 +21,7 @@ export const userLogin = createAsyncThunk("USER_LOGIN", (data) => {
     return axios.post("/api/users/login", data)
         .then(user => {
             localStorage.setItem('user', JSON.stringify(user.data))
-            return user.data
+            return user.data.user
         });
 });
 

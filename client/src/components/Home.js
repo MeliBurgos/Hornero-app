@@ -18,20 +18,20 @@ const Home = () => {
   }, [])
 
   return (
-    <div className="text-center mt-3" style={{ height: "75vh" }}>
+    <div className="text-center mt-3" style={{}}>
       <h5>Hola {user.name} !</h5>
       <h1>Bienvenido a Hornero</h1>
       <h5 class="d-flex align-items-center justify-content-center">una app de  <Image src={Logo} alt='Globant' style={{ width: "30%" }} ></Image></h5>
       <hr></hr>
-      <div>
-        <ListGroup variant="flush"   >
+      <div style={{height: "45vh",width:"100vw", display: "flex", alignItems: "center", justifyContent: "center"}}>
+        <ListGroup variant="flush">
           <ListGroup.Item> <strong>Buscá</strong> <AiOutlineSearch className="mx-2" />  </ListGroup.Item>
           <ListGroup.Item> <strong>Reservá</strong> <AiOutlineEdit className="mx-2" /> </ListGroup.Item>
           <ListGroup.Item> <strong>Compartí</strong> <FaRegShareSquare className="mx-2" /> </ListGroup.Item>
           <ListGroup.Item> <strong>Trabajá </strong> <MdOutlineWorkOutline className="mx-2" /> </ListGroup.Item>
           <ListGroup.Item> <h5>Todo en la palma de tu mano</h5> </ListGroup.Item>
         </ListGroup>
-      </div>
+</div>
     </div>
 
 

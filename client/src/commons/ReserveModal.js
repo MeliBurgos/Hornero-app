@@ -54,7 +54,7 @@ const ReserveModal = ({ show, setShow }) => {
   
  const dateFormater = () => {
     let newDate = new Date(reserve.start)
-     return newDate.toLocaleDateString('es-ES',{ weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' })
+     return newDate.toLocaleDateString('es-ES',{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     }
 
   return (

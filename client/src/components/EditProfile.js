@@ -31,7 +31,7 @@ const EditProfile = () => {
   const surname = useInput();
   const email = useInput();
   const office = useInput();
-  const charge = useInput();
+  const position = useInput();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,7 +39,7 @@ const EditProfile = () => {
     let apellido = surname.value.length === 0 ? user.surname : surname.value
     let correo = email.value.length === 0 ? user.email : email.value
     let oficina = office.value.length === 0 ? user.mainofice : office.value
-    let cargo = charge.value.length === 0 ? user.charge : charge.value
+    let rol = position.value.length === 0 ? user.position : position.value
 
     dispatch(userUpdate(
       [{
@@ -47,12 +47,11 @@ const EditProfile = () => {
         surname: apellido,
         email: correo,
         mainOffice: oficina,
-        position: cargo
+        position: rol
       }, user._id]
     )).then(() => (setShow(true),
       window.scrollTo({ behavior: "smooth", top: 0, left: 0 })))
       .catch(err => console.log(err))
-
   };
 
   const mainOffice = [
@@ -66,6 +65,15 @@ const EditProfile = () => {
     "Tucumán",
     "Resistencia",
   ];
+
+   const roles = [
+    "Development and Coding",
+    "Project Management",
+    "Project Design",
+    "Marketing and Communication",
+    "Human Resources",
+    "Financial Management"
+  ]
 
   return (
     <div className="text-center mt-3">
@@ -114,10 +122,17 @@ const EditProfile = () => {
             </Form.Group>
           </ListGroup.Item>
           <ListGroup.Item>
-            <Form.Group className="mb-3">
-              <Form.Label>Cargo</Form.Label>
-              <Form.Control type="text" placeholder={user.charge} onChange={charge.onChange} />
-            </Form.Group>
+
+<Form.Group className="mb-3" controlId="formBasicTextRol">
+          <Form.Label>Rol</Form.Label>
+          <Form.Select placeholder={user.position} onChange={position.onChange} aria-label="Default select example">
+            <option>Rol</option>
+            {roles.map((rol, i) => (
+              <option key={i} value={rol}>{rol}</option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+
           </ListGroup.Item>
 
           <ListGroup.Item>

@@ -63,17 +63,17 @@
 }
 
 .fil0 {
-  fill: #a9abae;
+  fill: #444444;
 }
-
+/*
 .fil1:hover {
   fill: #666769;
 }
 
-.selected {
+.reserved {
   fill: #a2b82a;
 }
-
+*/
 
 .contsvg {
   margin: auto;
