@@ -20,7 +20,7 @@ const Office = () => {
 
 
   useEffect(() => {
-    DeskSetter(setShow)
+    DeskSetter(setShow,Floor)
   }, [Floor]);
 
   let officeFloors = 3 // reemplazar esto x Info traida de la db
@@ -28,7 +28,7 @@ const Office = () => {
 
   for (let i = 1; i <= officeFloors; i++) {
     items.push(
-      <option>
+      <option key={i}>
         {i}
       </option>);
   }
@@ -36,7 +36,7 @@ const Office = () => {
 
   return (
     <>
-      <ReserveModal show={Show} setShow={setShow} />
+      <ReserveModal show={Show} setShow={setShow} desk={`${officeNameOk}:${Show}`} />
       <div className="text-center mt-3 w-100">
         <Card.Title className="mb-3">{officeNameOk}</Card.Title>
 
