@@ -16,8 +16,8 @@ const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
     const user = useSelector(state=> state.user)
 
     const handleAddFriend = (id)=>{
-        dispatch(addFriend({id:user._id,userIdToAdd:id}))
-        .then(()=>dispatch(getFriends(user._id)))
+        dispatch(addFriend(id))
+        .then(()=>dispatch(getFriends()))
     }
 
     // buscar usuarios para agregar

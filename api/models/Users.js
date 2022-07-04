@@ -33,13 +33,9 @@ const UserSchema = new Schema({
   mainOffice: {
     type: String,
   },
-  favOffice: {
+  favorites: {
     type: [String],
-    // default: ["MDQ", "Puerto Madero", "Bahía Blanca"],
-  },
-  favDesk: {
-    type: [String],
-    default: ["F74D2", "F1D2", "F2D2", "F3D2", "F4D2", "F5D2"],
+    // default: ["MDQ:F1D10", "Puerto Madero:F1D12", "Bahía Blanca:F1D14"],
   },
   friends: {
     type: [String],
