@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DeskSetter from "../hooks/deskSetter";
 import Card from "react-bootstrap/Card";
@@ -9,15 +9,18 @@ import MapSelector from "../images/offices/MapSelector.js"
 import ReserveModal from "../commons/ReserveModal"
 
 const Office = () => {
-
   const { officeName } = useParams();
-
+  
   // regex para cambiar mar_del_plata ==> Mar Del Plata
   const officeNameOk = officeName.replace(/_/g, ' ').replace(/(?: |\b)(\w)/g, function (key) { return key.toUpperCase() });
-
   const [Show, setShow] = useState(false)
   const [Floor, setFloor] = useState(1)
-
+  
+  // chequea si hay alguien conectado sino te manda a login
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
+  },[])
 
   useEffect(() => {
     DeskSetter(setShow,Floor)

@@ -13,11 +13,14 @@ const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
     const [filteredUsers, setFilteredUsers] = useState([])
     const showedUsers = (searchUsers.value.length>=3) ? filteredUsers : []
     const friendIds = friends.map(friend => friend._id)
-    const user = useSelector(state=> state.user)
+    const [hideButton, setHideButton] = useState(false)
+    const darkMode = useSelector(state => state.darkMode)
 
     const handleAddFriend = (id)=>{
+        setHideButton(true)
         dispatch(addFriend(id))
         .then(()=>dispatch(getFriends()))
+        .then(()=>setHideButton(false))
     }
 
     // buscar usuarios para agregar
@@ -31,14 +34,14 @@ const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
     },[searchUsers.value])
 
     return (<Modal show={show} onHide={()=>{setShow(false);setAddFriend(false)}} centered>
-        <Modal.Header>
+        <Modal.Header className={darkMode? "dark-mode": "light"}>
             <Modal.Title style={{fontFamily:"heeboregular"}}>Agregar Amigos</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className={darkMode? "dark-mode": "light"}>
             <form onSubmit={(e) => e.preventDefault()}>
-            <input className="main-input" type="text" {...searchUsers} placeholder="Escribe el nombre y/o apellido" />
+            <input className={darkMode?"dark-mode-input":"main-input"} type="text" {...searchUsers} placeholder="Escribe el nombre y/o apellido" />
             </form>
-            <Table style={{fontFamily:"heeboregular",fontWeigth:700}}  responsive hover size="sm">
+            <Table style={{fontFamily:"heeboregular",fontWeigth:700}} className={darkMode? "dark-mode": "light"}  responsive hover size="sm">
             {searchUsers.value.length>=3 && <thead>
                 <tr>
                 <th>#</th>
@@ -52,16 +55,21 @@ const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
                     <td>{i+1}</td>
                     <td>{`${user.name} ${user.surname}`}</td>
                     <td>{user.mainOffice}</td>
-                    {friendIds.includes(user._id) ? <td/> : <td><BsPlusCircle style={{cursor:"pointer"}} size={28} onClick={()=>handleAddFriend(user._id)}/></td>}
+                    {(friendIds.includes(user._id) || hideButton) ? <td/> : <td><BsPlusCircle style={{cursor:"pointer"}} size={28} onClick={()=>handleAddFriend(user._id)}/></td>}
                 </tr>
                 ))}
             </tbody>
             </Table>
         </Modal.Body>
-        <Modal.Footer>
-            <button className="main-button-black" onClick={()=>setAddFriend(false)}>Volver</button>
-            <button
-            className="main-button-black"
+        <Modal.Footer className={darkMode? "dark-mode": "light"}>
+            <button 
+            className={darkMode?"dark-mode-black-button":"main-button-black"}
+            onClick={()=>setAddFriend(false)}
+            >
+            Volver
+            </button>
+            <button 
+            className={darkMode?"dark-mode-black-button":"main-button-black"}
             onClick={()=>{setShow(false);setAddFriend(false)}}
             >
             Cerrar

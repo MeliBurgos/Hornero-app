@@ -1,14 +1,16 @@
 import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert"
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
 import useInput from "../hooks/useInput";
 import { sendMailToFriend } from "../store/friends";
 
 const SendMessage = ({ show, setShow, setSendMessage, mailTo }) => {
+  const dispatch = useDispatch()
   const message = useInput();
   const user = useSelector(state => state.user)
+  const darkMode = useSelector(state => state.darkMode)
   const [showGoodAlert, setShowGoodAlert] = useState(false)
   const [showBadAlert, setShowBadAlert] = useState(false)
   
@@ -20,14 +22,14 @@ const SendMessage = ({ show, setShow, setSendMessage, mailTo }) => {
       mailBody: message.value,
     }
     if(message.value.length){
-      console.log(mail)
-      sendMailToFriend(mail)
-      console.log("mensaje enviado")
-      setShowGoodAlert(true)
-      setTimeout(()=>{
-        setSendMessage({})
-        setShowGoodAlert(false)
-      },2000)
+      dispatch(sendMailToFriend(mail))
+      .then(()=>{
+        setShowGoodAlert(true)
+        setTimeout(()=>{
+          setSendMessage({})
+          setShowGoodAlert(false)
+        },2000)
+      })
     } else {
       setShowBadAlert(true)
       setTimeout(()=>{
@@ -38,14 +40,14 @@ const SendMessage = ({ show, setShow, setSendMessage, mailTo }) => {
 
   return (
     <Modal show={show} onHide={() => {setShow(false);setSendMessage({})}} centered>
-      <Modal.Header>
+      <Modal.Header className={darkMode? "dark-mode": "light"}>
         <Modal.Title style={{ fontFamily: "heeboregular" }}>
           Mensaje para {mailTo.fullname}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+      <Modal.Body className={darkMode? "dark-mode": "light"} style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
         <form id="form1" onSubmit={handleSubmit}>
-            <textarea 
+            <textarea  className={darkMode? "dark-mode-textarea": "light"}
               rows="6" 
               style={{width:"300px"}} 
               {...message} 
@@ -61,8 +63,8 @@ const SendMessage = ({ show, setShow, setSendMessage, mailTo }) => {
         Deberías escribirle algo.
         </Alert>
       </Modal.Body>
-      <Modal.Footer>
-        <button className="main-button-black" onClick={() => setSendMessage({})}>
+      <Modal.Footer className={darkMode? "dark-mode": "light"}>
+        <button className={darkMode?"dark-mode-black-button":"main-button-black"} onClick={() => setSendMessage({})}>
           Volver
         </button>
         <button form="form1" className="main-button" onClick={handleSubmit}>

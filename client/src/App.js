@@ -1,6 +1,7 @@
 import './styles/general.css'
 import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useSelector } from 'react-redux';
 
 import Footer from "./components/Footer";
 import Home from "./components/Home";
@@ -15,10 +16,11 @@ import CamTest from './components/CamTest';
 
 
 function App() {
+  const darkMode = useSelector(state => state.darkMode)
   return (
-    <>
+    <div className={darkMode ? "dark-mode" : "light"} >
       <NavigationBar />
-      <Routes>
+      <Routes >
         <Route path="/home" element={<Home />} />
         <Route path="/" element={<Login />} />
         <Route path="/test" element={<CamTest />} />
@@ -29,7 +31,7 @@ function App() {
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 
