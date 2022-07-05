@@ -48,8 +48,11 @@ const EditProfile = () => {
         mainOffice: oficina,
         position: rol
       }, user._id]
-    )).then(() => (setShow(true),
-      window.scrollTo({ behavior: "smooth", top: 0, left: 0 })))
+    )).then(() => {
+      setShow(true)
+      window.scrollTo({ behavior: "smooth", top: 0, left: 0 })
+      dispatch(getUser())
+    })
       .catch(err => console.log(err))
 
   };
@@ -83,7 +86,7 @@ const EditProfile = () => {
         </Button>
       </Alert>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <Image style={{ width: "60%", height: 'auto' }} roundedCircle="true" thumbnail="true" src={user.photo} />
+        <Image style={{ width: "60%", height: 'auto' }} roundedCircle="true" thumbnail="true" src={user.imgUrl} />
         <Card.Body>
 
           <Card.Title>

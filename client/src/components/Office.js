@@ -44,8 +44,8 @@ const Office = () => {
         <Card.Title className="mb-3">{officeNameOk}</Card.Title>
 
         <div>
-          <span class="d-inline-block w-25" >Piso: </span>
-          <div class="d-inline-block w-25">
+          <span className="d-inline-block w-25" >Piso: </span>
+          <div className="d-inline-block w-25">
             <Form.Select size="sm" style={{ width: "auto" }} onChange={(e) => setFloor(e.target.value)}>
               {items}
             </Form.Select>
@@ -53,7 +53,7 @@ const Office = () => {
         </div>
 
         <Card.Body>
-          <div class="contsvg ratio ratio-4x3">
+          <div className="contsvg ratio ratio-4x3">
             <MapSelector Office={officeName} Floor={Floor} />
           </div>
         </Card.Body>
