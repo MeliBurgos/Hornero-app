@@ -21,17 +21,16 @@ const ReservationsSchema = new Schema({
     ref: "User",
     required: true,
   },
-  meetingRoom: {
-    type: Schema.Types.ObjectId,
-    ref: "Rooms",
+  booking: {
+    type: String,
     default: null,
   },
-  desk: {
+  office: {
     type: Schema.Types.ObjectId,
-    ref: "Desk",
+    ref: "Office",
     default: null,
   },
-});
+}, { timestamps: true });
 
 
 

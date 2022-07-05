@@ -4,10 +4,12 @@ const UserSchema= require("../models/Users")
 const ReservationsController = {
   //crea una reserva
   create: async (req, res) => {
+    console.log(req.body, "req.body")
     let newReservation = await ReservationsSchema.create(req.body);
     let user= await UserSchema.findById(req.body.user)
-    user.reservations.push(newReservation._id)
+    user.reservations.push(newReservation)
     user.save()
+    console.log(newReservation, "newReservation");
     res.json(newReservation);
   },
   //busca una reserva por id
@@ -33,6 +35,7 @@ const ReservationsController = {
   },
   //busca todas las reservas de una oficina por id
   getAllReservationsByOffice: async (req, res) => {
+    console.log(req.body, "soy req body")
     let found = await ReservationsSchema.find({
       office: req.params.id,
     }).populate("office");

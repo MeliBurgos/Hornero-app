@@ -9,11 +9,4 @@ const UserControllers = {
     }
 }
 
-/* router.get("/:id/reservations", async (req, res) => {
-    let found = await ReservationsSchema.find({ user: req.params.id }).populate(
-      "user"
-    );
-    res.json(found);
-  })
- */
   module.exports= UserControllers
