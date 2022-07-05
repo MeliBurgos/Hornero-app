@@ -20,12 +20,12 @@ const Friends = ({ show, setShow }) => {
   const [sendMessage,setSendMessage] = useState({})
   
   useEffect(() => {
-    if(user._id) dispatch(getFriends(user._id))
+    if(user._id) dispatch(getFriends())
   },[user._id])
 
   const handleDeleteFriend = (id) => {
-    dispatch(removeFriend({id:user._id,userIdToDelete:id}))
-    .then(() => dispatch(getFriends(user._id)))
+    dispatch(removeFriend(id))
+    .then(() => dispatch(getFriends()))
   }
 
   // buscar amigos

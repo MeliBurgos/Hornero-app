@@ -1,11 +1,7 @@
 const DeskSchema = require("../models/Desk");
+const FloorSchema= require("../models/Floor")
 
 const DeskController = {
-  //busca todos los escritorios
-  all: async (req, res) => {
-    let all = await DeskSchema.find({});
-    res.json(all);
-  },
   //busca un escritorio por id
   find: async (req, res) => {
     let found = await DeskSchema.findById(req.params.id);
@@ -14,6 +10,9 @@ const DeskController = {
   // crea un escritorio
   create: async (req, res) => {
     let newDesk = await DeskSchema.create(req.body);
+    let floor= await FloorSchema.findById(req.body.floor)
+    floor.desks.push(newDesk._id)
+    floor.save()
     res.json(newDesk);
   },
   //actualiza un escritorio
@@ -30,6 +29,11 @@ const DeskController = {
     let deletedDesk = await DeskSchema.findByIdAndRemove(req.params.id);
     res.json(deletedDesk);
   },
+  //busca todas las reservas por escritorio
+  getAllReservations: async (req, res) => {
+    let found= await DeskSchema.findById(req.params.id).populate("reservation")
+    res.json(found)
+  }
 };
 
 module.exports = DeskController;

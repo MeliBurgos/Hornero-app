@@ -1,22 +1,22 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const autopopulate = require("mongoose-autopopulate");
 
 const DeskSchema = new Schema({
   name: {
     type: String,
     required: true,
   },
-  office: {
+  floor: {
     type: Schema.Types.ObjectId,
-    ref: "Office",
+    ref: "Floor",
     required: true,
-    autopopulate: true,
   },
-  status: {
-    type: String,
-    default: "available",
-  },
+  reservation: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Reservations",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Desk", DeskSchema);

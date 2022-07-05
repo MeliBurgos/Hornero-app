@@ -1,15 +1,17 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert"
 import Button from "react-bootstrap/Button";
 import Calendario from "./Calendario";
 import { BsPlusCircle, BsDashCircle } from "react-icons/bs";
 
-const ReserveModal = ({ show, setShow }) => {
+import { addFavorite, getFavorites, removeFavorite } from "../store/favorites";
+
+const ReserveModal = ({ show, setShow, desk }) => {
 
   const dispatch = useDispatch()
-
+  const favorites = useSelector(state => state.favorites)
   const [show1, setShow1] = useState(false)
   const [show2, setShow2] = useState(false)
   const [show3, setShow3] = useState(false)
@@ -42,13 +44,24 @@ const ReserveModal = ({ show, setShow }) => {
 
   const [addedToFavorites, setAddedToFavorites] = useState(false)
 
-  const handleRemoveFromFavorites = (deskId) => {
-    // pedido al back para eliminar 1 favorito
+  useEffect(()=>{
+    if(favorites[0]) {
+      if(favorites.includes(desk)) setAddedToFavorites(true)
+      else setAddedToFavorites(false)
+    }
+  },[desk])
+
+  const handleRemoveFromFavorites = async (desk) => {
+    console.log(desk)
+    await dispatch(removeFavorite(desk))
+    dispatch(getFavorites())
     setAddedToFavorites(false)
   }
 
-  const handleAddToFavorites = (deskId) => {
-    // pedido al back para agregar 1 favorito
+  const handleAddToFavorites = async (desk) => {
+    console.log(desk)
+    await dispatch(addFavorite(desk))
+    dispatch(getFavorites())
     setAddedToFavorites(true)
   }
   
@@ -88,10 +101,10 @@ const ReserveModal = ({ show, setShow }) => {
       <Modal show={show} onHide={() => setShow(false)} centered >
         <Modal.Header>
           <p style={{textHeight:"20px",fontWeight:"700"}} className="main-text">Seleccione dia y hora</p>
-          {addedToFavorites ? <button className="main-button-black" onClick={handleRemoveFromFavorites}>
+          {addedToFavorites ? <button className="main-button-black" onClick={()=>handleRemoveFromFavorites(desk)}>
             <BsDashCircle size={20}/> Favorito
           </button> :
-          <button className="main-button" onClick={handleAddToFavorites}>
+          <button className="main-button" onClick={()=>handleAddToFavorites(desk)}>
             <BsPlusCircle size={20}/> Favorito
           </button>}
         </Modal.Header>
