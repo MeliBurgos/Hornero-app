@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getOffices } from "../store/offices";
 import { getReservations } from "../store/reservations";
@@ -21,7 +21,6 @@ import { AiOutlineArrowRight, AiOutlineArrowLeft, AiOutlineCalendar } from "reac
 
 
 const Office = () => {
-
   const [Show, setShow] = useState('')
   const [Floor, setFloor] = useState(1)
   const [date, setDate] = useState("DD:MM:YYYY")
@@ -35,7 +34,12 @@ const Office = () => {
   //Nombre de la oficina y regex
   const { officeName } = useParams();
   const officeNameOk = officeName.replace(/_/g, ' ').replace(/(?: |\b)(\w)/g, function (key) { return key.toUpperCase() });
-
+  
+  // chequea si hay alguien conectado sino te manda a login
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
+  },[])
 
   //Seteo fecha de hoy
   useEffect(() => {
@@ -117,7 +121,7 @@ const Office = () => {
     <>
       <div className="text-center mt-3 w-100">
         <Card.Title className="mb-3">{officeNameOk}</Card.Title>
-
+        
         <Dropdown onSelect={(n) => setFloor(n)}>
           <Dropdown.Toggle id="dropdown-basic">
             Piso: {items[0] || Floor}
@@ -136,7 +140,7 @@ const Office = () => {
         </OverlayTrigger>
 
         <Card.Body>
-          <div class="contsvg ratio ratio-4x3">
+          <div className="contsvg ratio ratio-4x3">
             <MapSelector Office={officeName} Floor={Floor} />
           </div>
         </Card.Body>

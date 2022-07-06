@@ -36,6 +36,7 @@ const OfficeController = {
     let found= await OfficeSchema.findById(req.params.id).populate("floor")
     res.json(found)
   }
+  
 };
 
 module.exports = OfficeController;

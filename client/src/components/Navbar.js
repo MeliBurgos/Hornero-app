@@ -6,40 +6,48 @@ import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
 import Container from "react-bootstrap/Container"
 import { AiOutlineUser } from "react-icons/ai";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { userLogout } from '../store/user';
 import { useNavigate } from 'react-router'
-import { getOffices } from "../store/offices";
 
 import Friends from './Friends'
 import Favorites from './Favorites';
+import { getUser, userLogout } from '../store/user';
+import { getOffices } from "../store/offices";
+import { setDarkMode } from '../store/darkMode';
+import { getFriends } from '../store/friends';
+import { getFavorites } from '../store/favorites';
 
 const NavigationBar = () => {
 
   const [checked, setChecked] = useState(false);
-  const [toggle, setToggle] = useState(1)
 
   const [showFriends, setShowFriends] = useState(false);
   const [showFavs, setShowFavs] = useState(false);
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const location = useLocation()
 
-  const user = JSON.parse(localStorage.getItem('user'))
-  let offices = useSelector((state) => state.offices)
+  const user = localStorage.getItem('user')
+  const offices = useSelector((state) => state.offices)
 
-   const handleClick = (officeName) => {
+  const handleClick = (officeName) => {
     officeName = officeName.replace(/\s+/g, '_').toLowerCase();
     navigate(`/office/${officeName}`)
   }
 
   useEffect(()=>{
-    dispatch(getOffices())
-    .then((res) => offices = res)
+    dispatch(getUser())
   },[])
+
+  useEffect(()=>{
+    if(user) {
+      dispatch(getOffices())
+      dispatch(getFriends())
+      dispatch(getFavorites())
+    }
+  },[user])
 
   const handleLogout = () => {
     dispatch(userLogout())
@@ -49,54 +57,50 @@ const NavigationBar = () => {
       })
   }
 
+  const darkMode = useSelector(state => state.darkMode)
+  const handleChangeTheme = () => {
+    dispatch(setDarkMode(!darkMode))
+    localStorage.setItem('darkMode',!darkMode)
+  }
+
   return (
     <>
-    {
-    (!user) ? "" :
-    <Navbar bg={toggle === 1 ? "light" : "dark"} expand="md">
+    {user &&
+    <Navbar expand="md">
       <Container>
         <Link to={checked ? "/" : "/profile"}>
           <ToggleButton
             id="toggle-check"
             type="checkbox"
-            variant="outline-secondary"
-            checked={checked}
+            variant={darkMode?"outline-light":"outline-secondary"}
+            checked={darkMode?false:checked}
             onClick={() => setChecked(!checked)}> <AiOutlineUser /> </ToggleButton>
         </Link>
 
-        <NavDropdown align="center" title="Oficinas" id="basic-nav-dropdown">
+        <NavDropdown align="center" title="Oficinas" id={darkMode?"dark-nav-dropdown":"nav-dropdown"}>
           <NavDropdown.Item onClick={() => setShowFavs(true)} >Oficinas Favoritas</NavDropdown.Item>
           <NavDropdown.Divider />
           {Object.values(offices).map((e, i) => (
           <NavDropdown.Item onClick={()=> handleClick(e.name)} key={i} >{e.name}</NavDropdown.Item>
-          )
-          )}
+          ))}
         </NavDropdown>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" id="dark-burger" />
         <Navbar.Collapse id="basic-navbar-nav" >
-          <Nav className="me-auto">
-            <Nav.Link href="#link">
-              <ToggleButtonGroup type="checkbox" value={toggle}>
+          <Nav className="me-auto" >
+            <Nav.Link href="" >
+              <ToggleButtonGroup type="checkbox">
                 <ToggleButton
                   id="tbg-btn-1"
-                  variant={toggle === 1 ? "secondary" : "light "}
-                  value={1}
-                  onClick={() => setToggle(1)} >
-                  <MdOutlineLightMode />
-                </ToggleButton>
-                <ToggleButton
-                  id="tbg-btn-3"
-                  variant={toggle === 1 ? "secondary" : "light "}
-                  value={2}
-                  onClick={() => setToggle(2)}>
-                  <MdOutlineDarkMode />
+                  variant={darkMode?"light":"secondary"}
+                  onClick={handleChangeTheme} >
+                  {darkMode ? <MdOutlineLightMode/> : <MdOutlineDarkMode/>}
                 </ToggleButton>
               </ToggleButtonGroup>
             </Nav.Link>
-            <Nav.Link href="/home">Home</Nav.Link>
-            <Nav.Link onClick={() => setShowFriends(true)}>Amigos</Nav.Link>
-            <Nav.Link onClick={handleLogout} href="/" >Log Out</Nav.Link>
-            <Nav.Link href="#link">Reportar un problema</Nav.Link>
+            <Nav.Link className={darkMode ? "dark-mode" : "light"} href="/home">Home</Nav.Link>
+            <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={() => setShowFriends(true)}>Amigos</Nav.Link>
+            <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={handleLogout} href="/" >Log Out</Nav.Link>
+            <Nav.Link className={darkMode ? "dark-mode" : "light"} href="#link">Reportar un problema</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

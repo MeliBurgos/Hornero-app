@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import useInput from "../hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "../store/user";
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 import { getOffices } from "../store/offices";
 
 const Register = () => {
@@ -16,16 +16,16 @@ const Register = () => {
   const surname = useInput();
   const email = useInput();
   const password = useInput();
-  const [position, setPosition] = useState('');
-  const [mainOffice, setMainOffice] = useState('');
+  const [position, setPosition] = useState("");
+  const [mainOffice, setMainOffice] = useState("");
 
-  const user = JSON.parse(localStorage.getItem('user'))
-  let offices = useSelector((state) => state.offices)
+  const user = JSON.parse(localStorage.getItem("user"));
+  let offices = useSelector((state) => state.offices);
 
-  useEffect(()=>{
-    if(user){
-      if(location.pathname === "/register"){
-        navigate("/home")
+  useEffect(() => {
+    if (user) {
+      if (location.pathname === "/register") {
+        navigate("/home");
       }
     }
   },[])
@@ -51,9 +51,8 @@ const Register = () => {
     "Project Design",
     "Marketing and Communication",
     "Human Resources",
-    "Financial Management"
-  ]
- 
+    "Financial Management",
+  ];
   return (
     <>
       <Card.Body>
@@ -61,63 +60,82 @@ const Register = () => {
       </Card.Body>
       <Form onSubmit={handleSubmit} align="center">
         <Form.Group className="mb-3" controlId="formBasicTextFirstName">
-
-          <Form.Label>Nombre</Form.Label>
-          <Form.Control {...name} type="text" placeholder="Ingrese su Nombre" />
+          <Form.Label>Nombre</Form.Label><br></br>
+          <input className="input-form"
+            {...name} 
+            type="text" 
+            placeholder="Ingrese su Nombre"
+            required
+            minLength="8"
+            maxLength="20"
+             />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextLastName">
-          <Form.Label>Apellido</Form.Label>
-          <Form.Control
+          <Form.Label>Apellido</Form.Label><br></br>
+          <input className="input-form"
             {...surname}
             type="text"
             placeholder="Ingrese su Apellido"
+            required
+            minLength="8"
+            maxLength="30"
           />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextRol">
-          <Form.Label>Rol</Form.Label>
-          <Form.Select onChange={(e)=>setPosition(e.target.value)} aria-label="Default select example">
+          <Form.Label>Rol</Form.Label><br></br>
+          <select className="select-form"
+            required
+            onChange={(e) => setPosition(e.target.value)}
+          >
             <option>Seleccione su rol</option>
             {roles.map((rol, i) => (
-              <option key={i} value={rol}>{rol}</option>
+              <option key={i} value={rol}>
+                {rol}
+              </option>
             ))}
-          </Form.Select>
+          </select>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextMainOffice">
-          <Form.Label>Oficina Principal</Form.Label>
-          <Form.Select onChange={(e)=>setMainOffice(e.target.value)} aria-label="Default select example">
+          <Form.Label>Oficina Principal</Form.Label><br></br>
+          <select className="select-form"
+            required
+            onChange={(e) => setMainOffice(e.target.value)}
+          >
             <option>Seleccione su oficina principal</option>
             {Object.values(offices).map((e, i) => (
               <option key={i}>{e.name}</option>
             ))}
-          </Form.Select>
+          </select>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Correo electrónico</Form.Label>
-          <Form.Control
+          <Form.Label>Correo electrónico</Form.Label><br></br>
+          <input className="input-form"
             {...email}
             type="email"
             placeholder="Ingrese su correo electrónico"
+            required
           />
-          <Form.Text className="text-muted">
+          <Form.Text className="text-muted"><br></br>
             Nunca compartiremos su correo electrónico con nadie más.
           </Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Contraseña</Form.Label>
-          <Form.Control
+          <Form.Label>Contraseña</Form.Label><br></br>
+          <input className="input-form"
             {...password}
             type="password"
             placeholder="Ingrese su contraseña"
+            required
           />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicLogin">
           <Form.Text className="text-muted">
-            ¿Ya eres usuario? <Link to="/">Iniciar Sesión</Link>
+            ¿Ya eres usuario? <Link to="/">&nbsp;Iniciar Sesión</Link>
           </Form.Text>
         </Form.Group>
 

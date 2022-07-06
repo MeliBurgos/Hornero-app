@@ -5,6 +5,7 @@ import OfficesReducer from './offices';
 import friendsReducer from './friends';
 import favoritesReducer from './favorites';
 import ReservationReducer from './reservations';
+import darkModeReducer from './darkMode';
 
 const store = configureStore({
     middleware: (getDefaultMiddleware) =>
@@ -16,7 +17,8 @@ const store = configureStore({
         offices: OfficesReducer,
         reservations: ReservationReducer,
         friends: friendsReducer,
-        favorites: favoritesReducer
+        favorites: favoritesReducer,
+        darkMode: darkModeReducer
     }
 });
 

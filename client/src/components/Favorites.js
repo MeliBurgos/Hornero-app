@@ -7,22 +7,11 @@ import { useEffect } from "react";
 
 import { getFavorites, removeFavorite } from "../store/favorites"
 
-// // Reemplazar este arreglo por un pedido al back
-// const favorites = [
-//   { id:1, office: "Mar Del Plata", desk: "F1D20" },
-//   { id:2, office: "Bahia Blanca", desk: "F1D3" },
-//   { id:3, office: "CABA - Puerto Madero", desk: "F4D10" },
-//   { id:4, office: "CABA - Puerto Madero", desk: "F4D24" },
-// ];
-
 const Favorites = ({ show, setShow }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const favorites = useSelector(state => state.favorites)
-
-  useEffect(()=>{
-    dispatch(getFavorites())
-  },[])
+  const darkMode = useSelector(state => state.darkMode)
 
   // click sobre el tacho (elimina un favorito)
   const handleDeleteFavorite = async (favorite) => {
@@ -44,11 +33,11 @@ const Favorites = ({ show, setShow }) => {
   return (
     <>
       <Modal show={show} onHide={()=>setShow(false)} centered>
-        <Modal.Header>
+        <Modal.Header className={darkMode? "dark-mode": "light"}>
           <Modal.Title style={{fontFamily:"heeboregular"}}>Oficinas Favoritas</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Table style={{fontFamily:"heeboregular",fontWeigth:700}}  responsive hover size="sm">
+        <Modal.Body className={darkMode? "dark-mode": "light"}>
+          <Table className={darkMode? "dark-mode": "light"} style={{fontFamily:"heeboregular",fontWeigth:700}}  responsive hover size="sm">
             <thead>
               <tr>
                 <th>#</th>
@@ -68,8 +57,8 @@ const Favorites = ({ show, setShow }) => {
             </tbody>
           </Table>
         </Modal.Body>
-        <Modal.Footer>
-          <button className="main-button-black" onClick={()=>setShow(false)}>
+        <Modal.Footer className={darkMode? "dark-mode": "light"}>
+          <button className={darkMode?"dark-mode-black-button":"main-button-black"} onClick={()=>setShow(false)}>
             Cerrar
           </button>
         </Modal.Footer>

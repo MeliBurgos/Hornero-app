@@ -41,6 +41,30 @@ const ReservationsController = {
     }).populate("office");
     res.json(found);
   },
+   //busca todas las reservas de una oficina entre dos fechas
+   getAllReservationsByDate: async (req, res) => {
+    const { startDate, endDate } = req.body;
+    let found = await ReservationsSchema.find({
+      office: req.params.id,
+      date: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    }).populate("office");
+    res.json(found);
+  },
+  //busca todas las reservas de un usuario entre dos fechas
+  getAllReservationsUserByDate: async (req, res) => {
+    const { startDate, endDate } = req.body;
+    let found = await ReservationsSchema.find({
+      user: req.params.id,
+      date: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    }).populate("user");
+    res.json(found);
+  },
 };
 
 module.exports = ReservationsController;
