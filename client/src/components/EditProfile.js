@@ -86,7 +86,7 @@ const EditProfile = () => {
         </Button>
       </Alert>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <Image style={{ width: "60%", height: 'auto' }} roundedCircle="true" thumbnail="true" src={user.imgUrl} />
+        <Image style={{ width: "60%", height: 'auto', maxWidth: "400px"  }} roundedCircle="true" thumbnail="true" src={user.imgUrl} />
         <Card.Body>
 
           <Card.Title>

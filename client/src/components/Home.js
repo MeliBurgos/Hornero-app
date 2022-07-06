@@ -20,10 +20,10 @@ const Home = () => {
   },[])
 
   return (
-    <div className="text-center mt-3" style={{ height: "75vh" }}>
+    <div className="text-center mt-3">
       <h5>Hola {user.name} !</h5>
       <h1>Bienvenido a Hornero</h1>
-      <h5 className="d-flex align-items-center justify-content-center">una app de  <Image src={darkMode? LogoWhite: Logo} alt='Globant' style={{ width: "30%" }} ></Image></h5>
+      <h5 className="d-flex align-items-center justify-content-center">una app de  <Image src={darkMode? LogoWhite: Logo} alt='Globant' style={{ width: "30%", maxWidth:"200px" }} ></Image></h5>
       <hr></hr>
       <div>
         <ListGroup  variant="flush"   >
