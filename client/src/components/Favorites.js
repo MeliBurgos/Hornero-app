@@ -2,20 +2,26 @@ import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import { BsFillTrashFill } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from "react";
 
-// Reemplazar este arreglo por un pedido al back
-const favorites = [
-  { id:1, office: "Mar Del Plata", desk: "F1D20" },
-  { id:2, office: "Bahia Blanca", desk: "F1D3" },
-  { id:3, office: "CABA - Puerto Madero", desk: "F4D10" },
-  { id:4, office: "CABA - Puerto Madero", desk: "F4D24" },
-];
+import { getFavorites, removeFavorite } from "../store/favorites"
 
 const Favorites = ({ show, setShow }) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const favorites = useSelector(state => state.favorites)
+  const darkMode = useSelector(state => state.darkMode)
 
   // click sobre el tacho (elimina un favorito)
-  const handleDeleteFavorite = (id) => {console.log(`eliminar el puesto con id ${id}`)}
+  const handleDeleteFavorite = async (favorite) => {
+    try {
+      await dispatch(removeFavorite(favorite))
+      dispatch(getFavorites())
+    } catch (err) {
+      console.log(err)
+    }
+  }
   
   // click sobre un favorito (redirige a esa vista) 
   const handleClick = (officeName) => {
@@ -27,11 +33,11 @@ const Favorites = ({ show, setShow }) => {
   return (
     <>
       <Modal show={show} onHide={()=>setShow(false)} centered>
-        <Modal.Header>
+        <Modal.Header className={darkMode? "dark-mode": "light"}>
           <Modal.Title style={{fontFamily:"heeboregular"}}>Oficinas Favoritas</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Table style={{fontFamily:"heeboregular",fontWeigth:700}}  responsive hover size="sm">
+        <Modal.Body className={darkMode? "dark-mode": "light"}>
+          <Table className={darkMode? "dark-mode": "light"} style={{fontFamily:"heeboregular",fontWeigth:700}}  responsive hover size="sm">
             <thead>
               <tr>
                 <th>#</th>
@@ -40,19 +46,19 @@ const Favorites = ({ show, setShow }) => {
               </tr>
             </thead>
             <tbody>
-              {favorites.map((favorite, i) => (
+              {favorites[0] && favorites.map((favorite, i) => (
                 <tr key={i}>
-                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.office)}>{i+1}</td>
-                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.office)}>{favorite.office}</td>
-                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.office)}>{favorite.desk}</td>
-                  <td> <BsFillTrashFill style={{cursor:"pointer"}} size={20} onClick={()=>handleDeleteFavorite(favorite.id)}/></td>
+                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.split(":")[0])}>{i+1}</td>
+                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.split(":")[0])}>{favorite.split(":")[0]}</td>
+                  <td style={{cursor:"pointer"}} onClick={()=>handleClick(favorite.split(":")[0])}>{favorite.split(":")[1]}</td>
+                  <td> <BsFillTrashFill style={{cursor:"pointer"}} size={20} onClick={()=>handleDeleteFavorite(favorite)}/></td>
                 </tr>
               ))}
             </tbody>
           </Table>
         </Modal.Body>
-        <Modal.Footer>
-          <button className="main-button-black" onClick={()=>setShow(false)}>
+        <Modal.Footer className={darkMode? "dark-mode": "light"}>
+          <button className={darkMode?"dark-mode-black-button":"main-button-black"} onClick={()=>setShow(false)}>
             Cerrar
           </button>
         </Modal.Footer>

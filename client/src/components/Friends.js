@@ -11,21 +11,18 @@ import SendMessage from "./SendMessage";
 
 const Friends = ({ show, setShow }) => {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.user)
-  const friends = useSelector((state) => state.friends)
+  const user = useSelector(state => state.user)
+  const friends = useSelector(state => state.friends)
+  const darkMode = useSelector(state => state.darkMode)
   const searchFriend = useInput()
   const [filteredFriends, setFilteredFriends] = useState([])
   const showedFriends = (searchFriend.value.length>=3) ? filteredFriends : friends
   const [addFriend,setAddFriend] = useState(false)
   const [sendMessage,setSendMessage] = useState({})
   
-  useEffect(() => {
-    if(user._id) dispatch(getFriends(user._id))
-  },[user._id])
-
   const handleDeleteFriend = (id) => {
-    dispatch(removeFriend({id:user._id,userIdToDelete:id}))
-    .then(() => dispatch(getFriends(user._id)))
+    dispatch(removeFriend(id))
+    .then(() => dispatch(getFriends()))
   }
 
   // buscar amigos
@@ -56,20 +53,22 @@ const Friends = ({ show, setShow }) => {
   return (
     <>
       <Modal show={show} onHide={()=>setShow(false)} centered>
-        <Modal.Header>
+        <Modal.Header className={darkMode? "dark-mode": "light"}>
           <Modal.Title style={{fontFamily:"heeboregular"}}>Amigos</Modal.Title>
           <button className="main-button" onClick={()=>{setAddFriend(true)}}><BsPlusCircle size={24}/>  Agregar </button>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className={darkMode? "dark-mode": "light"}>
           <form onSubmit={(e) => e.preventDefault()}>
             <input 
-              className="main-input" 
+              className={darkMode?"dark-mode-input":"main-input"}
               type="text" 
               {...searchFriend} 
               placeholder="Buscar amigo" 
             />
           </form>
-          <Table style={{fontFamily:"heeboregular",fontWeigth:700}}  responsive hover size="sm">
+          
+          <Table className={darkMode? "dark-mode": "light"} style={{fontFamily:"heeboregular",fontWeigth:700}} responsive size="sm">
+          {friends[0] ? <>
             <thead>
               <tr>
                 <th>#</th>
@@ -77,7 +76,7 @@ const Friends = ({ show, setShow }) => {
               </tr>
             </thead>
             <tbody>
-              {friends[0] ? showedFriends.map((friend, i) => (
+              {showedFriends.map((friend, i) => (
                 <tr key={i}>
                   <td>{i+1}</td>
                   <td>{`${friend.name} ${friend.surname}`}</td>
@@ -92,12 +91,13 @@ const Friends = ({ show, setShow }) => {
                     onClick={()=>handleDeleteFriend(friend._id)}
                   /></td>
                 </tr>
-              )) : null}
-            </tbody>
+              ))}
+            </tbody> 
+            </> : <tbody>No encontramos amigos. Agregalos y empieza a charlar!</tbody>}
           </Table>
         </Modal.Body>
-        <Modal.Footer>
-          <button className="main-button-black" onClick={()=>setShow(false)}>
+        <Modal.Footer className={darkMode? "dark-mode": "light"}>
+          <button className={darkMode?"dark-mode-black-button":"main-button-black"} onClick={()=>setShow(false)}>
             Cerrar
           </button>
         </Modal.Footer>

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DeskSetter from "../hooks/deskSetter";
 import Card from "react-bootstrap/Card";
@@ -9,18 +9,21 @@ import MapSelector from "../images/offices/MapSelector.js"
 import ReserveModal from "../commons/ReserveModal"
 
 const Office = () => {
-
   const { officeName } = useParams();
-
+  
   // regex para cambiar mar_del_plata ==> Mar Del Plata
   const officeNameOk = officeName.replace(/_/g, ' ').replace(/(?: |\b)(\w)/g, function (key) { return key.toUpperCase() });
-
   const [Show, setShow] = useState(false)
   const [Floor, setFloor] = useState(1)
-
+  
+  // chequea si hay alguien conectado sino te manda a login
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
+  },[])
 
   useEffect(() => {
-    DeskSetter(setShow)
+    DeskSetter(setShow,Floor)
   }, [Floor]);
 
   let officeFloors = 3 // reemplazar esto x Info traida de la db
@@ -28,7 +31,7 @@ const Office = () => {
 
   for (let i = 1; i <= officeFloors; i++) {
     items.push(
-      <option>
+      <option key={i}>
         {i}
       </option>);
   }
@@ -36,13 +39,13 @@ const Office = () => {
 
   return (
     <>
-      <ReserveModal show={Show} setShow={setShow} />
+      <ReserveModal show={Show} setShow={setShow} desk={`${officeNameOk}:${Show}`} />
       <div className="text-center mt-3 w-100">
         <Card.Title className="mb-3">{officeNameOk}</Card.Title>
 
         <div>
-          <span class="d-inline-block w-25" >Piso: </span>
-          <div class="d-inline-block w-25">
+          <span className="d-inline-block w-25" >Piso: </span>
+          <div className="d-inline-block w-25">
             <Form.Select size="sm" style={{ width: "auto" }} onChange={(e) => setFloor(e.target.value)}>
               {items}
             </Form.Select>
@@ -50,7 +53,7 @@ const Office = () => {
         </div>
 
         <Card.Body>
-          <div class="contsvg ratio ratio-4x3">
+          <div className="contsvg ratio ratio-4x3">
             <MapSelector Office={officeName} Floor={Floor} />
           </div>
         </Card.Body>

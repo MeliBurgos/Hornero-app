@@ -5,12 +5,15 @@
   font-style: normal;
 }
 
-.navLogo {
-  height: 60px;
+/* ESTILOS GENERALES */
+#nav-dropdown{
+  font-family: heeboregular;
+  font-size: large;
+  color: black;
 }
-
 .main-text {
   font-family: heeboregular;
+  color: black;
 }
 
 .main-button {
@@ -51,6 +54,24 @@
     border-width: 1px;
     border-radius: 1000px;
     padding: 5px 25px;
+    margin-bottom: 5px;
+}
+select.round {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    radial-gradient(#ddd 70%, transparent 72%);
+  background-position:
+    calc(100% - 20px) calc(15px),
+    calc(100% - 15px) calc(15px),
+    calc(100% - .5em) .3em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
 }
 
 .menu-button{
@@ -62,8 +83,12 @@
     padding: 5px;
 }
 
+/* ESTILOS PARA MAPAS */
 .fil0 {
   fill: #444444;
+}
+.fil0-dark {
+  fill: #888888
 }
 /*
 .fil1:hover {
@@ -93,7 +118,6 @@
   border-radius: 1000px !important;
   padding: 5% 10% !important;
   transition: 0.3s !important;
-
 }
 
 .input-form{
@@ -109,4 +133,55 @@
   border-radius: 10px;
   padding: 5px 5px;
   background-color: white;
+
+/* ESTILOS PARA DARK MODE */
+#dark-burger {
+  border-color: #888888 !important;
+  color: #888888 !important;
+}
+
+.dark-mode {
+  background-color: #444444 !important;
+  color: white !important;
+  border-color: #666666 !important;
+}
+
+.dark-mode-input {
+  width: 100%;
+  color:white;
+  border-color: #666666;
+  background-color: #999999;
+  border-width: 0px;
+  border-radius: 1000px;
+  padding: 5px 25px;
+  margin-bottom: 5px;
+}
+
+.dark-mode-textarea {
+  color:#333333;
+  border-color: #666666;
+  background-color: #aaaaaa;
+  border-radius: 6px;
+}
+
+.dark-mode-black-button {
+  font-family: heeboregular, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #bfd732;
+  background-color: #666666;
+  border: none;
+  border-radius: 1000px;
+  padding: 10px 25px;
+  transition: 0.3s;
+}
+
+.dark-mode-black-button:hover {
+  background-color: #777777;
+}
+
+#dark-nav-dropdown{
+  font-family: heeboregular;
+  font-size: large;
+  color: white;
 }

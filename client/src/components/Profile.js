@@ -4,8 +4,7 @@ import Image from 'react-bootstrap/Image'
 import { FaUserFriends, FaStar, FaPencilAlt } from "react-icons/fa"
 import {useNavigate} from "react-router-dom"
 import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../store/user";
+import { useSelector } from "react-redux";
 
 import Friends from './Friends'
 import Favorites from './Favorites';
@@ -13,15 +12,14 @@ import Favorites from './Favorites';
 const Profile = () => {
   const [showFriends, setShowFriends] = useState(false)
   const [showFavs, setShowFavs] = useState(false)
+  const darkMode = useSelector(state => state.darkMode)
 
-  let Navigate = useNavigate()
-  const dispatch = useDispatch();
-  let user = useSelector((state) => state.user)
+  const navigate = useNavigate()
+  const user = useSelector((state) => state.user)
   
   useEffect(() => {
-    dispatch(getUser())
-      .then((res) => user = res)
-  }, [])
+    if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
+  },[])
 
 
   return (
@@ -32,10 +30,10 @@ const Profile = () => {
         <Card.Title>{user.name} {user.surname}</Card.Title>
       </Card.Body>
       <ListGroup>
-        <ListGroup.Item>{user.email}</ListGroup.Item>
-        <ListGroup.Item>{user.mainOffice}</ListGroup.Item>
-        <ListGroup.Item>{user.position}</ListGroup.Item>
-      <ListGroup.Item>
+        <ListGroup.Item className={darkMode? "dark-mode": "light"}>{user.email}</ListGroup.Item>
+        <ListGroup.Item className={darkMode? "dark-mode": "light"}>{user.mainOffice}</ListGroup.Item>
+        <ListGroup.Item className={darkMode? "dark-mode": "light"}>{user.position}</ListGroup.Item>
+      <ListGroup.Item className={darkMode? "dark-mode": "light"}>
         <dt style={{ paddingTop:"5px" }}>
           <button style={{ maxWidth: "400px" }} onClick={()=>setShowFriends(true)} className="main-button"> <FaUserFriends /> Amigos </button>
         </dt>
@@ -43,7 +41,7 @@ const Profile = () => {
           <button style={{ maxWidth: "400px" }} onClick={()=>setShowFavs(true)} className="main-button"> <FaStar /> Favoritos </button>
         </dt>
         <dt style={{ paddingTop:"5px" }}>
-          <button style={{ maxWidth: "400px" }} className="main-button-black" onClick={()=>Navigate("/editprofile")}> <FaPencilAlt /> Editar </button>
+          <button style={{ maxWidth: "400px" }} className={darkMode?"dark-mode-black-button":"main-button-black"} onClick={()=>navigate("/editprofile")}> <FaPencilAlt /> Editar </button>
         </dt>
       </ListGroup.Item>
       </ListGroup>
