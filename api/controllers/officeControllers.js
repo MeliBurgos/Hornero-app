@@ -8,7 +8,7 @@ const OfficeController = {
   },
   //busca una oficina por id
   find: async (req, res) => {
-    let found = await OfficeSchema.findById(req.params.id);
+    let found = await OfficeSchema.findById(req.params.id)
     res.json(found);
   },
   //crea una oficina

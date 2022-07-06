@@ -1,12 +1,15 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { getOffices } from "../store/offices";
+import { getReservations } from "../store/reservations";
+import { useDispatch, useSelector } from 'react-redux'
+
 import DeskSetter from "../hooks/deskSetter";
 import MapSelector from "../images/offices/MapSelector.js"
 import Calendario from "../commons/Calendario";
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import { GoWatch } from "react-icons/go"
@@ -23,11 +26,16 @@ const Office = () => {
   const [Floor, setFloor] = useState(1)
   const [date, setDate] = useState("DD:MM:YYYY")
   const [hour, setHour] = useState("9:00")
+  const [selectedOffice, setSelectedOffice] = useState({})
+  const reservations = useSelector((state) => state.reservations)
+   const offices = useSelector((state) => state.offices)
+  const dispatch = useDispatch()
+  let items = []
 
   //Nombre de la oficina y regex
   const { officeName } = useParams();
-
   const officeNameOk = officeName.replace(/_/g, ' ').replace(/(?: |\b)(\w)/g, function (key) { return key.toUpperCase() });
+
 
   //Seteo fecha de hoy
   useEffect(() => {
@@ -36,6 +44,35 @@ const Office = () => {
     setDate(date[0])
     setHour(date[1].slice(0, -3))
   }, [])
+
+  //Trae reservas de la oficina seleccionada
+  /*   useEffect(() => {
+      dispatch(getOffices())
+        .then((res) => res.payload.forEach(oficina =>
+          oficina.name.toLowerCase() === officeNameOk.toLocaleLowerCase() ? setSelectedOffice(oficina) : ""))
+          .then(() => dispatch(getReservations(selectedOffice._id))
+          )
+    }, [officeName])
+   */
+
+  useEffect(() => {
+    if (offices.length){
+     setSelectedOffice(offices.find(element => element.name.toLowerCase() === officeNameOk.toLowerCase()))}
+    }, [offices])
+
+
+  //Cantidad de pisos por oficina
+  useEffect(() => {
+    if (selectedOffice.floors) {
+      for (let i = 0; i <= selectedOffice.floors.length; i++) {
+        items.push(
+          <Dropdown.Item key={i} eventKey={i + 1}>
+            {selectedOffice.floors[i]}
+          </Dropdown.Item>)
+      }
+    }
+  }, [selectedOffice])
+
 
   //Setea escritorios
   useEffect(() => {
@@ -46,18 +83,6 @@ const Office = () => {
   }, [Floor]);
 
 
-  //Cantidad de pisos por oficina
-  let officeFloors = 3 // reemplazar esto x Info traida de la db
-  let items = []
-
-  for (let i = 1; i <= officeFloors; i++) {
-    items.push(
-      <Dropdown.Item eventKey={i}>
-        {i}
-      </Dropdown.Item>
-    );
-  }
-
   //confirmacion de la reserva
   let reserveConfirmation = /*aysnc*/ () => {
     /*  try {
@@ -67,7 +92,6 @@ const Office = () => {
      }
     */
   }
-
 
   //Popovers date y time picker
   const popoverDate = (
@@ -94,9 +118,9 @@ const Office = () => {
       <div className="text-center mt-3 w-100">
         <Card.Title className="mb-3">{officeNameOk}</Card.Title>
 
-        <Dropdown onSelect={(n)=>setFloor(n)}>
+        <Dropdown onSelect={(n) => setFloor(n)}>
           <Dropdown.Toggle id="dropdown-basic">
-            Piso: {Floor}
+            Piso: {items[0] || Floor}
           </Dropdown.Toggle>
           <Dropdown.Menu>
             {items}

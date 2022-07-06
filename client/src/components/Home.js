@@ -1,21 +1,15 @@
 import Logo from "../images/Globant-Original.svg"
 import Image from "react-bootstrap/Image"
-import ListGroup from 'react-bootstrap/ListGroup';
 import { AiOutlineSearch, AiOutlineEdit } from "react-icons/ai"
 import { MdOutlineWorkOutline } from "react-icons/md"
 import { FaRegShareSquare } from "react-icons/fa"
-import { getUser } from "../store/user";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from 'react'
+import { useSelector } from "react-redux";
+
 
 const Home = () => {
-  const dispatch = useDispatch()
+
   let user = useSelector((state) => state.user)
 
-  useEffect(() => {
-    dispatch(getUser())
-      .then((res) => user = res)
-  }, [])
 
   return (
     <div className="text-center mt-3" style={{}}>
@@ -38,15 +32,6 @@ const Home = () => {
         <div style={{ width: "20%" }}> <MdOutlineWorkOutline /> </div>
         <hr class="w-100"></hr>
         <h5>Todo en la palma de tu mano</h5>
-
-
-        {/*  <ListGroup variant="flush"> 
-          <ListGroup.Item> <strong>Buscá</strong> <AiOutlineSearch className="mx-2" />  </ListGroup.Item>
-          <ListGroup.Item> <strong>Reservá</strong> <AiOutlineEdit className="mx-2" /> </ListGroup.Item>
-          <ListGroup.Item> <strong>Compartí</strong> <FaRegShareSquare className="mx-2" /> </ListGroup.Item>
-          <ListGroup.Item> <strong>Trabajá </strong> <MdOutlineWorkOutline className="mx-2" /> </ListGroup.Item>
-          <ListGroup.Item> <h5>Todo en la palma de tu mano</h5> </ListGroup.Item>
-        </ListGroup> */}
       </div>
     </div>
 

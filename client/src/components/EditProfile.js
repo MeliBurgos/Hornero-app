@@ -19,12 +19,6 @@ const EditProfile = () => {
   const dispatch = useDispatch()
   let user = useSelector((state) => state.user)
 
-  useEffect(() => {
-    dispatch(getUser())
-      .then((res) => user = res)
-  }, [])
-
-
   const [show, setShow] = useState(false)
 
   const name = useInput();

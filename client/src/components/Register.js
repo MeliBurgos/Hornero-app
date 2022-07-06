@@ -28,9 +28,6 @@ const Register = () => {
         navigate("/home")
       }
     }
-
-    dispatch(getOffices())
-    .then((res) => offices = res)
   },[])
 
   const handleSubmit = (e) => {

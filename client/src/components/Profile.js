@@ -18,12 +18,6 @@ const Profile = () => {
   const dispatch = useDispatch();
   let user = useSelector((state) => state.user)
 
-  useEffect(() => {
-    dispatch(getUser())
-      .then((res) => user = res)
-  }, [])
-
-
   return (
     <div className="text-center mt-3">
       <Image style={{ width: "60%", height: 'auto', maxWidth: "400px" }} roundedCircle="true" thumbnail="true" src={user.imgUrl} />
