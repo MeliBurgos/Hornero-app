@@ -95,3 +95,18 @@
   transition: 0.3s !important;
 
 }
+
+.input-form{
+  width: 90%;
+  border-color: #444444;
+  border-radius: 10px;
+  padding: 5px 5px;
+}
+
+.select-form{
+  width: 90%;
+  border-color: #444444;
+  border-radius: 10px;
+  padding: 5px 5px;
+  background-color: white;
+}
