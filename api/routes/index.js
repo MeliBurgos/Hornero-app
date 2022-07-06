@@ -14,6 +14,7 @@ router.use("/friends", friends);
 //rutas users
 const UserControllers= require("../controllers/userControllers")
 router.get("/users/:id/reservations", UserControllers.getAllReservations)
+// router.get("/users/:id/reservations/:date", UserControllers.getAllReservationsByDate)
 
 //rutas offices
 const OfficeControlls = require("../controllers/officeControllers");
@@ -22,7 +23,6 @@ router.post("/offices", OfficeControlls.create);
 router.get("/offices/:id", OfficeControlls.find);
 router.put("/offices/:id", OfficeControlls.update);
 router.delete("/offices/:id", OfficeControlls.delete);
-// router.get("/offices/:id/floors", OfficeControlls.getAllFloors)
 
 
 //rutas reservations
@@ -32,5 +32,10 @@ router.get("/reservations/:id", ReservationControlls.find);
 router.put("/reservations/:id", ReservationControlls.update);
 router.delete("/reservations/:id", ReservationControlls.delete);
 router.get("/reservations/office/:id", ReservationControlls.getAllReservationsByOffice)
+//filtra reservas por fecha de una office
+router.get("/reservations/date/:id", ReservationControlls.getAllReservationsByDate)
+//filtra reservas por fecha de un usuario
+router.get("/reservations/users/date/:id", ReservationControlls.getAllReservationsUserByDate)
+
 
 module.exports = router;

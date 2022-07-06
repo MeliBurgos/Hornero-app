@@ -31,11 +31,6 @@ const OfficeController = {
     res.json(deletedOffice);
   },
   
-  //busca todos los pisos de una oficina
-  getAllFloors: async (req, res) => {
-    let found= await OfficeSchema.findById(req.params.id).populate("floor")
-    res.json(found)
-  }
 };
 
 module.exports = OfficeController;
