@@ -20,10 +20,6 @@ const Friends = ({ show, setShow }) => {
   const [addFriend,setAddFriend] = useState(false)
   const [sendMessage,setSendMessage] = useState({})
   
-  useEffect(() => {
-    if(user._id) dispatch(getFriends())
-  },[user._id])
-
   const handleDeleteFriend = (id) => {
     dispatch(removeFriend(id))
     .then(() => dispatch(getFriends()))

@@ -16,6 +16,8 @@ import Favorites from './Favorites';
 import { getUser, userLogout } from '../store/user';
 import { getOffices } from "../store/offices";
 import { setDarkMode } from '../store/darkMode';
+import { getFriends } from '../store/friends';
+import { getFavorites } from '../store/favorites';
 
 const NavigationBar = () => {
 
@@ -27,7 +29,7 @@ const NavigationBar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const user = JSON.parse(localStorage.getItem('user'))
+  const user = localStorage.getItem('user')
   const offices = useSelector((state) => state.offices)
 
   const handleClick = (officeName) => {
@@ -37,8 +39,15 @@ const NavigationBar = () => {
 
   useEffect(()=>{
     dispatch(getUser())
-    dispatch(getOffices())
   },[])
+
+  useEffect(()=>{
+    if(user) {
+      dispatch(getOffices())
+      dispatch(getFriends())
+      dispatch(getFavorites())
+    }
+  },[user])
 
   const handleLogout = () => {
     dispatch(userLogout())

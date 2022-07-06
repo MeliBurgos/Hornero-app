@@ -13,10 +13,6 @@ const Favorites = ({ show, setShow }) => {
   const favorites = useSelector(state => state.favorites)
   const darkMode = useSelector(state => state.darkMode)
 
-  useEffect(()=>{
-    dispatch(getFavorites())
-  },[])
-
   // click sobre el tacho (elimina un favorito)
   const handleDeleteFavorite = async (favorite) => {
     try {
