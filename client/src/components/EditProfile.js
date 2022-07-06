@@ -54,7 +54,6 @@ const EditProfile = () => {
       dispatch(getUser())
     })
       .catch(err => console.log(err))
-
   };
 
   const mainOffice = [
@@ -68,6 +67,15 @@ const EditProfile = () => {
     "Tucumán",
     "Resistencia",
   ];
+
+   const roles = [
+    "Development and Coding",
+    "Project Management",
+    "Project Design",
+    "Marketing and Communication",
+    "Human Resources",
+    "Financial Management"
+  ]
 
   return (
     <div className="text-center mt-3">
@@ -116,10 +124,16 @@ const EditProfile = () => {
             </Form.Group>
           </ListGroup.Item>
           <ListGroup.Item className={darkMode?"dark-mode":"light"}>
-            <Form.Group className="mb-3">
-              <Form.Label>Rol</Form.Label>
-              <input className={darkMode?"dark-mode-input":"main-input"} type="text" placeholder={user.position} onChange={position.onChange} />
-            </Form.Group>
+
+<Form.Group className="mb-3" controlId="formBasicTextRol">
+          <Form.Label>Rol</Form.Label>
+          <Form.Select className={darkMode?"dark-mode-input":"main-input"} placeholder={user.position} onChange={position.onChange} aria-label="Default select example">
+            <option>Rol</option>
+            {roles.map((rol, i) => (
+              <option key={i} value={rol}>{rol}</option>
+            ))}
+          </Form.Select>
+        </Form.Group>
           </ListGroup.Item>
 
           <ListGroup.Item className={darkMode?"dark-mode":"light"}>

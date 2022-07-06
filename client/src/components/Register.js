@@ -28,9 +28,7 @@ const Register = () => {
         navigate("/home");
       }
     }
-
-    dispatch(getOffices()).then((res) => (offices = res));
-  }, []);
+  },[])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -112,7 +110,6 @@ const Register = () => {
             ))}
           </select>
         </Form.Group>
-        
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Correo electrónico</Form.Label><br></br>
           <input className="input-form"

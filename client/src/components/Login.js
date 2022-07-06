@@ -4,7 +4,7 @@ import Alert from "react-bootstrap/Alert";
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch} from 'react-redux'
 import { userLogin } from '../store/user';
 import { useEffect, useState } from 'react'
 
@@ -45,7 +45,8 @@ const Login = () => {
 
   return (
     <>
-      <Card.Body>
+        <div style={{ minHeight: "100vh" }}>
+      <Card.Body >
         <Card.Title align="center">Iniciar sesión</Card.Title>
       </Card.Body>
       <Alert variant="warning" show={showAlert} onClose={() => ( setShowAlert(false))} dismissible>
@@ -75,7 +76,7 @@ const Login = () => {
 
         <Form.Group className="mb-3" controlId="formBasicLogin">
           <Form.Text className="text-muted">
-            ¿No es un miembro?<Link to="/register">&nbsp;Crear una cuenta</Link>
+            ¿No es un miembro? <Link to="/register">Crear una cuenta</Link>
           </Form.Text>
         </Form.Group>
 
@@ -83,6 +84,7 @@ const Login = () => {
           Iniciar sesión
         </button>
       </Form>
+</div>
     </>
   );
 };

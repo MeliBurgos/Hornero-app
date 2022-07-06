@@ -1,7 +1,6 @@
 import Logo from "../images/Globant-Original.svg"
 import LogoWhite from "../images/Globant-White-Green.svg"
 import Image from "react-bootstrap/Image"
-import ListGroup from 'react-bootstrap/ListGroup';
 import { AiOutlineSearch, AiOutlineEdit } from "react-icons/ai"
 import { MdOutlineWorkOutline } from "react-icons/md"
 import { FaRegShareSquare } from "react-icons/fa"
@@ -25,14 +24,21 @@ const Home = () => {
       <h1>Bienvenido a Hornero</h1>
       <h5 className="d-flex align-items-center justify-content-center">una app de  <Image src={darkMode? LogoWhite: Logo} alt='Globant' style={{ width: "30%", maxWidth:"200px" }} ></Image></h5>
       <hr></hr>
-      <div>
-        <ListGroup  variant="flush"   >
-          <ListGroup.Item className={darkMode ? "dark-mode" : "light"} > <strong>Buscá</strong> <AiOutlineSearch className="mx-2" />  </ListGroup.Item>
-          <ListGroup.Item className={darkMode ? "dark-mode" : "light"} > <strong>Reservá</strong> <AiOutlineEdit className="mx-2" /> </ListGroup.Item>
-          <ListGroup.Item className={darkMode ? "dark-mode" : "light"} > <strong>Compartí</strong> <FaRegShareSquare className="mx-2" /> </ListGroup.Item>
-          <ListGroup.Item className={darkMode ? "dark-mode" : "light"} > <strong>Trabajá </strong> <MdOutlineWorkOutline className="mx-2" /> </ListGroup.Item>
-          <ListGroup.Item className={darkMode ? "dark-mode" : "light"} > <h5>Todo en la palma de tu mano</h5> </ListGroup.Item>
-        </ListGroup>
+      <div style={{ height: "50vh", width: "100vw", display: "flex", flexWrap: "wrap", justifyContent: "center", alignContent: 'center' }}>
+
+        <div style={{ width: "20%" }}> <strong>Buscá</strong> </div>
+        <div style={{ width: "20%" }}> <AiOutlineSearch /> </div>
+        <hr class="w-100"></hr>
+        <div style={{ width: "20%" }}> <strong>Reservá</strong> </div>
+        <div style={{ width: "20%" }}> <AiOutlineEdit /> </div>
+        <hr class="w-100"></hr>
+        <div style={{ width: "20%" }}> <strong>Compartí</strong> </div>
+        <div style={{ width: "20%" }}> <FaRegShareSquare /> </div>
+        <hr class="w-100"></hr>
+        <div style={{ width: "20%" }}> <strong>Trabajá</strong> </div>
+        <div style={{ width: "20%" }}> <MdOutlineWorkOutline /> </div>
+        <hr class="w-100"></hr>
+        <h5>Todo en la palma de tu mano</h5>
       </div>
     </div>
 
