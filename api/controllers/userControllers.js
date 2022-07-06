@@ -6,14 +6,14 @@ const UserControllers = {
     getAllReservations: async (req, res) => {
         let found= await ReservationsSchema.find({ user: req.params.id})
         res.json(found)
-    }
+    },
+    //traer las reservas de un usiario, en un cierto rango de fecha
+    /* getAllReservationsByDate: async (req, res) => {
+        let found = await ReservationsSchema.find({
+          date: { $gte: req.body.date, $lte: req.body.endDate },
+        });
+        res.json(found);
+    } */
 }
 
-/* router.get("/:id/reservations", async (req, res) => {
-    let found = await ReservationsSchema.find({ user: req.params.id }).populate(
-      "user"
-    );
-    res.json(found);
-  })
- */
   module.exports= UserControllers
