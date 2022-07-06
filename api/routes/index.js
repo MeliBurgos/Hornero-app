@@ -31,7 +31,9 @@ router.post("/reservations", ReservationControlls.create);
 router.get("/reservations/:id", ReservationControlls.find);
 router.put("/reservations/:id", ReservationControlls.update);
 router.delete("/reservations/:id", ReservationControlls.delete);
+
 router.get("/reservations/office/:id", ReservationControlls.getAllReservationsByOffice)
+
 //filtra reservas por fecha de una office
 router.get("/reservations/date/:id", ReservationControlls.getAllReservationsByDate)
 //filtra reservas por fecha de un usuario

@@ -4,8 +4,8 @@ const DeskSetter = (setShow,Floor) => {
     element.setAttribute(`id`, `F${Floor}D${i + 1}`)
     element.onclick = (e) => {
       const id = e.target.getAttribute("id");
-      if (document.querySelector(`#${id}`).classList.contains("selected")) {
-        document.querySelector(`#${id}`).classList.remove("selected")
+      if (document.querySelector(`#${id}`).classList.contains("reserved")) {
+        document.querySelector(`#${id}`).classList.remove("reserved")
       } else {
         document.querySelector(`#${id}`).classList.add("selected")
         setShow(id)

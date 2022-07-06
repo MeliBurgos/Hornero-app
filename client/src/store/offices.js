@@ -6,8 +6,9 @@ export const getOffices = createAsyncThunk("GET_OFFICES", () => {
         .then(res => res.data)
 })
 
+
 const OfficesReducer = createReducer({}, {
-    [getOffices.fulfilled]: (state, action) => action.payload
+    [getOffices.fulfilled]: (state, action) => action.payload,
 });
 
 export default OfficesReducer;

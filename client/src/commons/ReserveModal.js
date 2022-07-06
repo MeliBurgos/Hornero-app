@@ -67,7 +67,7 @@ const ReserveModal = ({ show, setShow, desk }) => {
   
  const dateFormater = () => {
     let newDate = new Date(reserve.start)
-     return newDate.toLocaleDateString('es-ES',{ weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' })
+     return newDate.toLocaleDateString('es-ES',{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     }
 
   return (
@@ -76,7 +76,7 @@ const ReserveModal = ({ show, setShow, desk }) => {
         <Alert.Heading>¡Atención!</Alert.Heading>
         <p>
           No se ha seleccionado <strong>ninguna</strong> fecha para la reserva.
-        </p>
+        </p> 
       </Alert>
 
       <Alert variant="warning" show={show2} onClose={() => setShow2(false)} dismissible>
