@@ -7,6 +7,7 @@ import { FaRegShareSquare } from "react-icons/fa"
 import { useSelector } from "react-redux";
 import { useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import Placeholder from 'react-bootstrap/Placeholder';
 
 const Home = () => {
   const user = useSelector((state) => state.user)
@@ -20,7 +21,11 @@ const Home = () => {
 
   return (
     <div className="text-center mt-3">
-      {user && <h5>Hola {user.name} !</h5>}
+      {user && <h5>Hola {user.name? user.name : 
+          <Placeholder as="p" animation="wave">
+            <Placeholder xs={4} />
+          </Placeholder>} !</h5>}
+
       <h1>Bienvenido a Hornero</h1>
       <h5 className="d-flex align-items-center justify-content-center">una app de  <Image src={darkMode? LogoWhite: Logo} alt='Globant' style={{ width: "30%", maxWidth:"200px" }} ></Image></h5>
       <hr></hr>
@@ -28,16 +33,16 @@ const Home = () => {
 
         <div style={{ width: "20%" }}> <strong>Buscá</strong> </div>
         <div style={{ width: "20%" }}> <AiOutlineSearch /> </div>
-        <hr class="w-100"></hr>
+        <hr className="w-100"></hr>
         <div style={{ width: "20%" }}> <strong>Reservá</strong> </div>
         <div style={{ width: "20%" }}> <AiOutlineEdit /> </div>
-        <hr class="w-100"></hr>
+        <hr className="w-100"></hr>
         <div style={{ width: "20%" }}> <strong>Compartí</strong> </div>
         <div style={{ width: "20%" }}> <FaRegShareSquare /> </div>
-        <hr class="w-100"></hr>
+        <hr className="w-100"></hr>
         <div style={{ width: "20%" }}> <strong>Trabajá</strong> </div>
         <div style={{ width: "20%" }}> <MdOutlineWorkOutline /> </div>
-        <hr class="w-100"></hr>
+        <hr className="w-100"></hr>
         <h5>Todo en la palma de tu mano</h5>
       </div>
     </div>

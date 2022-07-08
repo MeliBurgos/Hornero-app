@@ -19,6 +19,7 @@ const EditProfile = () => {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
   const darkMode = useSelector(state => state.darkMode)
+  const offices = useSelector(state => state.offices)
 
   const [show, setShow] = useState(false)
 
@@ -28,9 +29,9 @@ const EditProfile = () => {
   const office = useInput();
   const position = useInput();
 
-  useEffect(()=>{
-    if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
-  },[])
+  useEffect(() => {
+    if (!JSON.parse(localStorage.getItem('user'))) navigate('/')
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,19 +57,7 @@ const EditProfile = () => {
       .catch(err => console.log(err))
   };
 
-  const mainOffice = [
-    "La Plata",
-    "Tandil",
-    "Mar del Plata",
-    "Bahía Blanca",
-    "Rosario",
-    "Córdoba",
-    "Mendoza",
-    "Tucumán",
-    "Resistencia",
-  ];
-
-   const roles = [
+  const roles = [
     "Development and Coding",
     "Project Management",
     "Project Design",
@@ -94,49 +83,49 @@ const EditProfile = () => {
         </Button>
       </Alert>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <Image style={{ width: "60%", height: 'auto', maxWidth: "400px"  }} roundedCircle="true" thumbnail="true" src={user.imgUrl} />
+        <Image style={{ width: "60%", height: 'auto', maxWidth: "400px" }} roundedCircle="true" thumbnail="true" src={user.imgUrl} />
         <Card.Body>
 
           <Card.Title>
             <Form.Group className="mb-3">
               <Form.Label>Nombre</Form.Label>
-              <input className={darkMode?"dark-mode-input":"main-input"} type="text" placeholder={user.name} onChange={name.onChange} />
+              <input className={darkMode ? "dark-mode-input" : "main-input"} type="text" placeholder={user.name} onChange={name.onChange} />
               <Form.Label>Apellido</Form.Label>
-              <input className={darkMode?"dark-mode-input":"main-input"} type="text" placeholder={user.surname} onChange={surname.onChange} />
+              <input className={darkMode ? "dark-mode-input" : "main-input"} type="text" placeholder={user.surname} onChange={surname.onChange} />
             </Form.Group>
           </Card.Title>
         </Card.Body>
         <ListGroup>
-          <ListGroup.Item className={darkMode?"dark-mode":"light"}>
+          <ListGroup.Item className={darkMode ? "dark-mode" : "light"}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email</Form.Label>
-              <input className={darkMode?"dark-mode-input":"main-input"} type="email" placeholder={user.email} onChange={email.onChange} />
+              <input className={darkMode ? "dark-mode-input" : "main-input"} type="email" placeholder={user.email} onChange={email.onChange} />
             </Form.Group>
           </ListGroup.Item>
-          <ListGroup.Item className={darkMode?"dark-mode":"light"}>
+          <ListGroup.Item className={darkMode ? "dark-mode" : "light"}>
             <Form.Group className="mb-3">
               <Form.Label>Oficina principal</Form.Label>
-              <select className={darkMode?"dark-mode-input round":"main-input round"} onChange={office.onChange}>
+              <select className={darkMode ? "dark-mode-input round" : "main-input round"} onChange={office.onChange}>
                 <option>Open this select menu</option>
-                {mainOffice.map((office, i) =>
-                  <option key={i} >{office}</option>)}
+                {offices[0] && offices.map((office, i) =>
+                  <option key={i} >{office.name}</option>)}
               </select>
             </Form.Group>
           </ListGroup.Item>
-          <ListGroup.Item className={darkMode?"dark-mode":"light"}>
+          <ListGroup.Item className={darkMode ? "dark-mode" : "light"}>
 
-<Form.Group className="mb-3" controlId="formBasicTextRol">
-          <Form.Label>Rol</Form.Label>
-          <Form.Select className={darkMode?"dark-mode-input":"main-input"} placeholder={user.position} onChange={position.onChange} aria-label="Default select example">
-            <option>Rol</option>
-            {roles.map((rol, i) => (
-              <option key={i} value={rol}>{rol}</option>
-            ))}
-          </Form.Select>
-        </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicTextRol">
+              <Form.Label>Rol</Form.Label>
+              <select className={darkMode ? "dark-mode-input round" : "main-input round"} placeholder={user.position} onChange={position.onChange} aria-label="Default select example">
+                <option>Rol</option>
+                {roles.map((rol, i) => (
+                  <option key={i} value={rol}>{rol}</option>
+                ))}
+              </select>
+            </Form.Group>
           </ListGroup.Item>
 
-          <ListGroup.Item className={darkMode?"dark-mode":"light"}>
+          <ListGroup.Item className={darkMode ? "dark-mode" : "light"}>
             <button className="main-button" type='submit' > <AiOutlineSend /> Enviar </button>
           </ListGroup.Item>
         </ListGroup>
