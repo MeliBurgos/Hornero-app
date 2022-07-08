@@ -17,7 +17,7 @@ export const removeFavorite = createAsyncThunk("REMOVE_FAVORITE", (desk) => {
     return axios.delete(`/api/favorites/${userId}/remove/${desk}`)
 })
 
-const favoritesReducer = createReducer({}, {
+const favoritesReducer = createReducer([], {
     [getFavorites.fulfilled]: (state, action) => action.payload,
 });
 

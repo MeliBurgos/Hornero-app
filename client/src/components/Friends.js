@@ -92,7 +92,7 @@ const Friends = ({ show, setShow }) => {
                 </tr>
               ))}
             </tbody> 
-            </> : <tbody>No encontramos amigos. Agregalos y empieza a charlar!</tbody>}
+            </> : <tbody><td>No encontramos amigos. Agregalos y empieza a charlar!</td></tbody>}
           </Table>
         </Modal.Body>
         <Modal.Footer className={darkMode? "dark-mode": "light"}>
