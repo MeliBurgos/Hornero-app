@@ -7,9 +7,8 @@ import { getReservations, newReservation } from "../store/reservations";
 import Table from "react-bootstrap/Table";
 import DeskSetter from "../hooks/deskSetter";
 import Calendario from "../commons/Calendario";
-import MapSelector from "../images/offices/MapSelector.js"
-import Modal from 'react-bootstrap/Modal'
-import Dropdown from 'react-bootstrap/Dropdown';
+import MapSelector from "../images/offices/MapSelector.js";
+import Modal from 'react-bootstrap/Modal';
 import Card from "react-bootstrap/Card";
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
@@ -32,7 +31,6 @@ const Office = () => {
   const [date, setDate] = useState("DD:MM:YYYY")
   const [addedToFavorites, setAddedToFavorites] = useState(false)
   const [selectedOffice, setSelectedOffice] = useState({ floors: [] })
- 
 
   const user = useSelector((state) => state.user)
   const offices = useSelector((state) => state.offices)
@@ -58,7 +56,8 @@ const Office = () => {
   //Seteo fecha de hoy
   useEffect(() => {
     let newDate = new Date()
-    let date = newDate.toLocaleString('en-GB').split(",")
+    let date = newDate.toLocaleString('en-GB').split(", ")
+    console.log(date)
     setDate(date[0].replace(/\//g, '-'))
     setHour(date[1].slice(0, -3))
   }, [])
@@ -183,7 +182,7 @@ const Office = () => {
         </OverlayTrigger>
 
         <OverlayTrigger rootClose={false} trigger="click" placement="bottom-end" overlay={popoverHour}>
-          <button style={{ maxWidth: "45%", margin: "2%" }} className="main-button">Hora: <GoWatch /> {hour}</button>
+          <button style={{ maxWidth: "45%", margin: "2%" }} className="main-button">Hora: <GoWatch />{hour}</button>
         </OverlayTrigger>
 
         <Card.Body>

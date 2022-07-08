@@ -21,7 +21,7 @@ const store = configureStore({
         friends: friendsReducer,
         favorites: favoritesReducer,
         darkMode: darkModeReducer,
-        selectedFloor: selectedFloorReducer
+        selectedFloor: selectedFloorReducer,
         userReservations: UserReservationReducer
     }
 });
