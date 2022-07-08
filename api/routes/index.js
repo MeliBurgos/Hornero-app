@@ -4,8 +4,6 @@ const user = require("./users");
 const favorites = require("./favorites");
 const friends = require("./friends");
 
-// const desk= require("./desk")
-// const offices = require("./offices")
 
 router.use("/users", user);
 router.use("/favorites", favorites);
@@ -15,6 +13,7 @@ router.use("/friends", friends);
 const UserControllers= require("../controllers/userControllers")
 router.get("/users/:id/reservations", UserControllers.getAllReservations)
 
+
 //rutas offices
 const OfficeControlls = require("../controllers/officeControllers");
 router.get("/offices", OfficeControlls.all);
@@ -22,7 +21,6 @@ router.post("/offices", OfficeControlls.create);
 router.get("/offices/:id", OfficeControlls.find);
 router.put("/offices/:id", OfficeControlls.update);
 router.delete("/offices/:id", OfficeControlls.delete);
-// router.get("/offices/:id/floors", OfficeControlls.getAllFloors)
 
 
 //rutas reservations
@@ -31,11 +29,17 @@ router.post("/reservations", ReservationControlls.create);
 router.get("/reservations/:id", ReservationControlls.find);
 router.put("/reservations/:id", ReservationControlls.update);
 router.delete("/reservations/:id", ReservationControlls.delete);
-router.get("/reservations/office/:id", ReservationControlls.getAllReservationsByOffice);
-//filtra reservas por fecha de una office
-router.get("/reservations/date/:id", ReservationControlls.getAllReservationsByDate)
-//filtra reservas por fecha de un usuario
-router.get("/reservations/users/date/:id", ReservationControlls.getAllReservationsUserByDate)
+
+//busca todas las reservas de una oficina por id
+router.get("/reservations/office/:id", ReservationControlls.getAllReservationsByOffice)
+
+//busca reservas pasadas de un user
+router.get("/reservations/users/:id/date", ReservationControlls.getPastReservationsByUser)
+
+//busca reservas futuras de un user
+router.get("/reservations/users/date/:id", ReservationControlls.getFutureReservationsByUser)
+
+
 
 router.get("/reservations/users/:id/date", ReservationControlls.getAllReservationsByUserAndDate)
 
