@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { getOffices } from "../store/offices";
 import { getReservations } from "../store/reservations";
 import { useDispatch, useSelector } from 'react-redux'
-
+import Table from "react-bootstrap/Table";
 import DeskSetter from "../hooks/deskSetter";
 import MapSelector from "../images/offices/MapSelector.js"
 import Calendario from "../commons/Calendario";
-
+import Modal from 'react-bootstrap/Modal'
 import Dropdown from 'react-bootstrap/Dropdown';
 import Card from "react-bootstrap/Card";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -18,6 +18,7 @@ import Alert from "react-bootstrap/Alert"
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 import { AiOutlineArrowRight, AiOutlineArrowLeft, AiOutlineCalendar } from "react-icons/ai"
+import { getUserReservations } from "../store/reservations"
 
 
 const Office = () => {
@@ -30,6 +31,11 @@ const Office = () => {
    const offices = useSelector((state) => state.offices)
   const dispatch = useDispatch()
   let items = []
+  //let userReservations = useSelector((state) => state.userReservations)
+ 
+  const [showw, setShoww] = useState(false);
+  const handleClose = () => setShoww(false);
+  const handleShow = () => setShoww(true);
 
   //Nombre de la oficina y regex
   const { officeName } = useParams();
@@ -39,8 +45,9 @@ const Office = () => {
   const navigate = useNavigate()
   useEffect(() => {
     if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
-  },[])
 
+    dispatch(getUserReservations()).then((res) => console.log("aca",res.payload));
+  },[])
   //Seteo fecha de hoy
   useEffect(() => {
     let newDate = new Date()
@@ -116,7 +123,6 @@ const Office = () => {
     </Popover>
   );
 
-
   return (
     <>
       <div className="text-center mt-3 w-100">
@@ -163,9 +169,32 @@ const Office = () => {
         <hr></hr>
 
 
-        <button style={{ maxWidth: "400px" }} onClick={() => console.log("Muestra las reservas futuras")} className="main-button"><AiOutlineArrowRight /> Reservas agendadas</button>
+        <button style={{ maxWidth: "400px" }} onClick={handleShow} className="main-button" >Mis reservas</button>
 
-        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={() => console.log("Muestra las reservas pasadas")} className="main-button"><AiOutlineArrowLeft /> Reservas anteriores</button>
+        <Modal show={showw} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Mis Reservas</Modal.Title>
+        </Modal.Header>
+        <Table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Lugar</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+        </Table>
+        <Modal.Body>aca se muestran todas las reservas</Modal.Body>
+        <Modal.Footer>
+          <button className="main-button" onClick={handleClose}>
+            Cerrar
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+        {/*<button style={{ maxWidth: "400px", margin: "3%" }} onClick={() => console.log("Muestra las reservas pasadas")} className="main-button"><AiOutlineArrowLeft /> Reservas anteriores</button>*/}
       </div>
     </>
   );
