@@ -10,10 +10,10 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-// transporter.verify((err, success) => {
-//     if (err) console.error(err);
-//     else console.log('Mail config is correct');
-// });
+transporter.verify((err, success) => {
+    if (err) console.error(err);
+    else console.log('Mail config is correct');
+});
 
 const replyButton = `<a href="http://localhost:3000/profile" style="margin:20px; text-decoration:none; font-family: sans-serif; font-size:14px; font-weight:700; color:black; background-color:#bfd732; border:none; border-radius:1000px; padding:10px 25px"> Responder </a>`
 
