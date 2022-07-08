@@ -57,7 +57,6 @@ const Office = () => {
   useEffect(() => {
     let newDate = new Date()
     let date = newDate.toLocaleString('en-GB').split(", ")
-    console.log(date)
     setDate(date[0].replace(/\//g, '-'))
     setHour(date[1].slice(0, -3))
   }, [])
@@ -90,9 +89,10 @@ const Office = () => {
   }, [Floor, date, reservations]);
 
 
-  const handleFloorSelector = (n) => {
-    dispatch(selectedFloor(`${officeName}F${n}`))
+  const handleFloorSelector = (n, name) => {
+    dispatch(selectedFloor(`${name}F${n}`))
     setFloor(Number(n))
+    navigate(`/office/${name}`)
   }
 
   //Manejo de Favoritos
@@ -164,7 +164,7 @@ const Office = () => {
       <div className="text-center mt-3 w-100">
         <Card.Title className="mb-3">{officeNameOk}</Card.Title>
 
-        <Dropdown onSelect={(n) => handleFloorSelector(n)}>
+        <Dropdown onSelect={(n) => handleFloorSelector(n,officeName)}>
           <Dropdown.Toggle id="dropdown-basic">
             Piso: {items[0] || Floor}
           </Dropdown.Toggle>
@@ -241,9 +241,9 @@ const Office = () => {
             </thead>
             <tbody>
               {userReservations.map((reserva,i)=>{
-                return (<tr key={i} onClick={()=>{setDate(reserva.start.split('T')[0]);setShowReservas(false)}}>
+                return (<tr key={i} onClick={()=>{setDate(reserva.start.split('T')[0]);setShowReservas(false);handleFloorSelector(reserva.booking.split('D')[0].slice(1),reserva.office.name.replace(/\s+/g, '_').toLowerCase())}}>
                   <td>{`${reserva.start.split('T')[0]} ${reserva.start.split('T')[1]}hs`}</td>
-                  <td>{reserva.booking}</td>
+                  <td>{`${reserva.office.name} ${reserva.booking}`}</td>
                   </tr>)
               })}
             </tbody>
