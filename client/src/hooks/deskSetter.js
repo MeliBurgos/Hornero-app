@@ -2,7 +2,7 @@ const DeskSetter = (Floor, dayReserv, officeNameOk, favorites, setShow) => {
 
   document.querySelectorAll(".fil0").forEach((element, i) => {
       var rect = element.getBoundingClientRect();
-console.log(rect.top, rect.right, rect.bottom, rect.left)
+// console.log(rect.top, rect.right, rect.bottom, rect.left)
     element.setAttribute(`id`, `F${Floor}D${i + 1}`)
     element.onclick = (e) => {
       let id = e.target.getAttribute("id");
