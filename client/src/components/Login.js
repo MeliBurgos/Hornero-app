@@ -45,7 +45,6 @@ const Login = () => {
 
   return (
     <>
-        <div style={{ minHeight: "100vh" }}>
       <Card.Body >
         <Card.Title align="center">Iniciar sesión</Card.Title>
       </Card.Body>
@@ -84,7 +83,6 @@ const Login = () => {
           Iniciar sesión
         </button>
       </Form>
-</div>
     </>
   );
 };

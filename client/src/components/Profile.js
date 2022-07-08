@@ -41,7 +41,7 @@ const Profile = () => {
         <button style={{ maxWidth: "400px" }} onClick={() => setShowFavs(true)} className="main-button"> <FaStar /> Favoritos </button>
       </dt>
       <dt style={{ paddingTop: "5px" }}>
-        <button style={{ maxWidth: "400px" }} className={darkMode?"dark-mode-black-button":"main-button-black"} onClick={() => Navigate("/editprofile")}> <FaPencilAlt /> Editar </button>
+        <button style={{ maxWidth: "400px" }} className={darkMode?"dark-mode-black-button":"main-button-black"} onClick={() => navigate("/editprofile")}> <FaPencilAlt /> Editar </button>
       </dt>
 
       <Friends show={showFriends} setShow={setShowFriends} />

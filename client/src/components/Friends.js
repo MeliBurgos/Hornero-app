@@ -6,12 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useInput from "../hooks/useInput";
 import AddFriend from "./AddFriend";
-import { getFriends, removeFriend, sendMailToFriend } from "../store/friends";
+import { getFriends, removeFriend } from "../store/friends";
 import SendMessage from "./SendMessage";
 
 const Friends = ({ show, setShow }) => {
   const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
   const friends = useSelector(state => state.friends)
   const darkMode = useSelector(state => state.darkMode)
   const searchFriend = useInput()
