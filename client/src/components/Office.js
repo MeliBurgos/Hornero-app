@@ -4,11 +4,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { selectedFloor } from "../store/selectedFloor";
 import { addFavorite, getFavorites, removeFavorite } from "../store/favorites";
 import { getReservations, newReservation } from "../store/reservations";
-
+import Table from "react-bootstrap/Table";
 import DeskSetter from "../hooks/deskSetter";
 import Calendario from "../commons/Calendario";
 import MapSelector from "../images/offices/MapSelector.js"
-
+import Modal from 'react-bootstrap/Modal'
+import Dropdown from 'react-bootstrap/Dropdown';
 import Card from "react-bootstrap/Card";
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
@@ -20,6 +21,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import { BsPlusCircle, BsDashCircle } from "react-icons/bs";
 import { AiOutlineArrowRight, AiOutlineArrowLeft, AiOutlineCalendar } from "react-icons/ai"
+import { getUserReservationsFuturas, getUserReservationsAnteriores } from "../store/userReservations"
 
 const Office = () => {
   const reduxFloor = useSelector((state) => state.selectedFloor)
@@ -39,6 +41,9 @@ const Office = () => {
  
  const dispatch = useDispatch()
   let items = []
+  let userReservations = useSelector((state) => state.userReservations)
+ 
+  const [showReservas, setShowReservas] = useState(false);
 
   //Nombre de la oficina y regex
   const { officeName } = useParams();
@@ -47,10 +52,9 @@ const Office = () => {
   // chequea si hay alguien conectado sino te manda a login
   const navigate = useNavigate()
   useEffect(() => {
-    if (!JSON.parse(localStorage.getItem('user'))) navigate('/')
-  }, [])
-
-
+    if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
+  },[])
+  
   //Seteo fecha de hoy
   useEffect(() => {
     let newDate = new Date()
@@ -128,6 +132,14 @@ const Office = () => {
 
   }
 
+  const handleShowFuturas = () => {
+    dispatch(getUserReservationsFuturas())
+    .then(()=>setShowReservas('futuras'))
+  }
+  const handleShowPasadas = () => {
+    dispatch(getUserReservationsAnteriores())
+    .then(() => setShowReservas('anteriores'))
+  }
 
   //Popovers date y time picker
   const popoverDate = (
@@ -147,7 +159,6 @@ const Office = () => {
       </Popover.Body>
     </Popover>
   );
-
 
   return (
     <>
@@ -214,9 +225,38 @@ const Office = () => {
 
         <hr></hr>
 
-        <button style={{ maxWidth: "400px" }} onClick={() => console.log("Muestra las reservas futuras")} className="main-button"><AiOutlineArrowRight /> Reservas agendadas</button>
+        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowFuturas} className="main-button"><AiOutlineArrowRight /> Reservas futuras</button>
+        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowPasadas} className="main-button"><AiOutlineArrowLeft /> Reservas anteriores</button>
 
-        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={() => console.log("Muestra las reservas pasadas")} className="main-button"><AiOutlineArrowLeft /> Reservas anteriores</button>
+        <Modal show={showReservas} onHide={() => setShowReservas(false)} centered>
+        <Modal.Header>
+          <Modal.Title>{showReservas === 'anteriores' ? 'Reservas Pasadas' : 'Reservas Futuras'}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Lugar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {userReservations.map((reserva,i)=>{
+                return (<tr key={i} onClick={()=>{setDate(reserva.start.split('T')[0]);setShowReservas(false)}}>
+                  <td>{`${reserva.start.split('T')[0]} ${reserva.start.split('T')[1]}hs`}</td>
+                  <td>{reserva.booking}</td>
+                  </tr>)
+              })}
+            </tbody>
+        </Table>
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="main-button" onClick={() => setShowReservas(false)}>
+            Cerrar
+          </button>
+        </Modal.Footer>
+      </Modal>
+
       </div>
     </>
   );

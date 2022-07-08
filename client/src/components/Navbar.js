@@ -48,11 +48,11 @@ const NavigationBar = () => {
 
   useEffect(() => {
     dispatch(getUser())
-  }, [])
+    dispatch(getOffices())
+  },[])
 
-  useEffect(() => {
-    if (user) {
-      dispatch(getOffices())
+  useEffect(()=>{
+    if(user) {
       dispatch(getFriends())
       dispatch(getFavorites())
     }

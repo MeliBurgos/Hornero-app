@@ -52,7 +52,6 @@ const Profile = () => {
             <Placeholder xs={4} />
           </Placeholder>}
         </ListGroup.Item>
-
       </ListGroup>
 
       <dt style={{ paddingTop: "5px", marginTop: "2vh" }}>

@@ -30,18 +30,17 @@ const Home = () => {
       <h5 className="d-flex align-items-center justify-content-center">una app de  <Image src={darkMode? LogoWhite: Logo} alt='Globant' style={{ width: "30%", maxWidth:"200px" }} ></Image></h5>
       <hr></hr>
       <div style={{ height: "50vh", width: "100vw", display: "flex", flexWrap: "wrap", justifyContent: "center", alignContent: 'center' }}>
-
-        <div style={{ width: "20%" }}> <strong>Buscá</strong> </div>
-        <div style={{ width: "20%" }}> <AiOutlineSearch /> </div>
+        <div style={{ width: "75px" }}> <strong>Buscá</strong> </div>
+        <div style={{ width: "75px" }}> <AiOutlineSearch /> </div>
         <hr className="w-100"></hr>
-        <div style={{ width: "20%" }}> <strong>Reservá</strong> </div>
-        <div style={{ width: "20%" }}> <AiOutlineEdit /> </div>
+        <div style={{ width: "75px" }}> <strong>Reservá</strong> </div>
+        <div style={{ width: "75px" }}> <AiOutlineEdit /> </div>
         <hr className="w-100"></hr>
-        <div style={{ width: "20%" }}> <strong>Compartí</strong> </div>
-        <div style={{ width: "20%" }}> <FaRegShareSquare /> </div>
+        <div style={{ width: "75px" }}> <strong>Compartí</strong> </div>
+        <div style={{ width: "75px" }}> <FaRegShareSquare /> </div>
         <hr className="w-100"></hr>
-        <div style={{ width: "20%" }}> <strong>Trabajá</strong> </div>
-        <div style={{ width: "20%" }}> <MdOutlineWorkOutline /> </div>
+        <div style={{ width: "75px" }}> <strong>Trabajá</strong> </div>
+        <div style={{ width: "75px" }}> <MdOutlineWorkOutline /> </div>
         <hr className="w-100"></hr>
         <h5>Todo en la palma de tu mano</h5>
       </div>
