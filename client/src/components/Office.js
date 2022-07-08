@@ -18,7 +18,7 @@ import Alert from "react-bootstrap/Alert"
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 import { AiOutlineArrowRight, AiOutlineArrowLeft, AiOutlineCalendar } from "react-icons/ai"
-import { getUserReservations } from "../store/reservations"
+import { getUserReservationsFuturas, getUserReservationsAnteriores } from "../store/reservations"
 
 
 const Office = () => {
@@ -33,9 +33,13 @@ const Office = () => {
   let items = []
   //let userReservations = useSelector((state) => state.userReservations)
  
-  const [showw, setShoww] = useState(false);
-  const handleClose = () => setShoww(false);
-  const handleShow = () => setShoww(true);
+  const [showReservasFuturas, setShowReservasFuturas] = useState(false);
+  const handleCloseF = () => setShowReservasFuturas(false);
+  const handleShowF= () => setShowReservasFuturas(true);
+
+  const [showReservasAnteriores, setShowReservasAnteriores] = useState(false);
+  const handleCloseP = () => setShowReservasAnteriores(false);
+  const handleShowP = () => setShowReservasAnteriores(true);
 
   //Nombre de la oficina y regex
   const { officeName } = useParams();
@@ -46,7 +50,8 @@ const Office = () => {
   useEffect(() => {
     if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
 
-    dispatch(getUserReservations()).then((res) => console.log("aca",res.payload));
+    dispatch(getUserReservationsFuturas()).then((res) => console.log("Futuras",res));
+    dispatch(getUserReservationsAnteriores()).then((res) => console.log("Pasadas",res));
   },[])
   //Seteo fecha de hoy
   useEffect(() => {
@@ -168,10 +173,9 @@ const Office = () => {
 
         <hr></hr>
 
+        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowF} className="main-button"><AiOutlineArrowRight /> Reservas futuras</button>
 
-        <button style={{ maxWidth: "400px" }} onClick={handleShow} className="main-button" >Mis reservas</button>
-
-        <Modal show={showw} onHide={handleClose}>
+        <Modal show={showReservasFuturas} onHide={handleCloseF}>
         <Modal.Header closeButton>
           <Modal.Title>Mis Reservas</Modal.Title>
         </Modal.Header>
@@ -188,13 +192,37 @@ const Office = () => {
         </Table>
         <Modal.Body>aca se muestran todas las reservas</Modal.Body>
         <Modal.Footer>
-          <button className="main-button" onClick={handleClose}>
+          <button className="main-button" onClick={handleCloseF}>
             Cerrar
           </button>
         </Modal.Footer>
       </Modal>
 
-        {/*<button style={{ maxWidth: "400px", margin: "3%" }} onClick={() => console.log("Muestra las reservas pasadas")} className="main-button"><AiOutlineArrowLeft /> Reservas anteriores</button>*/}
+        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowP} className="main-button"><AiOutlineArrowLeft /> Reservas anteriores</button>
+
+        <Modal show={showReservasAnteriores} onHide={handleCloseP}>
+        <Modal.Header closeButton>
+          <Modal.Title>Historial</Modal.Title>
+        </Modal.Header>
+        <Table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Lugar</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+        </Table>
+        <Modal.Body>aca se muestran todas las reservas</Modal.Body>
+        <Modal.Footer>
+          <button className="main-button" onClick={handleCloseP}>
+            Cerrar
+          </button>
+        </Modal.Footer>
+      </Modal>
+
       </div>
     </>
   );
