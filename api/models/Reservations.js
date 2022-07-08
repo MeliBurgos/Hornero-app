@@ -1,11 +1,15 @@
 const { Schema, model } = require("mongoose");
 
-//CONECTAR CON OFFICES, USERS, MEETINGROOMS, DESKS
 
 const ReservationsSchema = new Schema({
   start: {
     type: String,
     required: true,
+  },
+  //campo parseado a date
+  startDate: {
+    type: Date,
+    default: null
   },
   end: {
     type: String,
@@ -30,7 +34,15 @@ const ReservationsSchema = new Schema({
     ref: "Office",
     default: null,
   },
-}, { timestamps: true });
+}, 
+);
+
+//parseo a date para filtrar por fecha
+ReservationsSchema.pre("save", function() {
+  const date = this.start.slice(0, 10).split("-").reverse().join("-")+"T"+this.start.slice(11)
+  return this.startDate = date
+});
+
 
 
 

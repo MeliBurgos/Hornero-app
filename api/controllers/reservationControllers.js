@@ -41,31 +41,27 @@ const ReservationsController = {
     res.json(found);
   },
 
-   //busca todas las reservas de una oficina entre dos fechas
-   getAllReservationsByDate: async (req, res) => {
+  //filtrar reservas pasadas
+  getPastReservationsByUser: async (req, res) => {
+    let found = await ReservationsSchema.find({
+      user: req.params.id ,
+      startDate: { $lte: (new Date()) },
+    });
+    res.json(found);
+  },
 
-    const { startDate, endDate } = req.body;
+  //filtrar reservas futuras
+  getFutureReservationsByUser: async (req, res) =>{
     let found = await ReservationsSchema.find({
-      office: req.params.id,
-      date: {
-        $gte: startDate,
-        $lte: endDate,
-      },
-    }).populate("office");
+      user: req.params.id ,
+      startDate: { $gte: (new Date()) },
+    });
     res.json(found);
-  },
-  //busca todas las reservas de un usuario entre dos fechas
-  getAllReservationsUserByDate: async (req, res) => {
-    const { startDate, endDate } = req.body;
-    let found = await ReservationsSchema.find({
-      user: req.params.id,
-      date: {
-        $gte: startDate,
-        $lte: endDate,
-      },
-    }).populate("user");
-    res.json(found);
-  },
+  },  
 };
+
+
+
+
 
 module.exports = ReservationsController;
