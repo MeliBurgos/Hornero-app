@@ -41,4 +41,6 @@ router.get("/reservations/users/date/:id", ReservationControlls.getFutureReserva
 
 
 
+router.get("/reservations/users/:id/date", ReservationControlls.getAllReservationsByUserAndDate)
+
 module.exports = router;
