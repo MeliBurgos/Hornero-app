@@ -28,7 +28,8 @@ const Register = () => {
         navigate("/home");
       }
     }
-  },[])
+    dispatch(getOffices()).then((res) => (offices = res));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,32 +61,38 @@ const Register = () => {
       </Card.Body>
       <Form onSubmit={handleSubmit} align="center">
         <Form.Group className="mb-3" controlId="formBasicTextFirstName">
-          <Form.Label>Nombre</Form.Label><br></br>
-          <input className="input-form"
-            {...name} 
-            type="text" 
+          <Form.Label>Nombre</Form.Label>
+          <br></br>
+          <input
+            className="input-form"
+            {...name}
+            type="text"
             placeholder="Ingrese su Nombre"
             required
-            minLength="8"
+            minLength="4"
             maxLength="20"
-             />
+          />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextLastName">
-          <Form.Label>Apellido</Form.Label><br></br>
-          <input className="input-form"
+          <Form.Label>Apellido</Form.Label>
+          <br></br>
+          <input
+            className="input-form"
             {...surname}
             type="text"
             placeholder="Ingrese su Apellido"
             required
-            minLength="8"
+            minLength="4"
             maxLength="30"
           />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextRol">
-          <Form.Label>Rol</Form.Label><br></br>
-          <select className="select-form"
+          <Form.Label>Rol</Form.Label>
+          <br></br>
+          <select
+            className="select-form"
             required
             onChange={(e) => setPosition(e.target.value)}
           >
@@ -99,8 +106,10 @@ const Register = () => {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTextMainOffice">
-          <Form.Label>Oficina Principal</Form.Label><br></br>
-          <select className="select-form"
+          <Form.Label>Oficina Principal</Form.Label>
+          <br></br>
+          <select
+            className="select-form"
             required
             onChange={(e) => setMainOffice(e.target.value)}
           >
@@ -111,21 +120,26 @@ const Register = () => {
           </select>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Correo electrónico</Form.Label><br></br>
-          <input className="input-form"
+          <Form.Label>Correo electrónico</Form.Label>
+          <br></br>
+          <input
+            className="input-form"
             {...email}
             type="email"
             placeholder="Ingrese su correo electrónico"
             required
           />
-          <Form.Text className="text-muted"><br></br>
+          <Form.Text className="text-muted">
+            <br></br>
             Nunca compartiremos su correo electrónico con nadie más.
           </Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Contraseña</Form.Label><br></br>
-          <input className="input-form"
+          <Form.Label>Contraseña</Form.Label>
+          <br></br>
+          <input
+            className="input-form"
             {...password}
             type="password"
             placeholder="Ingrese su contraseña"

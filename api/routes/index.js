@@ -37,4 +37,6 @@ router.get("/reservations/date/:id", ReservationControlls.getAllReservationsByDa
 //filtra reservas por fecha de un usuario
 router.get("/reservations/users/date/:id", ReservationControlls.getAllReservationsUserByDate)
 
+router.get("/reservations/users/:id/date", ReservationControlls.getAllReservationsByUserAndDate)
+
 module.exports = router;

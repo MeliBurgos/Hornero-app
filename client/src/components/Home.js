@@ -28,16 +28,16 @@ const Home = () => {
 
         <div style={{ width: "20%" }}> <strong>Buscá</strong> </div>
         <div style={{ width: "20%" }}> <AiOutlineSearch /> </div>
-        <hr class="w-100"></hr>
+        <hr className="w-100"></hr>
         <div style={{ width: "20%" }}> <strong>Reservá</strong> </div>
         <div style={{ width: "20%" }}> <AiOutlineEdit /> </div>
-        <hr class="w-100"></hr>
+        <hr className="w-100"></hr>
         <div style={{ width: "20%" }}> <strong>Compartí</strong> </div>
         <div style={{ width: "20%" }}> <FaRegShareSquare /> </div>
-        <hr class="w-100"></hr>
+        <hr className="w-100"></hr>
         <div style={{ width: "20%" }}> <strong>Trabajá</strong> </div>
         <div style={{ width: "20%" }}> <MdOutlineWorkOutline /> </div>
-        <hr class="w-100"></hr>
+        <hr className="w-100"></hr>
         <h5>Todo en la palma de tu mano</h5>
       </div>
     </div>

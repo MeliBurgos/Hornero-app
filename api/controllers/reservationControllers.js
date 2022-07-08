@@ -65,6 +65,21 @@ const ReservationsController = {
     }).populate("user");
     res.json(found);
   },
+  getAllReservationsByUserAndDate: async (req, res) => {
+    // console.log(req.params.id, "req.params.id");
+    // const actualDate = new Date();
+    // const comparador = "10"
+    // console.log(actualDate, "actualDate");
+    // actualDate.slice(0, 10);
+
+    let found = await ReservationsSchema.find({
+
+      user: req.params.id ,
+      // prueba: { $lte: 10 },
+      // startDate: { $lte: ("2022-07-07T20:56:58.010Z") },
+    });
+    res.json(found);
+  }
 };
 
 module.exports = ReservationsController;
