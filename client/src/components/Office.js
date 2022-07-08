@@ -57,7 +57,6 @@ const Office = () => {
   useEffect(() => {
     let newDate = new Date()
     let date = newDate.toLocaleString('en-GB').split(", ")
-    console.log(date)
     setDate(date[0].replace(/\//g, '-'))
     setHour(date[1].slice(0, -3))
   }, [])
