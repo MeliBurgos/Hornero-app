@@ -18,7 +18,7 @@ import Alert from "react-bootstrap/Alert"
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
 import { AiOutlineArrowRight, AiOutlineArrowLeft, AiOutlineCalendar } from "react-icons/ai"
-import { getUserReservationsFuturas, getUserReservationsAnteriores } from "../store/reservations"
+import { getUserReservationsFuturas, getUserReservationsAnteriores } from "../store/userReservations"
 
 
 const Office = () => {
@@ -31,15 +31,9 @@ const Office = () => {
    const offices = useSelector((state) => state.offices)
   const dispatch = useDispatch()
   let items = []
-  //let userReservations = useSelector((state) => state.userReservations)
+  let userReservations = useSelector((state) => state.userReservations)
  
-  const [showReservasFuturas, setShowReservasFuturas] = useState(false);
-  const handleCloseF = () => setShowReservasFuturas(false);
-  const handleShowF= () => setShowReservasFuturas(true);
-
-  const [showReservasAnteriores, setShowReservasAnteriores] = useState(false);
-  const handleCloseP = () => setShowReservasAnteriores(false);
-  const handleShowP = () => setShowReservasAnteriores(true);
+  const [showReservas, setShowReservas] = useState(false);
 
   //Nombre de la oficina y regex
   const { officeName } = useParams();
@@ -49,9 +43,6 @@ const Office = () => {
   const navigate = useNavigate()
   useEffect(() => {
     if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
-
-    dispatch(getUserReservationsFuturas()).then((res) => console.log("Futuras",res));
-    dispatch(getUserReservationsAnteriores()).then((res) => console.log("Pasadas",res));
   },[])
   //Seteo fecha de hoy
   useEffect(() => {
@@ -107,6 +98,15 @@ const Office = () => {
        console.log(error)
      }
     */
+  }
+
+  const handleShowFuturas = () => {
+    dispatch(getUserReservationsFuturas())
+    .then(()=>setShowReservas('futuras'))
+  }
+  const handleShowPasadas = () => {
+    dispatch(getUserReservationsAnteriores())
+    .then(() => setShowReservas('anteriores'))
   }
 
   //Popovers date y time picker
@@ -173,12 +173,14 @@ const Office = () => {
 
         <hr></hr>
 
-        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowF} className="main-button"><AiOutlineArrowRight /> Reservas futuras</button>
+        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowFuturas} className="main-button"><AiOutlineArrowRight /> Reservas futuras</button>
+        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowPasadas} className="main-button"><AiOutlineArrowLeft /> Reservas anteriores</button>
 
-        <Modal show={showReservasFuturas} onHide={handleCloseF}>
-        <Modal.Header closeButton>
-          <Modal.Title>Mis Reservas</Modal.Title>
+        <Modal show={showReservas} onHide={() => setShowReservas(false)} centered>
+        <Modal.Header>
+          <Modal.Title>{showReservas === 'anteriores' ? 'Reservas Pasadas' : 'Reservas Futuras'}</Modal.Title>
         </Modal.Header>
+        <Modal.Body>
         <Table>
             <thead>
               <tr>
@@ -187,41 +189,22 @@ const Office = () => {
               </tr>
             </thead>
             <tbody>
-              
+              {userReservations.map((reserva,i)=>{
+                return (<tr key={i} onClick={()=>{setDate(reserva.start.split('T')[0]);setShowReservas(false)}}>
+                  <td>{`${reserva.start.split('T')[0]} ${reserva.start.split('T')[1]}hs`}</td>
+                  <td>{reserva.booking}</td>
+                  </tr>)
+              })}
             </tbody>
         </Table>
-        <Modal.Body>aca se muestran todas las reservas</Modal.Body>
+        </Modal.Body>
         <Modal.Footer>
-          <button className="main-button" onClick={handleCloseF}>
+          <button className="main-button" onClick={() => setShowReservas(false)}>
             Cerrar
           </button>
         </Modal.Footer>
       </Modal>
 
-        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowP} className="main-button"><AiOutlineArrowLeft /> Reservas anteriores</button>
-
-        <Modal show={showReservasAnteriores} onHide={handleCloseP}>
-        <Modal.Header closeButton>
-          <Modal.Title>Historial</Modal.Title>
-        </Modal.Header>
-        <Table>
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Lugar</th>
-              </tr>
-            </thead>
-            <tbody>
-              
-            </tbody>
-        </Table>
-        <Modal.Body>aca se muestran todas las reservas</Modal.Body>
-        <Modal.Footer>
-          <button className="main-button" onClick={handleCloseP}>
-            Cerrar
-          </button>
-        </Modal.Footer>
-      </Modal>
 
       </div>
     </>

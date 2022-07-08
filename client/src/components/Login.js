@@ -45,7 +45,7 @@ const Login = () => {
 
   return (
     <>
-      <Card.Body >
+      <Card.Body style={{marginTop:'30px'}}>
         <Card.Title align="center">Iniciar sesión</Card.Title>
       </Card.Body>
       <Alert variant="warning" show={showAlert} onClose={() => ( setShowAlert(false))} dismissible>
@@ -54,7 +54,7 @@ const Login = () => {
           E-mail o contraseña incorrectos
         </p>
       </Alert>
-      <Form onSubmit={handleSubmit} align="center">
+      <Form style={{marginTop:'30px'}} onSubmit={handleSubmit} align="center">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Correo electrónico</Form.Label>
           <input className="input-form" 

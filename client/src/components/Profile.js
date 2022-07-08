@@ -20,7 +20,7 @@ const Profile = () => {
     if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
   },[])
 
-
+  if(!user) return <></>
   return (
     <div className="text-center mt-3">
       <Image style={{ width: "60%", height: 'auto', maxWidth: "400px" }} roundedCircle="true" thumbnail="true" src={user.imgUrl} />
