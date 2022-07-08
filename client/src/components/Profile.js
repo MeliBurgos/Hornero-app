@@ -29,9 +29,9 @@ const Profile = () => {
         <Card.Title>{user.name} {user.surname}</Card.Title>
       </Card.Body>
       <ListGroup>
-        <ListGroup.Item>{user.email}</ListGroup.Item>
-        <ListGroup.Item>{user.mainOffice}</ListGroup.Item>
-        <ListGroup.Item>{user.position}</ListGroup.Item>
+        <ListGroup.Item className={darkMode? "dark-mode": "light"}>{user.email}</ListGroup.Item>
+        <ListGroup.Item className={darkMode? "dark-mode": "light"}>{user.mainOffice}</ListGroup.Item>
+        <ListGroup.Item className={darkMode? "dark-mode": "light"}>{user.position}</ListGroup.Item>
       </ListGroup>
 
       <dt style={{ paddingTop: "5px", marginTop: "2vh" }}>

@@ -127,12 +127,12 @@ const EditProfile = () => {
 
 <Form.Group className="mb-3" controlId="formBasicTextRol">
           <Form.Label>Rol</Form.Label>
-          <Form.Select className={darkMode?"dark-mode-input":"main-input"} placeholder={user.position} onChange={position.onChange} aria-label="Default select example">
+          <select className={darkMode?"dark-mode-input round":"main-input round"} placeholder={user.position} onChange={position.onChange} aria-label="Default select example">
             <option>Rol</option>
             {roles.map((rol, i) => (
               <option key={i} value={rol}>{rol}</option>
             ))}
-          </Form.Select>
+          </select>
         </Form.Group>
           </ListGroup.Item>
 

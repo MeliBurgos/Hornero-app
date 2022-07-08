@@ -29,7 +29,7 @@ export const searchFriends = createAsyncThunk("SEARCH_FRIENDS", (searchInput) =>
 })
 
 
-const friendsReducer = createReducer({}, {
+const friendsReducer = createReducer([], {
     [getFriends.fulfilled]: (state, action) => action.payload,
 });
 
