@@ -43,7 +43,7 @@ const ReservationsController = {
     let found = await ReservationsSchema.find({
       user: req.params.id ,
       startDate: { $lte: (new Date()) },
-    });
+    }).populate('office');
     res.json(found);
   },
 
@@ -52,7 +52,7 @@ const ReservationsController = {
     let found = await ReservationsSchema.find({
       user: req.params.id ,
       startDate: { $gte: (new Date()) },
-    });
+    }).populate('office');
     res.json(found);
   },  
 };
