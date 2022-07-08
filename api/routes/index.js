@@ -39,8 +39,4 @@ router.get("/reservations/users/:id/date", ReservationControlls.getPastReservati
 //busca reservas futuras de un user
 router.get("/reservations/users/date/:id", ReservationControlls.getFutureReservationsByUser)
 
-
-
-router.get("/reservations/users/:id/date", ReservationControlls.getAllReservationsByUserAndDate)
-
 module.exports = router;
