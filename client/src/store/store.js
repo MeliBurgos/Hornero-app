@@ -6,6 +6,7 @@ import friendsReducer from './friends';
 import favoritesReducer from './favorites';
 import ReservationReducer from './reservations';
 import darkModeReducer from './darkMode';
+import selectedFloorReducer from './selectedFloor';
 import UserReservationReducer from './userReservations';
 
 const store = configureStore({
@@ -20,6 +21,7 @@ const store = configureStore({
         friends: friendsReducer,
         favorites: favoritesReducer,
         darkMode: darkModeReducer,
+        selectedFloor: selectedFloorReducer
         userReservations: UserReservationReducer
     }
 });

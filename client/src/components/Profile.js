@@ -5,6 +5,7 @@ import { FaUserFriends, FaStar, FaPencilAlt } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
 import { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
+import Placeholder from 'react-bootstrap/Placeholder';
 
 import Friends from './Friends'
 import Favorites from './Favorites';
@@ -14,24 +15,43 @@ const Profile = () => {
   const [showFavs, setShowFavs] = useState(false)
   const darkMode = useSelector(state => state.darkMode)
   const navigate = useNavigate()
-  const user = useSelector((state) => state.user)
-  
-  useEffect(() => {
-    if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
-  },[])
+  let user = useSelector((state) => state.user)
 
-  if(!user) return <></>
+  useEffect(() => {
+    if (!JSON.parse(localStorage.getItem('user'))) navigate('/')
+  }, [])
+
   return (
     <div className="text-center mt-3">
-      <Image style={{ width: "60%", height: 'auto', maxWidth: "400px" }} roundedCircle="true" thumbnail="true" src={user.imgUrl} />
+      <Image style={{ width: "60%", height: 'auto', maxWidth: "400px" }} roundedCircle="true" thumbnail="true" src={user.imgUrl ? user.imgUrl : "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"} />
 
       <Card.Body>
-        <Card.Title>{user.name} {user.surname}</Card.Title>
+        <Card.Title>{user.name ? `${user.name} ${user.surname}` :
+          <Placeholder as="p" animation="wave">
+            <Placeholder xs={8} />
+          </Placeholder>
+        }</Card.Title>
       </Card.Body>
       <ListGroup>
-        <ListGroup.Item className={darkMode? "dark-mode": "light"}>{user.email}</ListGroup.Item>
-        <ListGroup.Item className={darkMode? "dark-mode": "light"}>{user.mainOffice}</ListGroup.Item>
-        <ListGroup.Item className={darkMode? "dark-mode": "light"}>{user.position}</ListGroup.Item>
+        <ListGroup.Item>{user.email ? user.email :
+          <Placeholder as="p" animation="wave">
+            <Placeholder xs={4} />
+          </Placeholder>}
+        </ListGroup.Item>
+
+
+        <ListGroup.Item>{user.mainOffice ? user.mainOffice :
+          <Placeholder as="p" animation="wave">
+            <Placeholder xs={4} />
+          </Placeholder>}
+        </ListGroup.Item>
+
+
+        <ListGroup.Item>{user.position ? user.position :
+          <Placeholder as="p" animation="wave">
+            <Placeholder xs={4} />
+          </Placeholder>}
+        </ListGroup.Item>
       </ListGroup>
 
       <dt style={{ paddingTop: "5px", marginTop: "2vh" }}>
@@ -41,7 +61,7 @@ const Profile = () => {
         <button style={{ maxWidth: "400px" }} onClick={() => setShowFavs(true)} className="main-button"> <FaStar /> Favoritos </button>
       </dt>
       <dt style={{ paddingTop: "5px" }}>
-        <button style={{ maxWidth: "400px" }} className={darkMode?"dark-mode-black-button":"main-button-black"} onClick={() => navigate("/editprofile")}> <FaPencilAlt /> Editar </button>
+        <button style={{ maxWidth: "400px" }} className={darkMode ? "dark-mode-black-button" : "main-button-black"} onClick={() => navigate("/editprofile")}> <FaPencilAlt /> Editar </button>
       </dt>
 
       <Friends show={showFriends} setShow={setShowFriends} />
