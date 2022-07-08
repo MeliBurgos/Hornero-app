@@ -66,7 +66,7 @@ const Register = () => {
             type="text" 
             placeholder="Ingrese su Nombre"
             required
-            minLength="8"
+            minLength="3"
             maxLength="20"
              />
         </Form.Group>
@@ -78,7 +78,7 @@ const Register = () => {
             type="text"
             placeholder="Ingrese su Apellido"
             required
-            minLength="8"
+            minLength="3"
             maxLength="30"
           />
         </Form.Group>
@@ -130,6 +130,8 @@ const Register = () => {
             type="password"
             placeholder="Ingrese su contraseña"
             required
+            minLength="6"
+            maxLength="30"
           />
         </Form.Group>
 
