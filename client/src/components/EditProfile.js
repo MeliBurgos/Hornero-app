@@ -98,7 +98,7 @@ const EditProfile = () => {
           Volver al Home
         </Button>
       </Alert>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form id="editProfile" onSubmit={(e) => handleSubmit(e)}>
         <div style={{ width: "60%", aspectRatio: "1/1", maxWidth: "400px", margin: "0 auto"}}>
           <img className="profilePhoto" src={imgUrl ? imgUrl : user.imgUrl}></img>
         </div>
@@ -174,15 +174,16 @@ const EditProfile = () => {
               </select>
             </Form.Group>
           </ListGroup.Item>
-
-          <ListGroup.Item className={darkMode ? "dark-mode" : "light"}>
-            <button className="main-button" type="submit">
-              {" "}
-              <AiOutlineSend /> Enviar{" "}
-            </button>
-          </ListGroup.Item>
         </ListGroup>
       </form>
+      <div style={{marginTop:"10px",display:"flex",justifyContent:"space-evenly"}}>
+            <button className={darkMode? "dark-mode-black-button" : "main-button-black"} onClick={()=> navigate("/profile")}>
+              Cancelar
+            </button>
+            <button className="main-button" type="submit" form="editProfile">
+              Aceptar cambios
+            </button>
+          </div>
       <ImageModal showModal={showModal} setShowModal={setShowModal} setImgUrl={setImgUrl} />
     </div>
   );
