@@ -176,7 +176,7 @@ const Office = () => {
           setShow={setShow}
           officeNameOk={officeNameOk}
           handleCancelReserve={handleCancelReserve}
-          selectedOffice={selectedOffice}
+          officeId={selectedOffice._id}
           date={date}
           hour={hour}
         />
@@ -192,6 +192,7 @@ const Office = () => {
           showReservas={showReservas}
           setShowReservas={setShowReservas}
           setDate={setDate}
+          officeNameOk={officeNameOk}
           handleFloorSelector={handleFloorSelector}
           handleCancelReserve={handleCancelReserve}
         />

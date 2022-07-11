@@ -1,13 +1,14 @@
 import Webcam from "react-webcam"
 
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 import { AiFillCamera, AiOutlineUpload } from "react-icons/ai"
+import { useSelector } from "react-redux";
 
 const ImageModal = ({ showModal, setShowModal, setImgUrl }) => {
 
+  const darkMode = useSelector(state => state.darkMode)
   const [upload, setUpload] = useState('')
   const [image, setImage] = useState('')
 
@@ -40,13 +41,13 @@ const ImageModal = ({ showModal, setShowModal, setImgUrl }) => {
   return (
 
     <Modal show={showModal} /* onHide={handleClose} */ className="text-center">
-      <Modal.Header>
+      <Modal.Header className={darkMode? "dark-mode": "light"}>
         <Modal.Title>
           <button className="main-button m-2" onClick={() => setUpload("cam")}> <AiFillCamera /> Tomar foto </button>
           <button className="main-button" onClick={() => setUpload("file")}> <AiOutlineUpload /> Subir foto </button>
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className={darkMode? "dark-mode": "light"}>
 
 
         {upload === "cam" ?
@@ -83,10 +84,10 @@ const ImageModal = ({ showModal, setShowModal, setImgUrl }) => {
           : ""}
 
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => setShowModal(false)} >
+      <Modal.Footer className={darkMode? "dark-mode": "light"}>
+        <button className={darkMode? "dark-mode-black-button" : "main-button-black"} onClick={() => setShowModal(false)} >
           Close
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
 
