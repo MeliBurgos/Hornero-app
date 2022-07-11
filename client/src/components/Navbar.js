@@ -106,9 +106,9 @@ const NavigationBar = () => {
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </Nav.Link>
-                <Nav.Link className={darkMode ? "dark-mode" : "light"} href="/home">Home</Nav.Link>
+                <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={() => navigate("/home")}>Home</Nav.Link>
                 <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={() => setShowFriends(true)}>Amigos</Nav.Link>
-                <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={handleLogout} href="/" >Log Out</Nav.Link>
+                <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={handleLogout}>Log Out</Nav.Link>
                 <Nav.Link className={darkMode ? "dark-mode" : "light"} href="#link">Reportar un problema</Nav.Link>
               </Nav>
             </Navbar.Collapse>

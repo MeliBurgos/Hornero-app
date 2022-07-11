@@ -21,10 +21,10 @@ const Home = () => {
 
   return (
     <div className="text-center mt-3">
-      {user && <h5>Hola {user.name? user.name : 
+      <h5>Hola {user ? user.name : 
           <Placeholder as="p" animation="wave">
             <Placeholder xs={4} />
-          </Placeholder>} !</h5>}
+          </Placeholder>} !</h5>
 
       <h1>Bienvenido a Hornero</h1>
       <h5 className="d-flex align-items-center justify-content-center">una app de  <Image src={darkMode? LogoWhite: Logo} alt='Globant' style={{ width: "30%", maxWidth:"200px" }} ></Image></h5>
