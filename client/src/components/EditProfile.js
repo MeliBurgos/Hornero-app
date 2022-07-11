@@ -23,11 +23,6 @@ const EditProfile = () => {
   const darkMode = useSelector((state) => state.darkMode);
   const offices = useSelector((state) => state.offices);
 
-  const dispatch = useDispatch()
-  const user = useSelector((state) => state.user)
-  const darkMode = useSelector(state => state.darkMode)
-  const offices = useSelector(state => state.offices)
-
   const [show, setShow] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
@@ -188,15 +183,9 @@ const EditProfile = () => {
           </ListGroup.Item>
         </ListGroup>
       </form>
+      <ImageModal showModal={showModal} setShowModal={setShowModal} setImgUrl={setImgUrl} />
     </div>
   );
 };
-
-      <ImageModal showModal={showModal} setShowModal={setShowModal} setImgUrl={setImgUrl} />
-
-    </div >
-  )
-}
-
 
 export default EditProfile
