@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from "react-router-dom";
 import { selectedFloor } from "../store/selectedFloor";
 import { getReservations, cancelReservation } from "../store/reservations";
 import DeskSetter from "../hooks/deskSetter";
 import Calendario from "../commons/Calendario";
 import MapSelector from "../images/offices/MapSelector.js";
+import { useNavigate, useParams } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import TimePicker from 'rc-time-picker';
 import 'rc-time-picker/assets/index.css';
@@ -28,14 +28,15 @@ const Office = () => {
   const darkMode = useSelector((state) => state.darkMode)
   
   const [Show, setShow] = useState('')
-  const [Floor, setFloor] = useState(reduxFloor ? reduxFloor.split("F")[1].split("D")[0] : 2)
   const [hour, setHour] = useState("9:00")
   const [date, setDate] = useState("DD:MM:YYYY")
   const [selectedOffice, setSelectedOffice] = useState({ floors: [] })
+  const [Floor, setFloor] = useState(reduxFloor ? reduxFloor.split("F")[1].split("D")[0] : 2)
+  const [showReservas, setShowReservas] = useState(false);
   
   let items = []
  
-  const [showReservas, setShowReservas] = useState(false);
+  const businessHours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 18, 19, 20, 21, 22, 23]
 
   //Nombre de la oficina y regex
   const { officeName } = useParams();
@@ -68,6 +69,7 @@ const Office = () => {
     if (offices.length) {
       setSelectedOffice(offices.find(element => element.name.toLowerCase() === officeNameOk.toLowerCase()))
       setShow('')
+      window.scrollTo({ behavior: "smooth", top: 0, left: 0 })
     }
   }, [officeNameOk])
 
@@ -94,6 +96,7 @@ const Office = () => {
     try {
       await dispatch(cancelReservation(reserveId))
       await dispatch(getReservations(selectedOffice._id))
+      setShow('')
     } catch (error) {
       console.log(error)
     }
@@ -131,7 +134,7 @@ const Office = () => {
     <Popover id="popover-basic">
       <Popover.Header as="h3" >Seleccione Hora</Popover.Header>
       <Popover.Body >
-        <TimePicker showSecond={false} onChange={(value) => setHour(value.format("HH:mm"))} disabledHours={() => [0, 1, 2, 3, 4, 5, 6, 7, 8, 18, 19, 20, 21, 22, 23]} placeholder={"HH:MM"} minuteStep={15} allowEmpty={false} />
+        <TimePicker showSecond={false} onChange={(value) => setHour(value.format("HH:mm"))} disabledHours={() => businessHours} placeholder={"HH:MM"} minuteStep={15} allowEmpty={false} />
       </Popover.Body>
     </Popover>
   );
@@ -141,7 +144,7 @@ const Office = () => {
       <div className="text-center mt-3 w-100">
         <Card.Title className="mb-3">{officeNameOk}</Card.Title>
 
-        <Dropdown onSelect={(n) => handleFloorSelector(n,officeName)}>
+        <Dropdown onSelect={(n) => handleFloorSelector(n, officeName)}>
           <Dropdown.Toggle id="dropdown-basic">
             Piso: {items[0] || Floor}
           </Dropdown.Toggle>

@@ -1,14 +1,17 @@
-import { AiOutlineSend } from "react-icons/ai";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
-import Form from "react-bootstrap/Form";
-import Alert from "react-bootstrap/Alert";
+import { AiOutlineSend } from "react-icons/ai"
+import { MdAddAPhoto } from "react-icons/md"
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image'
+import Form from 'react-bootstrap/Form';
+import Alert from "react-bootstrap/Alert"
 import useInput from "../hooks/useInput";
 
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import ImageModal from "./ImageModal"
+
+import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, userUpdate } from "../store/user";
 
@@ -20,13 +23,20 @@ const EditProfile = () => {
   const darkMode = useSelector((state) => state.darkMode);
   const offices = useSelector((state) => state.offices);
 
-  const [show, setShow] = useState(false);
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state.user)
+  const darkMode = useSelector(state => state.darkMode)
+  const offices = useSelector(state => state.offices)
+
+  const [show, setShow] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   const name = useInput();
   const surname = useInput();
   const email = useInput();
   const office = useInput();
   const position = useInput();
+  const [imgUrl, setImgUrl] = useState('')
 
   useEffect(() => {
     if (!JSON.parse(localStorage.getItem("user"))) navigate("/");
@@ -35,29 +45,29 @@ const EditProfile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let nombre = name.value.length === 0 ? user.name : name.value;
-    let apellido = surname.value.length === 0 ? user.surname : surname.value;
-    let correo = email.value.length === 0 ? user.email : email.value;
-    let oficina = office.value.length === 0 ? user.mainofice : office.value;
-    let rol = position.value.length === 0 ? user.position : position.value;
+    let apellido = surname.value.length === 0 ? user.surname : surname.value
+    let correo = email.value.length === 0 ? user.email : email.value
+    let oficina = office.value.length === 0 ? user.mainofice : office.value
+    let rol = position.value.length === 0 ? user.position : position.value
+    let foto = imgUrl.length === 0 ? user.imgUrl : imgUrl
 
-    dispatch(
-      userUpdate([
-        {
-          name: nombre,
-          surname: apellido,
-          email: correo,
-          mainOffice: oficina,
-          position: rol,
-        },
-        user._id,
-      ])
-    )
-      .then(() => {
-        setShow(true);
-        window.scrollTo({ behavior: "smooth", top: 0, left: 0 });
-        dispatch(getUser());
-      })
-      .catch((err) => console.log(err));
+
+
+    dispatch(userUpdate(
+      [{
+        name: nombre,
+        surname: apellido,
+        email: correo,
+        mainOffice: oficina,
+        position: rol,
+        imgUrl: foto
+      }, user._id]
+    )).then(() => {
+      setShow(true)
+      window.scrollTo({ behavior: "smooth", top: 0, left: 0 })
+      dispatch(getUser())
+    })
+      .catch(err => console.log(err))
   };
 
   const roles = [
@@ -94,16 +104,12 @@ const EditProfile = () => {
         </Button>
       </Alert>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <Image
-          style={{ width: "60%", height: "auto", maxWidth: "400px" }}
-          roundedCircle="true"
-          thumbnail="true"
-          src={
-            user
-              ? user.imgUrl
-              : "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
-          }
-        />
+        <div style={{ width: "60%", aspectRatio: "1/1", maxWidth: "400px", margin: "0 auto"}}>
+          <img className="profilePhoto" src={imgUrl ? imgUrl : user.imgUrl}></img>
+        </div>
+        <div>
+          <button className="main-button mt-2" type={"button"} onClick={() => setShowModal(true)}> <MdAddAPhoto /> </button>
+        </div>
         <Card.Body>
           <Card.Title>
             <Form.Group className="mb-3">
@@ -186,4 +192,11 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+      <ImageModal showModal={showModal} setShowModal={setShowModal} setImgUrl={setImgUrl} />
+
+    </div >
+  )
+}
+
+
+export default EditProfile
