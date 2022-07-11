@@ -81,18 +81,11 @@ select.round {
 .fil0 {
   fill: #bed732e6;
 }
-
-
-.fil0-dark {
-  fill: #bed732e6;
+.map-dark {
+  fill: #888888;
 }
-/*
-.fil1:hover {
-  fill: #666769;
-}
-*/
 .reserved {
-  fill: #8e8e8e;
+  fill: #b82a2a !important;
 }
 
 .contsvg {
