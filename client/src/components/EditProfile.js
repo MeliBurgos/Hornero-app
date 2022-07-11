@@ -1,4 +1,5 @@
 import { AiOutlineSend } from "react-icons/ai"
+import { MdAddAPhoto } from "react-icons/md"
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
@@ -6,6 +7,8 @@ import Image from 'react-bootstrap/Image'
 import Form from 'react-bootstrap/Form';
 import Alert from "react-bootstrap/Alert"
 import useInput from "../hooks/useInput";
+
+import ImageModal from "./ImageModal"
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
@@ -22,12 +25,14 @@ const EditProfile = () => {
   const offices = useSelector(state => state.offices)
 
   const [show, setShow] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   const name = useInput();
   const surname = useInput();
   const email = useInput();
   const office = useInput();
   const position = useInput();
+  const [imgUrl, setImgUrl] = useState('')
 
   useEffect(() => {
     if (!JSON.parse(localStorage.getItem('user'))) navigate('/')
@@ -40,6 +45,9 @@ const EditProfile = () => {
     let correo = email.value.length === 0 ? user.email : email.value
     let oficina = office.value.length === 0 ? user.mainofice : office.value
     let rol = position.value.length === 0 ? user.position : position.value
+    let foto = imgUrl.length === 0 ? user.imgUrl : imgUrl
+
+
 
     dispatch(userUpdate(
       [{
@@ -47,7 +55,8 @@ const EditProfile = () => {
         surname: apellido,
         email: correo,
         mainOffice: oficina,
-        position: rol
+        position: rol,
+        imgUrl: foto
       }, user._id]
     )).then(() => {
       setShow(true)
@@ -83,7 +92,12 @@ const EditProfile = () => {
         </Button>
       </Alert>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <Image style={{ width: "60%", height: 'auto', maxWidth: "400px" }} roundedCircle="true" thumbnail="true" src={user.imgUrl} />
+        <div style={{ width: "60%", aspectRatio: "1/1", maxWidth: "400px", margin: "0 auto"}}>
+          <img className="profilePhoto" src={imgUrl ? imgUrl : user.imgUrl}></img>
+        </div>
+        <div>
+          <button className="main-button mt-2" type={"button"} onClick={() => setShowModal(true)}> <MdAddAPhoto /> </button>
+        </div>
         <Card.Body>
 
           <Card.Title>
@@ -131,6 +145,7 @@ const EditProfile = () => {
         </ListGroup>
       </form>
 
+      <ImageModal showModal={showModal} setShowModal={setShowModal} setImgUrl={setImgUrl} />
 
     </div >
   )

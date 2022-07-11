@@ -1,18 +1,22 @@
-import Logo from "../images/Globant-Original.svg"
-import LogoWhite from "../images/Globant-White-Green.svg"
 import Image from "react-bootstrap/Image"
-import { AiOutlineSearch, AiOutlineEdit } from "react-icons/ai"
-import { MdOutlineWorkOutline } from "react-icons/md"
-import { FaRegShareSquare } from "react-icons/fa"
-import { useSelector } from "react-redux";
-import { useEffect } from 'react'
-import { useNavigate } from "react-router-dom";
 import Placeholder from 'react-bootstrap/Placeholder';
 
+import Logo from "../images/Globant-Original.svg"
+import LogoWhite from "../images/Globant-White-Green.svg"
+
+import { FaRegShareSquare } from "react-icons/fa"
+import { MdOutlineWorkOutline } from "react-icons/md"
+import { AiOutlineSearch, AiOutlineEdit } from "react-icons/ai"
+
+import { useEffect } from 'react'
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 const Home = () => {
+
+  const navigate = useNavigate()
   const user = useSelector((state) => state.user)
   const darkMode = useSelector(state => state.darkMode)
-  const navigate = useNavigate()
 
   // si no hay nadie conectado te manda al login
   useEffect(() => {
@@ -21,10 +25,10 @@ const Home = () => {
 
   return (
     <div className="text-center mt-3">
-      {user && <h5>Hola {user.name? user.name : 
+      <h5>Hola {user ? user.name : 
           <Placeholder as="p" animation="wave">
-            <Placeholder xs={4} />
-          </Placeholder>} !</h5>}
+            <Placeholder xs={3} />
+          </Placeholder>} !</h5>
 
       <h1>Bienvenido a Hornero</h1>
       <h5 className="d-flex align-items-center justify-content-center">una app de  <Image src={darkMode? LogoWhite: Logo} alt='Globant' style={{ width: "30%", maxWidth:"200px" }} ></Image></h5>
