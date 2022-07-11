@@ -23,31 +23,33 @@ const Profile = () => {
 
   return (
     <div className="text-center mt-3">
-      <Image style={{ width: "60%", height: 'auto', maxWidth: "400px" }} roundedCircle="true" thumbnail="true" src={user.imgUrl ? user.imgUrl : "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"} />
+      <div style={{ width: "60%", aspectRatio: "1/1", maxWidth: "400px", margin: "0 auto"}}>
+        <img className="profilePhoto" src={user ? user.imgUrl : "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"}></img>
+      </div>
 
       <Card.Body>
-        <Card.Title>{user.name ? `${user.name} ${user.surname}` :
+        <Card.Title>{user ? `${user.name} ${user.surname}` :
           <Placeholder as="p" animation="wave">
             <Placeholder xs={8} />
           </Placeholder>
         }</Card.Title>
       </Card.Body>
       <ListGroup>
-        <ListGroup.Item>{user.email ? user.email :
+        <ListGroup.Item>{user ? user.email :
           <Placeholder as="p" animation="wave">
             <Placeholder xs={4} />
           </Placeholder>}
         </ListGroup.Item>
 
 
-        <ListGroup.Item>{user.mainOffice ? user.mainOffice :
+        <ListGroup.Item>{user ? user.mainOffice :
           <Placeholder as="p" animation="wave">
             <Placeholder xs={4} />
           </Placeholder>}
         </ListGroup.Item>
 
 
-        <ListGroup.Item>{user.position ? user.position :
+        <ListGroup.Item>{user ? user.position :
           <Placeholder as="p" animation="wave">
             <Placeholder xs={4} />
           </Placeholder>}

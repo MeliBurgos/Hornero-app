@@ -79,10 +79,12 @@ select.round {
 
 /* ESTILOS PARA MAPAS */
 .fil0 {
-  fill: #444444;
+  fill: #bed732e6;
 }
+
+
 .fil0-dark {
-  fill: #888888;
+  fill: #bed732e6;
 }
 /*
 .fil1:hover {
@@ -90,7 +92,7 @@ select.round {
 }
 */
 .reserved {
-  fill: #b82a2a;
+  fill: #8e8e8e;
 }
 
 .contsvg {
@@ -195,4 +197,14 @@ select.round {
 background-position: center;
 background-repeat: no-repeat;
 background-size: 5px; */
+}
+
+.profilePhoto{
+width: 100%; 
+height: 100%; 
+border-radius: 50%; 
+border-width: 3px; 
+border-color: #8a8888; 
+border-style: solid; 
+object-fit: cover
 }

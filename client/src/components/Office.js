@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from "react-router-dom";
 import { selectedFloor } from "../store/selectedFloor";
-import { addFavorite, getFavorites, removeFavorite } from "../store/favorites";
+import { useNavigate, useParams } from "react-router-dom";
 import { getReservations, newReservation } from "../store/reservations";
+import { addFavorite, getFavorites, removeFavorite } from "../store/favorites";
+
 import Table from "react-bootstrap/Table";
 import DeskSetter from "../hooks/deskSetter";
 import Calendario from "../commons/Calendario";
 import MapSelector from "../images/offices/MapSelector.js";
+
 import Modal from 'react-bootstrap/Modal';
 import Card from "react-bootstrap/Card";
 import TimePicker from 'rc-time-picker';
@@ -23,24 +25,27 @@ import { AiOutlineArrowRight, AiOutlineArrowLeft, AiOutlineCalendar } from "reac
 import { getUserReservationsFuturas, getUserReservationsAnteriores } from "../store/userReservations"
 
 const Office = () => {
-  const reduxFloor = useSelector((state) => state.selectedFloor)
+
+    const reduxFloor = useSelector((state) => state.selectedFloor)
 
   const [Show, setShow] = useState('')
-  const [Floor, setFloor] = useState(reduxFloor ? reduxFloor.split("F")[1].split("D")[0] : 2)
   const [hour, setHour] = useState("9:00")
   const [date, setDate] = useState("DD:MM:YYYY")
   const [addedToFavorites, setAddedToFavorites] = useState(false)
   const [selectedOffice, setSelectedOffice] = useState({ floors: [] })
+  const [Floor, setFloor] = useState(reduxFloor ? reduxFloor.split("F")[1].split("D")[0] : 2)
 
   const user = useSelector((state) => state.user)
   const offices = useSelector((state) => state.offices)
   const favorites = useSelector(state => state.favorites)
+
   const reservations = useSelector((state) => state.reservations)
- 
- const dispatch = useDispatch()
+  const userReservations = useSelector((state) => state.userReservations)
+
+  const dispatch = useDispatch()
   let items = []
-  let userReservations = useSelector((state) => state.userReservations)
- 
+  const businessHours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 18, 19, 20, 21, 22, 23]
+
   const [showReservas, setShowReservas] = useState(false);
 
   //Nombre de la oficina y regex
@@ -50,9 +55,9 @@ const Office = () => {
   // chequea si hay alguien conectado sino te manda a login
   const navigate = useNavigate()
   useEffect(() => {
-    if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
-  },[])
-  
+    if (!JSON.parse(localStorage.getItem('user'))) navigate('/')
+  }, [])
+
   //Seteo fecha de hoy
   useEffect(() => {
     let newDate = new Date()
@@ -73,6 +78,7 @@ const Office = () => {
   useEffect(() => {
     if (offices.length) {
       setSelectedOffice(offices.find(element => element.name.toLowerCase() === officeNameOk.toLowerCase()))
+      window.scrollTo({ behavior: "smooth", top: 0, left: 0 })
     }
   }, [officeNameOk])
 
@@ -125,6 +131,7 @@ const Office = () => {
         office: selectedOffice._id
       }))
       await dispatch(getReservations(selectedOffice._id))
+      setShow('')
     } catch (error) {
       console.log(error)
     }
@@ -133,11 +140,11 @@ const Office = () => {
 
   const handleShowFuturas = () => {
     dispatch(getUserReservationsFuturas())
-    .then(()=>setShowReservas('futuras'))
+      .then(() => setShowReservas('futuras'))
   }
   const handleShowPasadas = () => {
     dispatch(getUserReservationsAnteriores())
-    .then(() => setShowReservas('anteriores'))
+      .then(() => setShowReservas('anteriores'))
   }
 
   //Popovers date y time picker
@@ -154,7 +161,7 @@ const Office = () => {
     <Popover id="popover-basic">
       <Popover.Header as="h3" >Seleccione Hora</Popover.Header>
       <Popover.Body >
-        <TimePicker showSecond={false} onChange={(value) => setHour(value.format("HH:mm"))} disabledHours={() => [0, 1, 2, 3, 4, 5, 6, 7, 8, 18, 19, 20, 21, 22, 23]} placeholder={"HH:MM"} minuteStep={15} allowEmpty={false} />
+        <TimePicker showSecond={false} onChange={(value) => setHour(value.format("HH:mm"))} disabledHours={() => businessHours} placeholder={"HH:MM"} minuteStep={15} allowEmpty={false} />
       </Popover.Body>
     </Popover>
   );
@@ -164,7 +171,7 @@ const Office = () => {
       <div className="text-center mt-3 w-100">
         <Card.Title className="mb-3">{officeNameOk}</Card.Title>
 
-        <Dropdown onSelect={(n) => handleFloorSelector(n,officeName)}>
+        <Dropdown onSelect={(n) => handleFloorSelector(n, officeName)}>
           <Dropdown.Toggle id="dropdown-basic">
             Piso: {items[0] || Floor}
           </Dropdown.Toggle>
@@ -228,33 +235,33 @@ const Office = () => {
         <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowPasadas} className="main-button"><AiOutlineArrowLeft /> Reservas anteriores</button>
 
         <Modal show={showReservas} onHide={() => setShowReservas(false)} centered>
-        <Modal.Header>
-          <Modal.Title>{showReservas === 'anteriores' ? 'Reservas Pasadas' : 'Reservas Futuras'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Table>
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Lugar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {userReservations.map((reserva,i)=>{
-                return (<tr key={i} onClick={()=>{setDate(reserva.start.split('T')[0]);setShowReservas(false);handleFloorSelector(reserva.booking.split('D')[0].slice(1),reserva.office.name.replace(/\s+/g, '_').toLowerCase())}}>
-                  <td>{`${reserva.start.split('T')[0]} ${reserva.start.split('T')[1]}hs`}</td>
-                  <td>{`${reserva.office.name} ${reserva.booking}`}</td>
+          <Modal.Header>
+            <Modal.Title>{showReservas === 'anteriores' ? 'Reservas Pasadas' : 'Reservas Futuras'}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Lugar</th>
+                </tr>
+              </thead>
+              <tbody>
+                {userReservations.map((reserva, i) => {
+                  return (<tr key={i} onClick={() => { setDate(reserva.start.split('T')[0]); setShowReservas(false); handleFloorSelector(reserva.booking.split('D')[0].slice(1), reserva.office.name.replace(/\s+/g, '_').toLowerCase()) }}>
+                    <td>{`${reserva.start.split('T')[0]} ${reserva.start.split('T')[1]}hs`}</td>
+                    <td>{`${reserva.office.name} ${reserva.booking}`}</td>
                   </tr>)
-              })}
-            </tbody>
-        </Table>
-        </Modal.Body>
-        <Modal.Footer>
-          <button className="main-button" onClick={() => setShowReservas(false)}>
-            Cerrar
-          </button>
-        </Modal.Footer>
-      </Modal>
+                })}
+              </tbody>
+            </Table>
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="main-button" onClick={() => setShowReservas(false)}>
+              Cerrar
+            </button>
+          </Modal.Footer>
+        </Modal>
 
       </div>
     </>
