@@ -82,10 +82,10 @@ select.round {
   fill: #bed732e6;
 }
 .map-dark {
-  fill: #888888;
+  fill: #bed732e6;
 }
 .reserved {
-  fill: #b82a2a !important;
+  fill: #888888 !important;
 }
 
 .contsvg {
