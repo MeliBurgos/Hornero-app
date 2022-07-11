@@ -29,7 +29,7 @@ const ShareModal = ({ showModal, setShowModal, officeNameOk }) => {
     );
     if (!checkedUsers[0]) {
       setShowBadAlert(true);
-      setTimeout(() => setShowBadAlert(false), 2000);
+      setTimeout(() => setShowBadAlert(false), 2500);
     } else {
       setShowOkAlert(true);
       checkedUsers.forEach((checkedUser) => {
@@ -78,10 +78,10 @@ const ShareModal = ({ showModal, setShowModal, officeNameOk }) => {
           </Table>
         </form>
       <Alert show={showOkAlert} variant="success">
-        Reserva compartida!
+        Reserva compartida con tus amigos!
       </Alert>
       <Alert show={showBadAlert} variant="warning">
-        Debes elegir al menos 1 amigo para compartir
+        Debes elegir al menos 1 amigo para compartir tu reserva
       </Alert>
       </Modal.Body>
       <Modal.Footer className={darkMode? 'dark-mode':'light'}>

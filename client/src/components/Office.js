@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux'
-import { selectedFloor } from "../store/selectedFloor";
-import { getReservations, cancelReservation } from "../store/reservations";
-import DeskSetter from "../hooks/deskSetter";
-import Calendario from "../commons/Calendario";
-import MapSelector from "../images/offices/MapSelector.js";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import TimePicker from 'rc-time-picker';
-import 'rc-time-picker/assets/index.css';
-import { GoWatch } from "react-icons/go";
 import Popover from 'react-bootstrap/Popover';
 import Dropdown from 'react-bootstrap/Dropdown';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import TimePicker from 'rc-time-picker';
+import 'rc-time-picker/assets/index.css';
+import { GoWatch } from "react-icons/go";
 import { AiOutlineArrowRight, AiOutlineArrowLeft, AiOutlineCalendar } from "react-icons/ai"
-import { getUserReservationsFuturas, getUserReservationsAnteriores } from "../store/userReservations"
 
+import { getUserReservationsFuturas, getUserReservationsAnteriores } from "../store/userReservations"
+import { selectedFloor } from "../store/selectedFloor";
+import { getReservations, cancelReservation } from "../store/reservations";
+import MapSelector from "../images/offices/MapSelector.js";
+import DeskSetter from "../hooks/deskSetter";
+import Calendario from "../commons/Calendario";
 import ReserveAlert from "./ReserveAlert"
 import FuturePastModal from "./FuturePastModal";
 
