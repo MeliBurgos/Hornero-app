@@ -11,6 +11,11 @@
   font-size: large;
   color: black;
 }
+#white-burger {
+  border-color: #666666 !important;
+  color: #666666 !important;
+}
+
 .main-text {
   font-family: heeboregular;
   color: black;
@@ -24,7 +29,7 @@
   background-color: #bfd732;
   border: none;
   border-radius: 1000px;
-  padding: 10px 25px;
+  padding: 10px 20px;
   transition: 0.3s;
 }
 
@@ -40,7 +45,7 @@
   background-color: #444444;
   border: none;
   border-radius: 1000px;
-  padding: 10px 25px;
+  padding: 10px 20px;
   transition: 0.3s;
 }
 
@@ -85,7 +90,7 @@ select.round {
   fill: #63E3CF;
 }
 .reserved {
-  fill: #888888 !important;
+  fill: #888888;
 }
 
 .contsvg {
@@ -125,8 +130,8 @@ select.round {
 
 /* ESTILOS PARA DARK MODE */
 #dark-burger {
-  border-color: #888888 !important;
-  color: #888888 !important;
+  border-color: white !important;
+  color: white !important;
 }
 
 .dark-mode {
@@ -161,7 +166,7 @@ select.round {
   background-color: #666666;
   border: none;
   border-radius: 1000px;
-  padding: 10px 25px;
+  padding: 10px 20px;
   transition: 0.3s;
 }
 

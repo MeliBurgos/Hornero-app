@@ -75,25 +75,25 @@ const Office = () => {
       window.scrollTo({ behavior: "smooth", top: 0, left: 0 })
     }
   }, [officeNameOk])
-
+  
   //Setea escritorios
   useEffect(() => {
     let dayReserv = []
     if (reservations) {
       reservations.forEach((reserva) => reserva.start.includes(date) ? dayReserv.push(reserva) : null)
-
+      
       DeskSetter(Floor, dayReserv, officeNameOk, favorites, friends, setShow)
       setShow('')
     }
   }, [Floor, date, reservations, darkMode]);
-
+  
   // setea el piso seleccionado
   const handleFloorSelector = (n, name) => {
     dispatch(selectedFloor(`${name}F${n}`))
     setFloor(Number(n))
     navigate(`/office/${name}`)
   }
-
+    
   // cancelar reserva
   const handleCancelReserve = async (reserveId) =>{
     try {

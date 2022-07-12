@@ -7,7 +7,7 @@ export const getOffices = createAsyncThunk("GET_OFFICES", () => {
 })
 
 
-const OfficesReducer = createReducer({}, {
+const OfficesReducer = createReducer([], {
     [getOffices.fulfilled]: (state, action) => action.payload,
 });
 
