@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useInput from "../hooks/useInput";
 import AddFriend from "./AddFriend";
+import ProfileModal from "./ProfileModal";
 import { getFriends, removeFriend } from "../store/friends";
 import SendMessage from "./SendMessage";
 
@@ -18,6 +19,8 @@ const Friends = ({ show, setShow }) => {
   const showedFriends = (searchFriend.value.length >= 3) ? filteredFriends : friends
   const [addFriend, setAddFriend] = useState(false)
   const [sendMessage, setSendMessage] = useState({})
+  const [friendProfile, setFriendProfile] = useState({})
+
 
   const handleDeleteFriend = (id) => {
     dispatch(removeFriend(id))
@@ -48,6 +51,7 @@ const Friends = ({ show, setShow }) => {
 
   if (addFriend) return <AddFriend show={show} setShow={setShow} setAddFriend={setAddFriend} friends={friends} />
   if (sendMessage.email) return <SendMessage show={show} setShow={setShow} setSendMessage={setSendMessage} mailTo={sendMessage} />
+  if(friendProfile._id) return <ProfileModal profile={friendProfile} setProfile={setFriendProfile}/>
 
   return (
     <>
@@ -78,7 +82,7 @@ const Friends = ({ show, setShow }) => {
                 {showedFriends.map((friend, i) => (
                   <tr key={i}>
                     <td>{i + 1}</td>
-                    <td>{`${friend.name} ${friend.surname}`}</td>
+                    <td onClick={()=>setFriendProfile(friend)}>{`${friend.name} ${friend.surname}`}</td>
                     <td><BsFillChatTextFill
                       style={{ cursor: "pointer" }}
                       size={20}

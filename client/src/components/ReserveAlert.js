@@ -84,22 +84,22 @@ const ReserveAlert = ({
         </Alert.Heading>
       )}
       <hr />
-      {Show.reserve ? (
+      {Show.reserve[0] ? (
         <>
           <p> Reservado por </p>
           
           <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-            <img style={{width: "20%", aspectRatio: "1/1", maxWidth: "80px",marginRight:"10px"}} className="profilePhoto" src={Show.reserve.user.imgUrl}></img>
+            <img style={{width: "20%", aspectRatio: "1/1", maxWidth: "80px",marginRight:"10px"}} className="profilePhoto" src={Show.reserve[0].user.imgUrl}></img>
             <p style={{margin:"0px"}}>
-              <strong>{Show.reserve.user.name} {Show.reserve.user.surname}</strong>
+              <strong>{Show.reserve[0].user.name} {Show.reserve[0].user.surname}</strong>
             </p>
           </div>
           <span>
-            Desde: <strong>{Show.reserve.start.slice(-5)} hs</strong>
+            Desde: <strong>{Show.reserve[0].start.slice(-5)} hs</strong>
           </span>
           {" | "}
           <span>
-            Hasta: <strong>{Show.reserve.end} hs</strong>
+            Hasta: <strong>{Show.reserve[0].end} hs</strong>
           </span>
         </>
       ) : (
@@ -120,7 +120,8 @@ const ReserveAlert = ({
           alignItems: "center",
         }}
       >
-        {!Show.reserve ? (
+
+        {!Show.reserve[0] ? (
           <button
             className={"mx-2 main-button"}
             onClick={() => reserveConfirmation()}
@@ -128,7 +129,7 @@ const ReserveAlert = ({
             Reservar
           </button>
         ) : (
-          Show.reserve.user._id === user._id && (
+          Show.reserve[0].user._id === user._id && (
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <button
                 className={"main-button"}
@@ -138,7 +139,7 @@ const ReserveAlert = ({
               </button>
               <button
                 className={darkMode ? "mx-2 dark-mode-black-button" : "mx-2 main-button-black"}
-                onClick={() => handleCancelReserve(Show.reserve._id)}
+                onClick={() => handleCancelReserve(Show.reserve[0]._id)}
               >
                 Cancelar Reserva
               </button>

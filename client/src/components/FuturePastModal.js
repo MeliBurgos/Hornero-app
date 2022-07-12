@@ -21,11 +21,11 @@ const FuturePastModal = ({
   return (
     <>
       <Modal show={showReservas} onHide={() => setShowReservas(false)} centered>
-        <Modal.Header className={darkMode ? "dark-mode" : "light"}>
+        <Modal.Header className={darkMode ? "dark-mode" : "light"} closeButton>
           <Modal.Title>
             {showReservas === "anteriores"
-              ? "Reservas Pasadas"
-              : "Reservas Futuras"}
+              ? "Reservas pasadas"
+              : "Reservas futuras"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className={darkMode ? "dark-mode" : "light"}>

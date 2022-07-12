@@ -40,7 +40,7 @@ const ImageModal = ({ showModal, setShowModal, setImgUrl }) => {
 
   return (
 
-    <Modal show={showModal} /* onHide={handleClose} */ className="text-center">
+    <Modal show={showModal} className="text-center" centered>
       <Modal.Header className={darkMode? "dark-mode": "light"}>
         <Modal.Title>
           <button className="main-button m-2" onClick={() => setUpload("cam")}> <AiFillCamera /> Tomar foto </button>

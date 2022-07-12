@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useInput from "../hooks/useInput";
 import { addFriend, getFriends, searchFriends } from "../store/friends";
+import ProfileModal from "./ProfileModal";
 
 const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
     const dispatch = useDispatch()
@@ -13,8 +14,10 @@ const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
     const [filteredUsers, setFilteredUsers] = useState([])
     const showedUsers = (searchUsers.value.length>=3) ? filteredUsers : []
     const friendIds = friends.map(friend => friend._id)
-    const [hideButton, setHideButton] = useState(false)
     const darkMode = useSelector(state => state.darkMode)
+    const [hideButton, setHideButton] = useState(false)
+    const [profile, setProfile] = useState(false)
+
 
     const handleAddFriend = (id)=>{
         setHideButton(true)
@@ -32,6 +35,8 @@ const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
             })
         }
     },[searchUsers.value])
+
+    if(profile){return(<ProfileModal profile={profile} setProfile={setProfile}/>)}
 
     return (<Modal show={show} onHide={()=>{setShow(false);setAddFriend(false)}} centered>
         <Modal.Header className={darkMode? "dark-mode": "light"}>
@@ -53,7 +58,7 @@ const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
                 {showedUsers.map((user, i) => (
                 <tr key={i}>
                     <td>{i+1}</td>
-                    <td>{`${user.name} ${user.surname}`}</td>
+                    <td onClick={()=>setProfile(user)}>{`${user.name} ${user.surname}`}</td>
                     <td>{user.mainOffice}</td>
                     {(friendIds.includes(user._id) || hideButton) ? <td/> : <td><BsPlusCircle style={{cursor:"pointer"}} size={28} onClick={()=>handleAddFriend(user._id)}/></td>}
                 </tr>
