@@ -31,6 +31,7 @@ const Favorites = ({ show, setShow }) => {
     let Nombre = oficina.name.replace(/\s+/g, '_').toLowerCase();
     dispatch(selectedFloor(`${Nombre}F${officeName.split("F")[1].split("D")[0]}`))
     navigate(`/office/${Nombre}`)
+    setShow(false)
   }
 
   return (

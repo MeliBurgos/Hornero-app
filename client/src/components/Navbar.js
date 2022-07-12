@@ -53,10 +53,10 @@ const NavigationBar = () => {
   useEffect(() => {
     dispatch(getUser())
     dispatch(getOffices())
-  },[])
+  }, [])
 
-  useEffect(()=>{
-    if(user) {
+  useEffect(() => {
+    if (user) {
       dispatch(getFriends())
       dispatch(getFavorites())
     }
@@ -117,7 +117,8 @@ const NavigationBar = () => {
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </Nav.Link>
-                <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={()=> navigate("/")}>Home</Nav.Link>
+
+                <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={() => navigate('/home')}>Home</Nav.Link>
                 <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={() => setShowFriends(true)}>Amigos</Nav.Link>
                 <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={handleLogout}>Log Out</Nav.Link>
               </Nav>
