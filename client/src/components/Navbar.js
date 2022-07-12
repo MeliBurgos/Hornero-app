@@ -2,14 +2,14 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ToggleButton from 'react-bootstrap/ToggleButton';
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
 import Container from "react-bootstrap/Container"
+import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
 import { AiOutlineUser } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { BsList, BsToggleOff, BsToggleOn } from "react-icons/bs"
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
+import { useNavigate, useLocation } from 'react-router'
+import { Link, useParams } from "react-router-dom";
 
 import Friends from './Friends'
 import Favorites from './Favorites';
@@ -46,9 +46,11 @@ const NavigationBar = () => {
     }
   }
 
+  const location = useLocation()
   useEffect(() => {
     dispatch(getUser())
     dispatch(getOffices())
+    if(location.pathname.slice(1,7) === 'office') navigate('/home')
   }, [])
 
   useEffect(() => {
@@ -72,6 +74,8 @@ const NavigationBar = () => {
     localStorage.setItem('darkMode', !darkMode)
   }
 
+  if(!user) return <></>
+
   return (
     <>
       {user &&
@@ -93,18 +97,14 @@ const NavigationBar = () => {
                 <NavDropdown.Item onClick={() => handleClick(e)} key={i} >{e.name}</NavDropdown.Item>
               ))}
             </NavDropdown>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" id="dark-burger" />
+            <Navbar.Toggle aria-controls="basic-navbar-nav" id={darkMode ? "dark-burger" : "white-burger"}>
+              <BsList size={24} id={darkMode ? "dark-burger" : "white-burger"}/>
+            </Navbar.Toggle>
             <Navbar.Collapse id="basic-navbar-nav" >
               <Nav className="me-auto" >
-                <Nav.Link href="" >
-                  <ToggleButtonGroup type="checkbox">
-                    <ToggleButton
-                      id="tbg-btn-1"
-                      variant={darkMode ? "light" : "secondary"}
-                      onClick={handleChangeTheme} >
-                      {darkMode ? <MdOutlineLightMode /> : <MdOutlineDarkMode />}
-                    </ToggleButton>
-                  </ToggleButtonGroup>
+                <Nav.Link className={darkMode ? "dark-mode" : "light"}>
+                <MdOutlineLightMode/> {darkMode ? <BsToggleOn size={28} onClick={handleChangeTheme}/>
+                   :<BsToggleOff size={28} onClick={handleChangeTheme}/>} <MdOutlineDarkMode/>
                 </Nav.Link>
                 <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={() => navigate('/home')}>Home</Nav.Link>
                 <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={() => setShowFriends(true)}>Amigos</Nav.Link>
