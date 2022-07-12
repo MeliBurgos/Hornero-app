@@ -79,10 +79,10 @@ select.round {
 
 /* ESTILOS PARA MAPAS */
 .fil0 {
-  fill: #bed732e6;
+  fill: #63E3CF;
 }
 .map-dark {
-  fill: #bed732e6;
+  fill: #63E3CF;
 }
 .reserved {
   fill: #888888 !important;
@@ -185,13 +185,6 @@ select.round {
   border-radius: 1000px;
 }
 
-.favorite{
-/* background-image: url("https://images-ext-2.discordapp.net/external/J4C9iQ1pxLDw5p5wYA0nRRmtzOjse8mQuQ-GIXvR0ks/https/www.pngmart.com/files/16/Gold-Star-PNG-Transparent-Image.png?width=520&height=520");
-background-position: center;
-background-repeat: no-repeat;
-background-size: 5px; */
-}
-
 .profilePhoto{
 width: 100%; 
 height: 100%; 
@@ -200,4 +193,48 @@ border-width: 3px;
 border-color: #8a8888; 
 border-style: solid; 
 object-fit: cover
+}
+
+.groupedButton {
+  text-align: center;
+  font-family: heeboregular;
+  font-size: 14px;
+  font-weight: 700;
+  color: black;
+  background-color: #bfd732;
+  border: solid 1px;
+  padding: 10px;
+  margin-top: 3px;
+  transition: 0.3s;
+  max-width: 16%;
+}
+
+.groupedButton:hover{
+background-color: #6a7a10;
+}
+
+.groupedButtonReserved {
+  text-align: center;
+  font-family: heeboregular;
+  font-size: 14px;
+  font-weight: 700;
+  color: black;
+  background-color: #888888;
+  border: solid 1px;
+  padding: 10px;
+  margin-top: 2px;
+  transition: 0.3s;
+  max-width: 16%;
+}
+
+.groupedButtonReserved:hover{
+  background-color: #434141;
+}
+
+.map-container{
+background-color: #444444;
+}
+
+.navbar-collapse{
+background-color: white !important
 }

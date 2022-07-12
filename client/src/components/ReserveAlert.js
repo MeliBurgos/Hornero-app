@@ -74,27 +74,27 @@ const ReserveAlert = ({
         </Alert.Heading>
       )}
       <hr/>
-      {Show.reserve ? (
+      {Show.reserve[0] ? (
         <>
           <p> Reservado por </p>
           <p>
             <Image
               roundedCircle="true"
               thumbnail="true"
-              src={Show.reserve.user.imgUrl}
+              src={Show.reserve[0].user.imgUrl}
               style={{ width: "20%", height: "auto", maxWidth: "100px" }}
             />
             <strong>
               {" "}
-              {Show.reserve.user.name} {Show.reserve.user.surname}{" "}
+              {Show.reserve[0].user.name} {Show.reserve[0].user.surname}{" "}
             </strong>
           </p>
           <span>
-            Desde: <strong>{Show.reserve.start.slice(-5)} hs</strong>
+            Desde: <strong>{Show.reserve[0].start.slice(-5)} hs</strong>
           </span>
           {" | "}
           <span>
-            Hasta: <strong>{Show.reserve.end} hs</strong>
+            Hasta: <strong>{Show.reserve[0].end} hs</strong>
           </span>
         </>
       ) : (
@@ -116,7 +116,7 @@ const ReserveAlert = ({
         }}
       >
 
-        {!Show.reserve ? (
+        {!Show.reserve[0] ? (
           <button
             className={"mx-2 main-button"}
             onClick={() => reserveConfirmation()}
@@ -124,12 +124,12 @@ const ReserveAlert = ({
             Reservar
           </button>
         ) : (
-          Show.reserve.user._id === user._id && (
+          Show.reserve[0].user._id === user._id && (
             <div style={{display:'flex',justifyContent:'space-around'}}>
             <button className={"main-button"}><BsFillShareFill/> Compartir</button>
             <button
               className={"mx-2 main-button-black"}
-              onClick={() => handleCancelReserve(Show.reserve._id)}
+              onClick={() => handleCancelReserve(Show.reserve[0]._id)}
             >
               Cancelar Reserva
             </button>

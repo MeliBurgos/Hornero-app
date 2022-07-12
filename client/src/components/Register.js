@@ -36,8 +36,8 @@ const Register = () => {
 
     dispatch(
       userRegister({
-        name: name.value,
-        surname: surname.value,
+        name: name.value[0].toUpperCase() + name.value.toLowerCase().slice(1),
+        surname: surname.value[0].toUpperCase() + name.value.toLowerCase().slice(1),
         email: email.value,
         password: password.value,
         position: position,

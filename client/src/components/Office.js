@@ -18,12 +18,14 @@ import { getUserReservationsFuturas, getUserReservationsAnteriores } from "../st
 
 import ReserveAlert from "./ReserveAlert"
 import FuturePastModal from "./FuturePastModal";
+import MeetingRoomModal from "./MeetingRoomModal";
 
 const Office = () => {
   const dispatch = useDispatch()
   const reduxFloor = useSelector((state) => state.selectedFloor)
   const offices = useSelector((state) => state.offices)
   const favorites = useSelector(state => state.favorites)
+  const friends = useSelector(state => state.friends)
   const reservations = useSelector((state) => state.reservations)
   const darkMode = useSelector((state) => state.darkMode)
   
@@ -35,12 +37,13 @@ const Office = () => {
   const [showReservas, setShowReservas] = useState(false);
   
   let items = []
- 
   const businessHours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 18, 19, 20, 21, 22, 23]
 
   //Nombre de la oficina y regex
   const { officeName } = useParams();
   const officeNameOk = officeName.replace(/_/g, ' ').replace(/(?: |\b)(\w)/g, function (key) { return key.toUpperCase() });
+
+
 
   // chequea si hay alguien conectado sino te manda a login
   const navigate = useNavigate()
@@ -79,7 +82,7 @@ const Office = () => {
     if (reservations) {
       reservations.forEach((reserva) => reserva.start.includes(date) ? dayReserv.push(reserva) : null)
 
-      DeskSetter(Floor, dayReserv, officeNameOk, favorites, setShow)
+      DeskSetter(Floor, dayReserv, officeNameOk, favorites, friends, setShow)
       setShow('')
     }
   }, [Floor, date, reservations, darkMode]);
@@ -141,7 +144,7 @@ const Office = () => {
 
   return (
     <>
-      <div className="text-center mt-3 w-100">
+      <div className="text-center w-100" style={{marginTop: "20%"}}>
         <Card.Title className="mb-3">{officeNameOk}</Card.Title>
 
         <Dropdown onSelect={(n) => handleFloorSelector(n, officeName)}>
@@ -166,12 +169,24 @@ const Office = () => {
         </OverlayTrigger>
 
         <Card.Body>
-          <div className="contsvg ratio ratio-4x3">
+          <div className="contsvg ratio ratio-4x3 map-container">
             <MapSelector />
           </div>
         </Card.Body>
 
-        {Show ? <ReserveAlert 
+        {Show ? Show.meetingRoom ? 
+        
+          <MeetingRoomModal Show={Show}
+          setShow={setShow}
+          officeNameOk={officeNameOk}
+          handleCancelReserve={handleCancelReserve}
+          selectedOffice={selectedOffice}
+          date={date}
+          hour={hour}
+/> 
+
+          :
+          <ReserveAlert 
           Show={Show}
           setShow={setShow}
           officeNameOk={officeNameOk}
