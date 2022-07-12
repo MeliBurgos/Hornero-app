@@ -50,8 +50,8 @@ const EditProfile = () => {
 
     dispatch(userUpdate(
       [{
-        name: nombre,
-        surname: apellido,
+        name: nombre[0].toUpperCase() + nombre.toLowerCase().slice(1),
+        surname: apellido[0].toUpperCase() + apellido.toLowerCase().slice(1),
         email: correo,
         mainOffice: oficina,
         position: rol,
@@ -75,7 +75,7 @@ const EditProfile = () => {
   ];
 
   return (
-    <div className="text-center mt-3">
+    <div className="text-center" style={{ marginTop: "20%" }}>
       <Alert
         variant="success"
         show={show}
@@ -98,9 +98,9 @@ const EditProfile = () => {
           Volver al Home
         </Button>
       </Alert>
-      <form id="editProfile" onSubmit={(e) => handleSubmit(e)}>
-        <div style={{ width: "60%", aspectRatio: "1/1", maxWidth: "400px", margin: "0 auto"}}>
-          <img className="profilePhoto" src={imgUrl ? imgUrl : user.imgUrl}></img>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <div style={{ width: "60%", aspectRatio: "1/1", maxWidth: "400px", margin: "0 auto" }}>
+          <img className="profilePhoto" src={imgUrl ? imgUrl : user ? user.imgUrl : "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"}></img>
         </div>
         <div>
           <button className="main-button mt-2" type={"button"} onClick={() => setShowModal(true)}> <MdAddAPhoto /> </button>

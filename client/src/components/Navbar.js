@@ -9,8 +9,9 @@ import { AiOutlineUser } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
+import { useNavigate, useLocation } from 'react-router'
 
+import favouriteDeleter from "../hooks/favouriteDeleter"
 import Friends from './Friends'
 import Favorites from './Favorites';
 import { getUser, userLogout } from '../store/user';
@@ -29,6 +30,8 @@ const NavigationBar = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation();
+  favouriteDeleter(location)
 
   const user = localStorage.getItem('user')
   const offices = useSelector((state) => state.offices)
@@ -75,7 +78,7 @@ const NavigationBar = () => {
   return (
     <>
       {user &&
-        <Navbar expand="md">
+        <Navbar expand="md" fixed="top" style={{backgroundColor:  darkMode ?  "#444444" : "white", boxShadow: "0 2px 2px gray"}}>
           <Container>
             <Link to={checked ? "/" : "/profile"}>
               <ToggleButton

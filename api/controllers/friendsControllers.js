@@ -84,6 +84,9 @@ const friendsController = {
             name: user.name,
             surname: user.surname,
             mainOffice: user.mainOffice,
+            imgUrl: user.imgUrl,
+            position: user.position,
+            email: user.email
           };
         });
         res.send(usersToShow);
@@ -94,10 +97,13 @@ const friendsController = {
         });
         const usersToShow = users.map((user) => {
           return {
-            _id: user._id,
+           _id: user._id,
             name: user.name,
             surname: user.surname,
             mainOffice: user.mainOffice,
+            imgUrl: user.imgUrl,
+            position: user.position,
+            email: user.email
           };
         });
         res.send(usersToShow);

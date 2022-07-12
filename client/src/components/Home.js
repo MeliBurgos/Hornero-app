@@ -24,7 +24,7 @@ const Home = () => {
   },[])
 
   return (
-    <div className="text-center mt-3">
+    <div className="text-center" style={{marginTop: "20%"}}>
       <h5>Hola {user ? user.name : 
           <Placeholder as="p" animation="wave">
             <Placeholder xs={3} />
