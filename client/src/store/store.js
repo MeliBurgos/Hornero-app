@@ -8,6 +8,7 @@ import ReservationReducer from './reservations';
 import darkModeReducer from './darkMode';
 import selectedFloorReducer from './selectedFloor';
 import UserReservationReducer from './userReservations';
+import adminReducer from "./admin"
 
 const store = configureStore({
     middleware: (getDefaultMiddleware) =>
@@ -22,7 +23,8 @@ const store = configureStore({
         favorites: favoritesReducer,
         darkMode: darkModeReducer,
         selectedFloor: selectedFloorReducer,
-        userReservations: UserReservationReducer
+        userReservations: UserReservationReducer,
+        admin: adminReducer
     }
 });
 

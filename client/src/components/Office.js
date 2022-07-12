@@ -19,8 +19,9 @@ import Popover from 'react-bootstrap/Popover';
 import Dropdown from 'react-bootstrap/Dropdown';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import { BsPlusCircle, BsDashCircle } from "react-icons/bs";
-import { AiOutlineArrowRight, AiOutlineArrowLeft, AiOutlineCalendar } from "react-icons/ai"
+import { AiOutlineArrowRight, AiOutlineArrowLeft, AiOutlineCalendar, AiFillDelete } from "react-icons/ai"
 import { getUserReservationsFuturas, getUserReservationsAnteriores } from "../store/userReservations"
+import { deleteReservationsAdmin } from "../store/admin"
 
 const Office = () => {
   const reduxFloor = useSelector((state) => state.selectedFloor)
@@ -36,6 +37,8 @@ const Office = () => {
   const offices = useSelector((state) => state.offices)
   const favorites = useSelector(state => state.favorites)
   const reservations = useSelector((state) => state.reservations)
+
+  const userAdmin = JSON.parse(localStorage.getItem("user"));
  
  const dispatch = useDispatch()
   let items = []
@@ -140,6 +143,11 @@ const Office = () => {
     .then(() => setShowReservas('anteriores'))
   }
 
+  const handleDelete = (id) => {
+    dispatch(deleteReservationsAdmin(id))
+    .then(()=>setShowReservas('futuras'))
+  }
+
   //Popovers date y time picker
   const popoverDate = (
     <Popover id="popover-basic" style={{ width: "90%" }}>
@@ -240,12 +248,23 @@ const Office = () => {
               </tr>
             </thead>
             <tbody>
-              {userReservations.map((reserva,i)=>{
-                return (<tr key={i} onClick={()=>{setDate(reserva.start.split('T')[0]);setShowReservas(false);handleFloorSelector(reserva.booking.split('D')[0].slice(1),reserva.office.name.replace(/\s+/g, '_').toLowerCase())}}>
-                  <td>{`${reserva.start.split('T')[0]} ${reserva.start.split('T')[1]}hs`}</td>
-                  <td>{`${reserva.office.name} ${reserva.booking}`}</td>
-                  </tr>)
-              })}
+              {userAdmin.user.admin === false ? (
+                userReservations.map((reserva,i)=>{
+                  return (<tr key={i} onClick={()=>{setDate(reserva.start.split('T')[0]);setShowReservas(false);handleFloorSelector(reserva.booking.split('D')[0].slice(1),reserva.office.name.replace(/\s+/g, '_').toLowerCase())}}>
+                    <td>{`${reserva.start.split('T')[0]} ${reserva.start.split('T')[1]}hs`}</td>
+                    <td>{`${reserva.office.name} ${reserva.booking}`}</td>
+                    </tr>)
+                })
+              ) : (
+                userReservations.map((reserva,i)=>{
+                  return (<tr key={i} onClick={()=>{setDate(reserva.start.split('T')[0]);setShowReservas(false);handleFloorSelector(reserva.booking.split('D')[0].slice(1),reserva.office.name.replace(/\s+/g, '_').toLowerCase())}}>
+                    <td>{`${reserva.start.split('T')[0]} ${reserva.start.split('T')[1]}hs`}</td>
+                    <td>{`${reserva.office.name} ${reserva.booking}`}</td>
+                    <button onClick={()=> handleDelete()}><AiFillDelete/></button>
+                    </tr>)
+                })
+              )}
+              
             </tbody>
         </Table>
         </Modal.Body>

@@ -27,7 +27,7 @@ const ReservationsController = {
   //elimina una reserva
   delete: async (req, res) => {
     let deletedReservation = await ReservationsSchema.findByIdAndRemove(
-      req.params.id
+      req.params.id,
     );
     res.json(deletedReservation);
   },

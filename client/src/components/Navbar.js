@@ -21,7 +21,7 @@ import { getFavorites } from '../store/favorites';
 import { selectedFloor } from '../store/selectedFloor';
 
 const NavigationBar = () => {
-
+ 
   const [checked, setChecked] = useState(false);
 
   const [showFriends, setShowFriends] = useState(false);
@@ -33,6 +33,10 @@ const NavigationBar = () => {
   const user = localStorage.getItem('user')
   const offices = useSelector((state) => state.offices)
   const Floor = useSelector((state) => state.selectedFloor)
+
+
+  const userAdmin = JSON.parse(localStorage.getItem("user"));
+
 
   const handleClick = (office) => {
     let officeName = office.name.replace(/\s+/g, '_').toLowerCase();
@@ -62,8 +66,8 @@ const NavigationBar = () => {
     dispatch(userLogout())
       .then(() => {
         localStorage.removeItem('user')
-        return navigate("/")
       })
+      .then(() => navigate("/"))
   }
 
   const darkMode = useSelector(state => state.darkMode)
@@ -77,14 +81,20 @@ const NavigationBar = () => {
       {user &&
         <Navbar expand="md">
           <Container>
+
+          {userAdmin.user.admin === false ? (
             <Link to={checked ? "/" : "/profile"}>
-              <ToggleButton
-                id="toggle-check"
-                type="checkbox"
-                variant={darkMode ? "outline-light" : "outline-secondary"}
-                checked={darkMode ? false : checked}
-                onClick={() => setChecked(!checked)}> <AiOutlineUser /> </ToggleButton>
-            </Link>
+            <ToggleButton
+              id="toggle-check"
+              type="checkbox"
+              variant={darkMode ? "outline-light" : "outline-secondary"}
+              checked={darkMode ? false : checked}
+              onClick={() => setChecked(!checked)}> <AiOutlineUser /> </ToggleButton>
+          </Link>
+          ) : (
+            <button className='main-button'>Admin</button>
+          )}
+            
 
             <NavDropdown align="center" title="Oficinas" id={darkMode ? "dark-nav-dropdown" : "nav-dropdown"}>
               <NavDropdown.Item onClick={() => setShowFavs(true)} >Oficinas Favoritas</NavDropdown.Item>
@@ -93,6 +103,7 @@ const NavigationBar = () => {
                 <NavDropdown.Item onClick={() => handleClick(e)} key={i} >{e.name}</NavDropdown.Item>
               ))}
             </NavDropdown>
+            
             <Navbar.Toggle aria-controls="basic-navbar-nav" id="dark-burger" />
             <Navbar.Collapse id="basic-navbar-nav" >
               <Nav className="me-auto" >
@@ -106,12 +117,12 @@ const NavigationBar = () => {
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </Nav.Link>
-                <Nav.Link className={darkMode ? "dark-mode" : "light"} href="/home">Home</Nav.Link>
+                <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={()=> navigate("/")}>Home</Nav.Link>
                 <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={() => setShowFriends(true)}>Amigos</Nav.Link>
-                <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={handleLogout} href="/" >Log Out</Nav.Link>
-                <Nav.Link className={darkMode ? "dark-mode" : "light"} href="#link">Reportar un problema</Nav.Link>
+                <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={handleLogout}>Log Out</Nav.Link>
               </Nav>
             </Navbar.Collapse>
+  
           </Container>
           <Friends show={showFriends} setShow={setShowFriends} />
           <Favorites show={showFavs} setShow={setShowFavs} />
