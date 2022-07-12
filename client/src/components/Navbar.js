@@ -49,7 +49,6 @@ const NavigationBar = () => {
     }
   }
 
-  const location = useLocation()
   useEffect(() => {
     dispatch(getUser())
     dispatch(getOffices())
