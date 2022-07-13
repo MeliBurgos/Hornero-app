@@ -22,7 +22,7 @@ const FuturePastModalAdmin = ({
   return (
     <>
       <Modal show={showAllReservas} onHide={() => setShowAllReservas(false)} centered>
-        <Modal.Header className={darkMode ? "dark-mode" : "light"}>
+        <Modal.Header className={darkMode ? "dark-mode" : "light"} closeButton>
           <Modal.Title>
             {showAllReservas === "anteriores"
               ? "Reservas Pasadas"

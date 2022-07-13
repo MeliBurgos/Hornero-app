@@ -27,6 +27,7 @@ const Office = () => {
   const dispatch = useDispatch();
   const reduxFloor = useSelector((state) => state.selectedFloor);
   const offices = useSelector((state) => state.offices);
+  const friends = useSelector((state) => state.friends);
   const favorites = useSelector((state) => state.favorites);
   const reservations = useSelector((state) => state.reservations);
   const darkMode = useSelector((state) => state.darkMode);
@@ -188,7 +189,7 @@ const Office = () => {
         admin={admin}
         setAdmin={setAdmin}
       />
-      <div className="text-center mt-3 w-100">
+      <div style={{marginTop:"20%"}} className="text-center w-100">
         <Card.Title className="mb-3">
           {officeNameOk}{" "}
           {userAdmin ? <AiFillEdit onClick={() => setAdmin(true)} /> : null}

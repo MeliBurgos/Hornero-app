@@ -13,6 +13,7 @@ import NotFound from "./components/NotFound";
 import Register from "./components/Register";
 import NavigationBar from './components/Navbar';
 import EditProfile from "./components/EditProfile";
+import Admin from './components/Admin';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/office/:officeName" element={<Office />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       </div>
