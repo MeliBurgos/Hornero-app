@@ -18,10 +18,12 @@ const ReserveAlert = ({
   hour,
 }) => {
   const dispatch = useDispatch();
-  const darkMode = useSelector(state => state.darkMode)
+  const darkMode = useSelector((state) => state.darkMode);
   const user = useSelector((state) => state.user);
   const favorites = useSelector((state) => state.favorites);
   const [showShareModal, setShowShareModal] = useState(false);
+
+  const userAdmin = JSON.parse(localStorage.getItem("user"));
 
   const handleRemoveFromFavorites = async (desk) => {
     await dispatch(removeFavorite(`${officeNameOk}:${desk}`));
@@ -66,7 +68,9 @@ const ReserveAlert = ({
             {favorites.includes(`${officeNameOk}:${Show.desk}`) ? (
               <button
                 style={{ marginBottom: "8px" }}
-                className={darkMode ? "dark-mode-black-button" :"main-button-black"}
+                className={
+                  darkMode ? "dark-mode-black-button" : "main-button-black"
+                }
                 onClick={() => handleRemoveFromFavorites(Show.desk)}
               >
                 <BsDashCircle size={20} /> Favorito
@@ -87,11 +91,28 @@ const ReserveAlert = ({
       {Show.reserve ? (
         <>
           <p> Reservado por </p>
-          
-          <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-            <img style={{width: "20%", aspectRatio: "1/1", maxWidth: "80px",marginRight:"10px"}} className="profilePhoto" src={Show.reserve.user.imgUrl}></img>
-            <p style={{margin:"0px"}}>
-              <strong>{Show.reserve.user.name} {Show.reserve.user.surname}</strong>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img
+              style={{
+                width: "20%",
+                aspectRatio: "1/1",
+                maxWidth: "80px",
+                marginRight: "10px",
+              }}
+              className="profilePhoto"
+              src={Show.reserve.user.imgUrl}
+            ></img>
+            <p style={{ margin: "0px" }}>
+              <strong>
+                {Show.reserve.user.name} {Show.reserve.user.surname}
+              </strong>
             </p>
           </div>
           <span>
@@ -128,7 +149,8 @@ const ReserveAlert = ({
             Reservar
           </button>
         ) : (
-          Show.reserve.user._id === user._id && (
+          Show.reserve.user._id === user._id ||
+          (userAdmin.user.admin === true && (
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <button
                 className={"main-button"}
@@ -137,16 +159,26 @@ const ReserveAlert = ({
                 <BsFillShareFill /> Compartir
               </button>
               <button
-                className={darkMode ? "mx-2 dark-mode-black-button" : "mx-2 main-button-black"}
+                className={
+                  darkMode
+                    ? "mx-2 dark-mode-black-button"
+                    : "mx-2 main-button-black"
+                }
                 onClick={() => handleCancelReserve(Show.reserve._id)}
               >
                 Cancelar Reserva
               </button>
             </div>
-          )
+          ))
         )}
       </div>
-      {showShareModal && Show.reserve && <ShareModal showModal={showShareModal} setShowModal={setShowShareModal} officeNameOk={officeNameOk} />}
+      {showShareModal && Show.reserve && (
+        <ShareModal
+          showModal={showShareModal}
+          setShowModal={setShowShareModal}
+          officeNameOk={officeNameOk}
+        />
+      )}
     </Alert>
   );
 };

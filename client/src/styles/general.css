@@ -201,3 +201,20 @@ border-color: #8a8888;
 border-style: solid; 
 object-fit: cover
 }
+
+.icon-align-right{
+  float: right;
+}
+
+
+.main-button-lapiz {
+  font-family: heeboregular;
+  font-size: 14px;
+  font-weight: 700;
+  color: black;
+  background-color: #bfd732;
+  border: none;
+  border-radius: 1000px;
+  padding: 5px 5;
+  transition: 0.3s;
+}

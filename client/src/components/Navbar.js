@@ -5,7 +5,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
 import Container from "react-bootstrap/Container"
-import { AiOutlineUser } from "react-icons/ai";
+import { AiOutlineUser, AiFillEdit } from "react-icons/ai"
 import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,7 +21,7 @@ import { getFavorites } from '../store/favorites';
 import { selectedFloor } from '../store/selectedFloor';
 
 const NavigationBar = () => {
- 
+
   const [checked, setChecked] = useState(false);
 
   const [showFriends, setShowFriends] = useState(false);
@@ -76,6 +76,8 @@ const NavigationBar = () => {
     localStorage.setItem('darkMode', !darkMode)
   }
 
+  // const handleEdit = () => {}
+
   return (
     <>
       {user &&
@@ -94,16 +96,26 @@ const NavigationBar = () => {
           ) : (
             <button className='main-button'>Admin</button>
           )}
-            
+
 
             <NavDropdown align="center" title="Oficinas" id={darkMode ? "dark-nav-dropdown" : "nav-dropdown"}>
               <NavDropdown.Item onClick={() => setShowFavs(true)} >Oficinas Favoritas</NavDropdown.Item>
               <NavDropdown.Divider />
-              {Object.values(offices).map((e, i) => (
+              {
+                userAdmin.user.admin === false ? (
+              Object.values(offices).map((e, i) => (
                 <NavDropdown.Item onClick={() => handleClick(e)} key={i} >{e.name}</NavDropdown.Item>
-              ))}
+              ))) : (
+                Object.values(offices).map((e, i) => (<>
+                  <NavDropdown.Item onClick={() => handleClick(e)} key={i} >{e.name}
+                  <span className="icon-align-right">
+                    <AiFillEdit 
+                     />
+                  </span>
+                   </NavDropdown.Item>
+               </> )))}
             </NavDropdown>
-            
+
             <Navbar.Toggle aria-controls="basic-navbar-nav" id="dark-burger" />
             <Navbar.Collapse id="basic-navbar-nav" >
               <Nav className="me-auto" >
@@ -123,7 +135,7 @@ const NavigationBar = () => {
                 <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={handleLogout}>Log Out</Nav.Link>
               </Nav>
             </Navbar.Collapse>
-  
+
           </Container>
           <Friends show={showFriends} setShow={setShowFriends} />
           <Favorites show={showFavs} setShow={setShowFavs} />

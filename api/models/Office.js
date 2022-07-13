@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-
 const OfficeSchema = new Schema({
   name: {
     type: String,
@@ -14,6 +13,5 @@ const OfficeSchema = new Schema({
     type: [String],
   },
 });
-
 
 module.exports = mongoose.model("Office", OfficeSchema);

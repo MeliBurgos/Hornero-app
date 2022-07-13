@@ -38,6 +38,23 @@ const ReservationsController = {
     }).populate("user");
     res.json(found);
   },
+  //buscar todas las reservas futuras de una oficina por id
+  getFutureReservationsByOffice: async (req, res) => {
+    let found = await ReservationsSchema.find({
+      office: req.params.id,
+      startDate: { $gte: new Date() },
+    }).populate("user");
+    res.json(found);
+  },
+  //buscar todas las reservas pasadas de una oficina por id
+  getPastReservationsByOffice: async (req, res) => {
+    let found = await ReservationsSchema.find({
+      office: req.params.id,
+      startDate: { $lte: new Date() },
+    }).populate("user");
+    res.json(found);
+  },
+
   //filtrar reservas pasadas
   getPastReservationsByUser: async (req, res) => {
     let found = await ReservationsSchema.find({
