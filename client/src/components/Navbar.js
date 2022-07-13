@@ -2,15 +2,16 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ToggleButton from 'react-bootstrap/ToggleButton';
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
 import Container from "react-bootstrap/Container"
-import { AiOutlineUser, AiFillEdit } from "react-icons/ai"
-import { Link } from "react-router-dom";
+import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
+import { AiOutlineUser } from "react-icons/ai";
+import { BsList, BsToggleOff, BsToggleOn } from "react-icons/bs"
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
+import { useNavigate, useLocation } from 'react-router'
+import { Link, useParams } from "react-router-dom";
 
+import favouriteDeleter from "../hooks/favouriteDeleter"
 import Friends from './Friends'
 import Favorites from './Favorites';
 import { getUser, userLogout } from '../store/user';
@@ -29,6 +30,8 @@ const NavigationBar = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation();
+  favouriteDeleter(location)
 
   const user = localStorage.getItem('user')
   const offices = useSelector((state) => state.offices)
@@ -53,6 +56,7 @@ const NavigationBar = () => {
   useEffect(() => {
     dispatch(getUser())
     dispatch(getOffices())
+    if (location.pathname.slice(1, 7) === 'office') navigate('/home')
   }, [])
 
   useEffect(() => {
@@ -76,12 +80,12 @@ const NavigationBar = () => {
     localStorage.setItem('darkMode', !darkMode)
   }
 
-  // const handleEdit = () => {}
+  if (!user) return <></>
 
   return (
     <>
       {user &&
-        <Navbar expand="md">
+        <Navbar expand="md" fixed="top" style={{ backgroundColor: darkMode ? "#444444" : "white", boxShadow: "0 2px 2px gray" }}>
           <Container>
 
           {userAdmin.user.admin === false ? (
@@ -101,33 +105,20 @@ const NavigationBar = () => {
             <NavDropdown align="center" title="Oficinas" id={darkMode ? "dark-nav-dropdown" : "nav-dropdown"}>
               <NavDropdown.Item onClick={() => setShowFavs(true)} >Oficinas Favoritas</NavDropdown.Item>
               <NavDropdown.Divider />
-              {
-                userAdmin.user.admin === false ? (
-              Object.values(offices).map((e, i) => (
-                <NavDropdown.Item onClick={() => handleClick(e)} key={i} >{e.name}</NavDropdown.Item>
-              ))) : (
+              { 
                 Object.values(offices).map((e, i) => (<>
                   <NavDropdown.Item onClick={() => handleClick(e)} key={i} >{e.name}
-                  <span className="icon-align-right">
-                    <AiFillEdit 
-                     />
-                  </span>
                    </NavDropdown.Item>
-               </> )))}
+               </> ))}
             </NavDropdown>
-
-            <Navbar.Toggle aria-controls="basic-navbar-nav" id="dark-burger" />
+            <Navbar.Toggle aria-controls="basic-navbar-nav" id={darkMode ? "dark-burger" : "white-burger"}>
+              <BsList size={24} id={darkMode ? "dark-burger" : "white-burger"} />
+            </Navbar.Toggle>
             <Navbar.Collapse id="basic-navbar-nav" >
               <Nav className="me-auto" >
-                <Nav.Link href="" >
-                  <ToggleButtonGroup type="checkbox">
-                    <ToggleButton
-                      id="tbg-btn-1"
-                      variant={darkMode ? "light" : "secondary"}
-                      onClick={handleChangeTheme} >
-                      {darkMode ? <MdOutlineLightMode /> : <MdOutlineDarkMode />}
-                    </ToggleButton>
-                  </ToggleButtonGroup>
+                <Nav.Link className={darkMode ? "dark-mode" : "light"}>
+                  <MdOutlineLightMode /> {darkMode ? <BsToggleOn size={28} onClick={handleChangeTheme} />
+                    : <BsToggleOff size={28} onClick={handleChangeTheme} />} <MdOutlineDarkMode />
                 </Nav.Link>
 
                 <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={() => navigate('/home')}>Home</Nav.Link>

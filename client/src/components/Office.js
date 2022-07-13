@@ -34,6 +34,7 @@ import FuturePastModal from "./FuturePastModal";
 import FuturePastModalAdmin from "./FuturePastModalAdmin";
 import { AiFillEdit } from "react-icons/ai";
 import EditOfficeModal from "./EditOfficeModal";
+import MeetingRoomModal from "./MeetingRoomModal";
 
 const Office = () => {
   const dispatch = useDispatch();
@@ -68,6 +69,8 @@ const Office = () => {
     .replace(/(?: |\b)(\w)/g, function (key) {
       return key.toUpperCase();
     });
+
+
 
   // chequea si hay alguien conectado sino te manda a login
   const navigate = useNavigate();
@@ -112,28 +115,25 @@ const Office = () => {
   useEffect(() => {
     let dayReserv = [];
     if (reservations) {
-      reservations.forEach((reserva) =>
-        reserva.start.includes(date) ? dayReserv.push(reserva) : null
-      );
-
-      DeskSetter(Floor, dayReserv, officeNameOk, favorites, setShow);
-      setShow("");
+      reservations.forEach((reserva) => reserva.start.includes(date) ? dayReserv.push(reserva) : null)
+      DeskSetter(Floor, dayReserv, officeNameOk, favorites, friends, setShow)
+      
     }
-  }, [Floor, date, reservations, darkMode]);
+  }, [Floor, date, reservations, darkMode, favorites, friends]);
 
   // setea el piso seleccionado
   const handleFloorSelector = (n, name) => {
-    dispatch(selectedFloor(`${name}F${n}`));
-    setFloor(Number(n));
-    navigate(`/office/${name}`);
-  };
+    dispatch(selectedFloor(`${name}F${n}`))
+    setFloor(Number(n))
+    setShow('') 
+    navigate(`/office/${name}`)
+  }
 
   // cancelar reserva
   const handleCancelReserve = async (reserveId) => {
     try {
-      await dispatch(cancelReservation(reserveId));
-      await dispatch(getReservations(selectedOffice._id));
-      setShow("");
+      await dispatch(cancelReservation(reserveId))
+      await dispatch(getReservations(selectedOffice._id))
     } catch (error) {
       console.log(error);
     }
@@ -172,9 +172,9 @@ const Office = () => {
   //Popovers date y time picker
   const popoverDate = (
     <Popover id="popover-basic" style={{ width: "90%" }}>
-      <Popover.Header as="h3">Seleccione dia</Popover.Header>
-      <Popover.Body>
-        <Calendario setDate={setDate} />
+      <Popover.Header as="h3" >Seleccione dia</Popover.Header>
+      <Popover.Body >
+        <Calendario setDate={setDate} setShow={setShow} />
       </Popover.Body>
     </Popover>
   );
@@ -253,12 +253,23 @@ const Office = () => {
         </OverlayTrigger>
 
         <Card.Body>
-          <div className="contsvg ratio ratio-4x3">
+          <div className="contsvg ratio ratio-4x3 map-container">
             <MapSelector />
           </div>
         </Card.Body>
 
-        {Show ? (
+        {Show ? Show.meetingRoom ?
+
+          <MeetingRoomModal Show={Show}
+            setShow={setShow}
+            officeNameOk={officeNameOk}
+            handleCancelReserve={handleCancelReserve}
+            selectedOffice={selectedOffice}
+            date={date}
+            hour={hour}
+          />
+
+          :
           <ReserveAlert
             Show={Show}
             setShow={setShow}
@@ -268,30 +279,13 @@ const Office = () => {
             date={date}
             hour={hour}
           />
-        ) : (
-          <>
-            <Card.Text className="mt-3">
-              Selecciona el espacio que quieras reservar.
-            </Card.Text>
-            <hr />
-          </>
-        )}
+          :
+          <><Card.Text className="mt-3">
+            Selecciona el espacio que quieras reservar.
+          </Card.Text><hr /></>}
 
-        <button
-          style={{ maxWidth: "400px", margin: "3%" }}
-          onClick={handleShowFuturas}
-          className="main-button"
-        >
-          <AiOutlineArrowRight /> Reservas futuras
-        </button>
-
-        <button
-          style={{ maxWidth: "400px", margin: "3%" }}
-          onClick={handleShowPasadas}
-          className="main-button"
-        >
-          <AiOutlineArrowLeft /> Reservas pasadas
-        </button>
+        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowFuturas} className="main-button"><AiOutlineArrowRight /> Reservas futuras</button>
+        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowPasadas} className="main-button"><AiOutlineArrowLeft /> Reservas pasadas</button>
 
         {userAdmin ? (
           <FuturePastModalAdmin

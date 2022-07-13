@@ -10,9 +10,7 @@ export const editOffice = createAsyncThunk("EDIT_OFFICES", (arr) => {
   return axios.put(`/api/offices/${arr[1]}`, arr[0]).then((res) => res.data);
 });
 
-const OfficesReducer = createReducer(
-  {},
-  {
+const OfficesReducer = createReducer([], {
     [getOffices.fulfilled]: (state, action) => action.payload,
   }
 );
