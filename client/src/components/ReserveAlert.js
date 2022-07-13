@@ -136,7 +136,7 @@ const ReserveAlert = ({
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <button
                 className={"main-button"}
-                onClick={() => setShowShareModal(Show)}
+                onClick={() => setShowShareModal({desk:Show.desk,reserve:Show.reserve[0]})}
               >
                 <BsFillShareFill /> Compartir
               </button>

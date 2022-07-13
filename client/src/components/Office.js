@@ -176,17 +176,17 @@ const Office = () => {
 
         {Show ? Show.meetingRoom ? 
         
-          <MeetingRoomModal Show={Show}
+        <MeetingRoomModal Show={Show}
           setShow={setShow}
           officeNameOk={officeNameOk}
           handleCancelReserve={handleCancelReserve}
           selectedOffice={selectedOffice}
           date={date}
           hour={hour}
-/> 
+        /> 
 
           :
-          <ReserveAlert 
+        <ReserveAlert 
           Show={Show}
           setShow={setShow}
           officeNameOk={officeNameOk}
