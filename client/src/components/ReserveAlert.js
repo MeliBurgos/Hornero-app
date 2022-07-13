@@ -1,13 +1,12 @@
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { BsFillShareFill, BsDashCircle, BsPlusCircle } from "react-icons/bs";
 import Alert from "react-bootstrap/Alert";
-import Image from "react-bootstrap/Image";
+import { BsFillShareFill, BsDashCircle, BsPlusCircle } from "react-icons/bs";
 
-import { getReservations, newReservation } from "../store/reservations";
-import { getFavorites, removeFavorite, addFavorite } from "../store/favorites";
 import ShareModal from "./ShareModal";
 import ProfileModal from "./ProfileModal"
-import { useState } from "react";
+import { getReservations, newReservation } from "../store/reservations";
+import { getFavorites, removeFavorite, addFavorite } from "../store/favorites";
 
 const ReserveAlert = ({
   Show,

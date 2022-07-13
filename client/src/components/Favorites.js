@@ -1,9 +1,8 @@
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import { BsFillTrashFill } from "react-icons/bs";
-
-import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 
 import { selectedFloor } from '../store/selectedFloor';
 import { getFavorites, removeFavorite } from "../store/favorites"

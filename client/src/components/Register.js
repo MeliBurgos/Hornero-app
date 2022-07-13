@@ -1,11 +1,12 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import useInput from "../hooks/useInput";
-import { useDispatch, useSelector } from "react-redux";
+
 import { userRegister } from "../store/user";
-import { useEffect, useState } from "react";
 import { getOffices } from "../store/offices";
+import useInput from "../hooks/useInput";
 
 const Register = () => {
   const navigate = useNavigate();

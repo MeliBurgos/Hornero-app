@@ -1,10 +1,10 @@
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert"
-import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
 
-import useInput from "../hooks/useInput";
 import { sendMailToFriend } from "../store/friends";
+import useInput from "../hooks/useInput";
 
 const SendMessage = ({ show, setShow, setSendMessage, mailTo }) => {
   const dispatch = useDispatch()

@@ -1,12 +1,12 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import { BsPlusCircle } from "react-icons/bs";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
-import useInput from "../hooks/useInput";
-import { addFriend, getFriends, searchFriends } from "../store/friends";
 import ProfileModal from "./ProfileModal";
+import { addFriend, getFriends, searchFriends } from "../store/friends";
+import useInput from "../hooks/useInput";
 
 const AddFriend = ({ show, setShow, setAddFriend, friends }) => {
     const dispatch = useDispatch()

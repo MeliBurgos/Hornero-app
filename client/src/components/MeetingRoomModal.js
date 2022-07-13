@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BsFillShareFill, BsDashCircle, BsPlusCircle } from "react-icons/bs";
-import Image from "react-bootstrap/Image";
 import Modal from "react-bootstrap/Modal";
 
 import { getReservations, newReservation } from "../store/reservations";

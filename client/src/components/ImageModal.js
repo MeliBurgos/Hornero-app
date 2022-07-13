@@ -1,10 +1,8 @@
-import Webcam from "react-webcam"
-
 import React, { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
-
-import { AiFillCamera, AiOutlineUpload } from "react-icons/ai"
+import Webcam from "react-webcam"
 import { useSelector } from "react-redux";
+import Modal from 'react-bootstrap/Modal';
+import { AiFillCamera, AiOutlineUpload } from "react-icons/ai"
 
 const ImageModal = ({ showModal, setShowModal, setImgUrl }) => {
 

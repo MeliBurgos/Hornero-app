@@ -1,16 +1,13 @@
-import Image from "react-bootstrap/Image"
-import Placeholder from 'react-bootstrap/Placeholder';
-
-import Logo from "../images/Globant-Original.svg"
-import LogoWhite from "../images/Globant-White-Green.svg"
-
-import { FaRegShareSquare } from "react-icons/fa"
-import { MdOutlineWorkOutline } from "react-icons/md"
-import { AiOutlineSearch, AiOutlineEdit } from "react-icons/ai"
-
 import { useEffect } from 'react'
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Image from "react-bootstrap/Image"
+import Placeholder from 'react-bootstrap/Placeholder';
+import { FaRegShareSquare } from "react-icons/fa"
+import { MdOutlineWorkOutline } from "react-icons/md"
+import { AiOutlineSearch, AiOutlineEdit } from "react-icons/ai"
+import Logo from "../images/Globant-Original.svg"
+import LogoWhite from "../images/Globant-White-Green.svg"
 
 const Home = () => {
 

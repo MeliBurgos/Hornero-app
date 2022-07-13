@@ -1,14 +1,13 @@
-import Modal from "react-bootstrap/Modal"
-import Card from "react-bootstrap/Card"
-import SendMessage from "./SendMessage"
-
-import ListGroup from "react-bootstrap/ListGroup"
-
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addFriend, getFriends, removeFriend } from "../store/friends";
+import Modal from "react-bootstrap/Modal"
+import Card from "react-bootstrap/Card"
+import ListGroup from "react-bootstrap/ListGroup"
 import { FaUserFriends } from "react-icons/fa";
 import { BsFillChatTextFill } from "react-icons/bs"
+
+import SendMessage from "./SendMessage"
+import { addFriend, getFriends, removeFriend } from "../store/friends";
 
 const ProfileModal = ({ profile, setProfile }) => {
 

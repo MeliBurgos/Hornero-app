@@ -10,15 +10,15 @@ import 'rc-time-picker/assets/index.css';
 import { GoWatch } from "react-icons/go";
 import { AiOutlineArrowRight, AiOutlineArrowLeft, AiOutlineCalendar } from "react-icons/ai"
 
-import { getUserReservationsFuturas, getUserReservationsAnteriores } from "../store/userReservations"
-import { selectedFloor } from "../store/selectedFloor";
-import { getReservations, cancelReservation } from "../store/reservations";
-import MapSelector from "../images/offices/MapSelector.js";
-import DeskSetter from "../hooks/deskSetter";
 import Calendario from "../commons/Calendario";
 import ReserveAlert from "./ReserveAlert"
 import FuturePastModal from "./FuturePastModal";
 import MeetingRoomModal from "./MeetingRoomModal";
+import MapSelector from "../images/offices/MapSelector.js";
+import { getUserReservationsFuturas, getUserReservationsAnteriores } from "../store/userReservations"
+import { selectedFloor } from "../store/selectedFloor";
+import { getReservations, cancelReservation } from "../store/reservations";
+import DeskSetter from "../hooks/deskSetter";
 
 const Office = () => {
   const dispatch = useDispatch()
