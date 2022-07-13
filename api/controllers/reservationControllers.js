@@ -1,5 +1,4 @@
-const ReservationsSchema = require("../models/Reservations");
-const UserSchema = require("../models/Users");
+
 
 const ReservationsController = {
   //crea una reserva

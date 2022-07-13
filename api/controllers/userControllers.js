@@ -7,8 +7,8 @@ const UserControllers = {
   getAllReservations: async (req, res) => {
     let found = await ReservationsSchema.find({ user: req.params.id });
     res.json(found);
-  },
-
+  }
+  
   
 };
 
