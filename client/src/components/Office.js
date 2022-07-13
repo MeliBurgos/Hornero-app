@@ -44,7 +44,6 @@ const Office = () => {
   const officeNameOk = officeName.replace(/_/g, ' ').replace(/(?: |\b)(\w)/g, function (key) { return key.toUpperCase() });
 
 
-
   // chequea si hay alguien conectado sino te manda a login
   const navigate = useNavigate()
   useEffect(() => {
@@ -170,7 +169,7 @@ const Office = () => {
 
         <Card.Body>
           <div className="contsvg ratio ratio-4x3 map-container">
-            <MapSelector />
+            {selectedOffice&&<MapSelector selectedOffice={selectedOffice}/>}
           </div>
         </Card.Body>
 

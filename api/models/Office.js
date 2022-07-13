@@ -13,6 +13,9 @@ const OfficeSchema = new Schema({
   floors: {
     type: [String],
   },
+  maps: {
+    type: [Object],
+  }
 });
 
 
