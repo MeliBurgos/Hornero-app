@@ -4,10 +4,10 @@ const MapSelector = ({selectedOffice}) => {
   const darkMode = useSelector(state => state.darkMode)
   const Floor = useSelector(state => state.selectedFloor)
 
-  const svgString = (Floor && selectedOffice.maps) ? selectedOffice.maps.find(map => Floor in map)[Floor] : 'null'
-  const svgContainer = document.createElement('div');
-  svgContainer.innerHTML = svgString
-  const final = svgContainer.children[0]
+  // const svgString = (Floor && selectedOffice.maps) ? selectedOffice.maps.find(map => Floor in map)[Floor] : 'null'
+  // const svgContainer = document.createElement('div');
+  // svgContainer.innerHTML = svgString
+  // const final = svgContainer.children[0]
 
   // console.log('final',final)
 
