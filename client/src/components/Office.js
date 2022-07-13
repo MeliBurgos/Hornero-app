@@ -117,10 +117,15 @@ const Office = () => {
   }
 
   // cancelar reserva
-  const handleCancelReserve = async (reserveId) => {
+  const handleCancelReserve = async (reserve) => {
     try {
-      await dispatch(cancelReservation(reserveId))
+      const reservas = Show.reserve
+      const toDelete = reservas.find(res=> res._id === reserve._id)
+      reservas.splice(reservas.indexOf(toDelete),1)
+      const desk = {desk:Show.desk,meetingRoom:Show.meetingRoom,reserve:[]}
+      await dispatch(cancelReservation(reserve._id))
       await dispatch(getReservations(selectedOffice._id))
+      setShow({desk:Show.desk,meetingRoom:Show.meetingRoom,reserve:reservas})
     } catch (error) {
       console.log(error);
     }
@@ -269,10 +274,12 @@ const Office = () => {
           <><Card.Text className="mt-3">
             Selecciona el espacio que quieras reservar.
           </Card.Text><hr /></>}
-
-        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowFuturas} className="main-button"><AiOutlineArrowRight /> Reservas futuras</button>
-        <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowPasadas} className="main-button"><AiOutlineArrowLeft /> Reservas pasadas</button>
-
+        
+        <span style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
+          <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowFuturas} className="main-button"><AiOutlineArrowRight /> Reservas futuras</button>
+          <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowPasadas} className="main-button"><AiOutlineArrowLeft /> Reservas pasadas</button>
+        </span>
+          
         {userAdmin ? (
           <FuturePastModalAdmin
             showAllReservas={showAllReservas}
@@ -289,7 +296,6 @@ const Office = () => {
             setDate={setDate}
             officeNameOk={officeNameOk}
             handleFloorSelector={handleFloorSelector}
-            handleCancelReserve={handleCancelReserve}
           />
         )}
       </div>

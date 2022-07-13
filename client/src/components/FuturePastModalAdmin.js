@@ -73,7 +73,7 @@ const FuturePastModalAdmin = ({
                         </td>
                         <td>
                           <BsTrashFill
-                            onClick={() => handleCancelReserve(reserva._id)}
+                            onClick={() => handleCancelReserve(reserva)}
                           />
                         </td>
                       </>
