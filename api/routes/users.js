@@ -27,6 +27,7 @@ router.post("/register", (req, res) => {
                 position: req.body.position,
                 mainOffice: req.body.mainOffice,
                 email: req.body.email,
+                admin: req.body.admin,
                 password: hash,
             })
             user
@@ -86,6 +87,11 @@ router.post("/login", (req, res) => {
         }
 );
 });
+
+
+router.post("/foto", (req, res) => {
+  User
+} )
 
 
 

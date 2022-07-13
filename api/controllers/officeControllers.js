@@ -8,7 +8,7 @@ const OfficeController = {
   },
   //busca una oficina por id
   find: async (req, res) => {
-    let found = await OfficeSchema.findById(req.params.id)
+    let found = await OfficeSchema.findById(req.params.id);
     res.json(found);
   },
   //crea una oficina
@@ -30,13 +30,12 @@ const OfficeController = {
     let deletedOffice = await OfficeSchema.findByIdAndRemove(req.params.id);
     res.json(deletedOffice);
   },
-  
+
   //busca todos los pisos de una oficina
   getAllFloors: async (req, res) => {
-    let found= await OfficeSchema.findById(req.params.id).populate("floor")
-    res.json(found)
-  }
-  
+    let found = await OfficeSchema.findById(req.params.id).populate("floor");
+    res.json(found);
+  },
 };
 
 module.exports = OfficeController;

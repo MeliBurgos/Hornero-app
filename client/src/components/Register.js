@@ -58,7 +58,7 @@ const Register = () => {
   ];
   return (
     <>
-      <Card.Body style={{marginTop:'30px'}}>
+      <Card.Body style={{ marginTop: "30px" }}>
         <Card.Title align="center">Registrarse</Card.Title>
       </Card.Body>
       <Form onSubmit={handleSubmit} align="center">

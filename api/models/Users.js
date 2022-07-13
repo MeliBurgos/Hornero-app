@@ -45,7 +45,7 @@ const UserSchema = new Schema({
   },
   admin: {
     type: Boolean,
-    default: false,
+    default: false
   },
   reservations: [
     {
