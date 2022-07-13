@@ -31,7 +31,8 @@ export default class Calendario extends React.Component {
 
 
 handleDateClick = (info) => {
-  this.props.setDate(info.dateStr.split("-").reverse().join("-"))
+  this.props.setDate(info.dateStr.split("-").reverse().join("-"));
+  this.props.setShow('') 
 }
 
 }

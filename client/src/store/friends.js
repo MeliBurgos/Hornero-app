@@ -19,7 +19,6 @@ export const removeFriend = createAsyncThunk("REMOVE_FRIEND", (userIdToDelete) =
 
 export const sendMailToFriend = createAsyncThunk("SEND_MAIL_TO_FRIEND", (mailData) => {
     // mailData = {mailFrom:'Nombre Apellido', mailTo: 'destinatario@globant.com', mailBody:'cuerpo del mail'}
-    console.log("MAILDATA",mailData)
     return axios.post(`/api/friends/sendMail`, mailData)
 })
 

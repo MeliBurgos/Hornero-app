@@ -28,14 +28,14 @@ const Office = () => {
   const friends = useSelector(state => state.friends)
   const reservations = useSelector((state) => state.reservations)
   const darkMode = useSelector((state) => state.darkMode)
-  
+
   const [Show, setShow] = useState('')
   const [hour, setHour] = useState("9:00")
   const [date, setDate] = useState("DD:MM:YYYY")
   const [selectedOffice, setSelectedOffice] = useState({ floors: [] })
   const [Floor, setFloor] = useState(reduxFloor ? reduxFloor.split("F")[1].split("D")[0] : 2)
   const [showReservas, setShowReservas] = useState(false);
-  
+
   let items = []
   const businessHours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 18, 19, 20, 21, 22, 23]
 
@@ -48,9 +48,9 @@ const Office = () => {
   // chequea si hay alguien conectado sino te manda a login
   const navigate = useNavigate()
   useEffect(() => {
-    if(!JSON.parse(localStorage.getItem('user'))) navigate('/') 
-  },[])
-  
+    if (!JSON.parse(localStorage.getItem('user'))) navigate('/')
+  }, [])
+
   //Seteo fecha de hoy
   useEffect(() => {
     let newDate = new Date()
@@ -66,40 +66,40 @@ const Office = () => {
       setFloor(reduxFloor ? reduxFloor.split("F")[1].split("D")[0] : selectedOffice.floors[0])
     }
   }, [offices, selectedOffice])
-  
+
   //Setea la oficina seleccionada
   useEffect(() => {
     if (offices.length) {
       setSelectedOffice(offices.find(element => element.name.toLowerCase() === officeNameOk.toLowerCase()))
-      setShow('')
+      setShow('') 
       window.scrollTo({ behavior: "smooth", top: 0, left: 0 })
     }
   }, [officeNameOk])
-  
+
   //Setea escritorios
   useEffect(() => {
     let dayReserv = []
     if (reservations) {
       reservations.forEach((reserva) => reserva.start.includes(date) ? dayReserv.push(reserva) : null)
-      
       DeskSetter(Floor, dayReserv, officeNameOk, favorites, friends, setShow)
-      setShow('')
+      
     }
-  }, [Floor, date, reservations, darkMode]);
-  
+  }, [Floor, date, reservations, darkMode, favorites, friends]);
+
   // setea el piso seleccionado
   const handleFloorSelector = (n, name) => {
     dispatch(selectedFloor(`${name}F${n}`))
     setFloor(Number(n))
+    setShow('') 
     navigate(`/office/${name}`)
   }
-    
+
   // cancelar reserva
-  const handleCancelReserve = async (reserveId) =>{
+  const handleCancelReserve = async (reserveId) => {
     try {
       await dispatch(cancelReservation(reserveId))
       await dispatch(getReservations(selectedOffice._id))
-      setShow('')
+      /* setShow('') */
     } catch (error) {
       console.log(error)
     }
@@ -128,7 +128,7 @@ const Office = () => {
     <Popover id="popover-basic" style={{ width: "90%" }}>
       <Popover.Header as="h3" >Seleccione dia</Popover.Header>
       <Popover.Body >
-        <Calendario setDate={setDate} />
+        <Calendario setDate={setDate} setShow={setShow} />
       </Popover.Body>
     </Popover>
   );
@@ -144,7 +144,7 @@ const Office = () => {
 
   return (
     <>
-      <div className="text-center w-100" style={{marginTop: "20%"}}>
+      <div className="text-center w-100" style={{ marginTop: "20%" }}>
         <Card.Title className="mb-3">{officeNameOk}</Card.Title>
 
         <Dropdown onSelect={(n) => handleFloorSelector(n, officeName)}>
@@ -174,31 +174,31 @@ const Office = () => {
           </div>
         </Card.Body>
 
-        {Show ? Show.meetingRoom ? 
-        
+        {Show ? Show.meetingRoom ?
+
           <MeetingRoomModal Show={Show}
-          setShow={setShow}
-          officeNameOk={officeNameOk}
-          handleCancelReserve={handleCancelReserve}
-          selectedOffice={selectedOffice}
-          date={date}
-          hour={hour}
-/> 
+            setShow={setShow}
+            officeNameOk={officeNameOk}
+            handleCancelReserve={handleCancelReserve}
+            selectedOffice={selectedOffice}
+            date={date}
+            hour={hour}
+          />
 
           :
-          <ReserveAlert 
-          Show={Show}
-          setShow={setShow}
-          officeNameOk={officeNameOk}
-          handleCancelReserve={handleCancelReserve}
-          officeId={selectedOffice._id}
-          date={date}
-          hour={hour}
-        />
-        :
-        <><Card.Text className="mt-3">
-          Selecciona el espacio que quieras reservar.
-        </Card.Text><hr/></>}
+          <ReserveAlert
+            Show={Show}
+            setShow={setShow}
+            officeNameOk={officeNameOk}
+            handleCancelReserve={handleCancelReserve}
+            officeId={selectedOffice._id}
+            date={date}
+            hour={hour}
+          />
+          :
+          <><Card.Text className="mt-3">
+            Selecciona el espacio que quieras reservar.
+          </Card.Text><hr /></>}
 
         <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowFuturas} className="main-button"><AiOutlineArrowRight /> Reservas futuras</button>
         <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowPasadas} className="main-button"><AiOutlineArrowLeft /> Reservas pasadas</button>

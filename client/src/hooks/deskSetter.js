@@ -1,6 +1,7 @@
 const DeskSetter = (Floor, dayReserv, officeNameOk, favorites, friends, setShow) => {
-  let favstars = document.querySelectorAll('.favstar')
-  if (favstars.length) { favstars.forEach(child => child.remove()) }
+  let icons = document.querySelectorAll('.icons')
+  if (icons.length) { icons.forEach(child => child.remove()) }
+  
 
   document.querySelectorAll(".fil0").forEach((element, i) => {
 
@@ -30,7 +31,7 @@ const DeskSetter = (Floor, dayReserv, officeNameOk, favorites, friends, setShow)
         let spanText = document.createTextNode('♥')
         span.appendChild(spanText)
         span.style.cssText = `position:absolute; top:${rect.top + window.scrollY + (rect.height / 2) - 20}px;left:${rect.right + window.scrollX - 22}px;height: ${rect.height}px; font-size: 29px; color: #E61587; text-align: top; z-index: 1; pointer-events: none`
-        span.classList.add("favstar")
+        span.classList.add(`icons`)
         document.body.appendChild(span)
       }
 
@@ -49,7 +50,7 @@ const DeskSetter = (Floor, dayReserv, officeNameOk, favorites, friends, setShow)
       let favSpanText = document.createTextNode('★')
       favSpan.appendChild(favSpanText)
       favSpan.style.cssText = `position:absolute; top:${rect.top + window.scrollY + (rect.height / 2) - 13}px;left:${rect.left + window.scrollX + 8}px;color: yellow; height:${rect.height}px; font-size: 20px; text-align: top; pointer-events: none`
-      favSpan.classList.add("favstar")
+      favSpan.classList.add(`icons`)
       
       document.body.appendChild(favSpan)
     } else {
