@@ -143,8 +143,8 @@ const ReserveAlert = ({
             Reservar
           </button>
         ) : (
-          Show.reserve[0].user._id === user._id ||
-          (userAdmin.user.admin === true && (
+          ((Show.reserve[0].user._id === user._id ||
+          userAdmin.user.admin === true) && (
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <button
                 className={"main-button"}
@@ -154,7 +154,7 @@ const ReserveAlert = ({
               </button>
               <button
                 className={darkMode ? "mx-2 dark-mode-black-button" : "mx-2 main-button-black"}
-                onClick={() => handleCancelReserve(Show.reserve[0]._id)}
+                onClick={() => handleCancelReserve(Show.reserve[0])}
               >
                 Cancelar Reserva
               </button>

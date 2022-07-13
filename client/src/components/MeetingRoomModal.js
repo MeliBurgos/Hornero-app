@@ -165,7 +165,7 @@ const MeetingRoomModal = ({
               <button onClick={() => setShowShareModal({ desk: selectedHour.booking, reserve: { start: selectedHour.start } })} className={"main-button"}><BsFillShareFill /> Compartir</button>
               <button
                 className={darkMode ? "mx-2 dark-mode-black-button" : "mx-2 main-button-black"}
-                onClick={() => handleCancelReserve(selectedHour._id)}
+                onClick={() => handleCancelReserve(selectedHour)}
               >
                 Cancelar Reserva
               </button>

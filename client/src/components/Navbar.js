@@ -115,7 +115,7 @@ const NavigationBar = () => {
               <BsList size={24} id={darkMode ? "dark-burger" : "white-burger"} />
             </Navbar.Toggle>
             <Navbar.Collapse id="basic-navbar-nav" >
-              <Nav className="me-auto" >
+              <Nav className={darkMode ? "me-auto dark-mode" : "me-auto light"}>
                 <Nav.Link className={darkMode ? "dark-mode" : "light"}>
                   <MdOutlineLightMode /> {darkMode ? <BsToggleOn size={28} onClick={handleChangeTheme} />
                     : <BsToggleOff size={28} onClick={handleChangeTheme} />} <MdOutlineDarkMode />

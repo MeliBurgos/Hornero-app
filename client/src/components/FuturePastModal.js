@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import { BsTrashFill, BsShareFill } from "react-icons/bs";
 
 import ShareModal from "./ShareModal";
+import { cancelReservation } from "../store/reservations";
+import { getUserReservationsFuturas } from "../store/userReservations";
 
 const FuturePastModal = ({
   showReservas,
@@ -12,11 +14,21 @@ const FuturePastModal = ({
   officeNameOk,
   setDate,
   handleFloorSelector,
-  handleCancelReserve,
 }) => {
+  const dispatch = useDispatch()
   const darkMode = useSelector((state) => state.darkMode);
+  const user = useSelector((state) => state.user)
   const userReservations = useSelector((state) => state.userReservations);
   const [showShareModal, setShowShareModal] = useState(false);
+
+  const handleCancelReserve = async (reserve) => {
+    try {
+      await dispatch(cancelReservation(reserve._id))
+      await dispatch(getUserReservationsFuturas(user._id))
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -40,21 +52,25 @@ const FuturePastModal = ({
             <tbody>
               {userReservations.map((reserva, i) => {
                 return (
-                  <tr
-                    key={i}
-                    onClick={() => {
+                  <tr key={i}>
+                    <td onClick={() => {
                       setDate(reserva.start.split("T")[0]);
                       setShowReservas(false);
                       handleFloorSelector(
                         reserva.booking.split("D")[0].slice(1),
                         reserva.office.name.replace(/\s+/g, "_").toLowerCase()
                       );
-                    }}
-                  >
-                    <td>{`${reserva.start.split("T")[0]} ${
+                    }}>{`${reserva.start.split("T")[0]} ${
                       reserva.start.split("T")[1]
                     }hs`}</td>
-                    <td>{`${reserva.office.name} ${reserva.booking}`}</td>
+                    <td onClick={() => {
+                      setDate(reserva.start.split("T")[0]);
+                      setShowReservas(false);
+                      handleFloorSelector(
+                        reserva.booking.split("D")[0].slice(1),
+                        reserva.office.name.replace(/\s+/g, "_").toLowerCase()
+                      );
+                    }}>{`${reserva.office.name} ${reserva.booking}`}</td>
                     {showReservas === "futuras" && (
                       <>
                         <td>
@@ -69,7 +85,7 @@ const FuturePastModal = ({
                         </td>
                         <td>
                           <BsTrashFill
-                            onClick={() => handleCancelReserve(reserva._id)}
+                            onClick={() => handleCancelReserve(reserva)}
                           />
                         </td>
                       </>
