@@ -6,6 +6,7 @@ import Image from "react-bootstrap/Image";
 import { getReservations, newReservation } from "../store/reservations";
 import { getFavorites, removeFavorite, addFavorite } from "../store/favorites";
 import ShareModal from "./ShareModal";
+import ProfileModal from "./ProfileModal"
 import { useState } from "react";
 
 const ReserveAlert = ({
@@ -22,6 +23,7 @@ const ReserveAlert = ({
   const user = useSelector((state) => state.user);
   const favorites = useSelector((state) => state.favorites);
   const [showShareModal, setShowShareModal] = useState(false);
+  const [profile, setProfile] = useState({})
 
   const handleRemoveFromFavorites = async (desk) => {
     await dispatch(removeFavorite(`${officeNameOk}:${desk}`));
@@ -32,7 +34,7 @@ const ReserveAlert = ({
     await dispatch(addFavorite(`${officeNameOk}:${desk}`));
     dispatch(getFavorites());
   };
-
+ 
   //confirmacion de la reserva
   const reserveConfirmation = async () => {
     try {
@@ -42,13 +44,25 @@ const ReserveAlert = ({
           user: user._id,
           booking: Show.desk,
           office: officeId,
-        })
+        }),
       );
       await dispatch(getReservations(officeId));
+      setShow({
+        desk: Show.desk, meetingRoom: false, reserve: [{
+          allDay: true,
+          booking: Show.desk,
+          end: "18:00",
+          office: officeId,
+          start: `${date}T${hour}`,
+          user: user
+        }]
+      })
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (profile._id) return <ProfileModal profile={profile} setProfile={setProfile} />
 
   return (
     <Alert variant="info" show={Show} onClose={() => setShow("")} dismissible>
@@ -66,7 +80,7 @@ const ReserveAlert = ({
             {favorites.includes(`${officeNameOk}:${Show.desk}`) ? (
               <button
                 style={{ marginBottom: "8px" }}
-                className={darkMode ? "dark-mode-black-button" :"main-button-black"}
+                className={darkMode ? "dark-mode-black-button" : "main-button-black"}
                 onClick={() => handleRemoveFromFavorites(Show.desk)}
               >
                 <BsDashCircle size={20} /> Favorito
@@ -87,10 +101,10 @@ const ReserveAlert = ({
       {Show.reserve[0] ? (
         <>
           <p> Reservado por </p>
-          
-          <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-            <img style={{width: "20%", aspectRatio: "1/1", maxWidth: "80px",marginRight:"10px"}} className="profilePhoto" src={Show.reserve[0].user.imgUrl}></img>
-            <p style={{margin:"0px"}}>
+
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "5px" }}>
+            <img onClick={() => setProfile(Show.reserve[0].user)} style={{ width: "20%", aspectRatio: "1/1", maxWidth: "80px", marginRight: "10px" }} className="profilePhoto" src={Show.reserve[0].user.imgUrl}></img>
+            <p onClick={() => setProfile(Show.reserve[0].user)} style={{ margin: "0px" }}>
               <strong>{Show.reserve[0].user.name} {Show.reserve[0].user.surname}</strong>
             </p>
           </div>

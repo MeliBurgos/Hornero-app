@@ -49,11 +49,10 @@ const NavigationBar = () => {
     }
   }
 
-
   useEffect(() => {
     dispatch(getUser())
     dispatch(getOffices())
-    if(location.pathname.slice(1,7) === 'office') navigate('/home')
+    if (location.pathname.slice(1, 7) === 'office') navigate('/home')
   }, [])
 
   useEffect(() => {
@@ -77,12 +76,12 @@ const NavigationBar = () => {
     localStorage.setItem('darkMode', !darkMode)
   }
 
-  if(!user) return <></>
+  if (!user) return <></>
 
   return (
     <>
       {user &&
-        <Navbar expand="md" fixed="top" style={{backgroundColor:  darkMode ?  "#444444" : "white", boxShadow: "0 2px 2px gray"}}>
+        <Navbar expand="md" fixed="top" style={{ backgroundColor: darkMode ? "#444444" : "white", boxShadow: "0 2px 2px gray" }}>
           <Container>
             <Link to={checked ? "/" : "/profile"}>
               <ToggleButton
@@ -101,13 +100,13 @@ const NavigationBar = () => {
               ))}
             </NavDropdown>
             <Navbar.Toggle aria-controls="basic-navbar-nav" id={darkMode ? "dark-burger" : "white-burger"}>
-              <BsList size={24} id={darkMode ? "dark-burger" : "white-burger"}/>
+              <BsList size={24} id={darkMode ? "dark-burger" : "white-burger"} />
             </Navbar.Toggle>
             <Navbar.Collapse id="basic-navbar-nav" >
               <Nav className="me-auto" >
                 <Nav.Link className={darkMode ? "dark-mode" : "light"}>
-                <MdOutlineLightMode/> {darkMode ? <BsToggleOn size={28} onClick={handleChangeTheme}/>
-                   :<BsToggleOff size={28} onClick={handleChangeTheme}/>} <MdOutlineDarkMode/>
+                  <MdOutlineLightMode /> {darkMode ? <BsToggleOn size={28} onClick={handleChangeTheme} />
+                    : <BsToggleOff size={28} onClick={handleChangeTheme} />} <MdOutlineDarkMode />
                 </Nav.Link>
                 <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={() => navigate('/home')}>Home</Nav.Link>
                 <Nav.Link className={darkMode ? "dark-mode" : "light"} onClick={() => setShowFriends(true)}>Amigos</Nav.Link>
