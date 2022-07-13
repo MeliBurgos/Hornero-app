@@ -27,6 +27,11 @@ router.get("/reservations/:id", ReservationControlls.find);
 router.put("/reservations/:id", ReservationControlls.update);
 router.delete("/reservations/:id", ReservationControlls.delete);
 
+//rutas admin
+const AdminControlls = require("../controllers/adminControllers");
+router.put("/admin/users/:id", AdminControlls.update);
+router.get("/admin/users", AdminControlls.get);
+
 router.get(
   "/reservations/office/:id/date",
   ReservationControlls.getFutureReservationsByOffice
@@ -53,5 +58,9 @@ router.get(
   "/reservations/users/date/:id",
   ReservationControlls.getFutureReservationsByUser
 );
+
+
+
+
 
 module.exports = router;
