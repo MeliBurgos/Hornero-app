@@ -1,19 +1,17 @@
-import { AiOutlineSend } from "react-icons/ai";
-import { MdAddAPhoto } from "react-icons/md";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
-import Form from "react-bootstrap/Form";
-import Alert from "react-bootstrap/Alert";
+import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Alert from "react-bootstrap/Alert"
+import { MdAddAPhoto } from "react-icons/md"
+
+import ImageModal from "./ImageModal"
+import { getUser, userUpdate } from "../store/user";
 import useInput from "../hooks/useInput";
 
-import ImageModal from "./ImageModal";
-
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser, userUpdate } from "../store/user";
 
 const EditProfile = () => {
   const navigate = useNavigate();

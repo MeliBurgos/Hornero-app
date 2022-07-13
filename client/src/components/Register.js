@@ -1,11 +1,12 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import useInput from "../hooks/useInput";
-import { useDispatch, useSelector } from "react-redux";
+
 import { userRegister } from "../store/user";
-import { useEffect, useState } from "react";
 import { getOffices } from "../store/offices";
+import useInput from "../hooks/useInput";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -20,7 +21,8 @@ const Register = () => {
   const [mainOffice, setMainOffice] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
-  let offices = useSelector((state) => state.offices);
+  const offices = useSelector((state) => state.offices);
+  const darkMode = useSelector((state) => state.darkMode);
 
   useEffect(() => {
     if (user) {
@@ -64,7 +66,8 @@ const Register = () => {
           <Form.Label>Nombre</Form.Label>
           <br></br>
           <input
-            className="input-form"
+            style={{width:'90%'}}
+            className={darkMode?"dark-mode-input":"main-input"}
             {...name}
             type="text"
             placeholder="Ingrese su Nombre"
@@ -78,7 +81,8 @@ const Register = () => {
           <Form.Label>Apellido</Form.Label>
           <br></br>
           <input
-            className="input-form"
+            style={{width:'90%'}}
+            className={darkMode?"dark-mode-input":"main-input"}
             {...surname}
             type="text"
             placeholder="Ingrese su Apellido"
@@ -92,7 +96,8 @@ const Register = () => {
           <Form.Label>Rol</Form.Label>
           <br></br>
           <select
-            className="select-form"
+            style={{width:'90%'}}
+            className={darkMode?"dark-mode-input":"main-input"}
             required
             onChange={(e) => setPosition(e.target.value)}
           >
@@ -109,7 +114,8 @@ const Register = () => {
           <Form.Label>Oficina Principal</Form.Label>
           <br></br>
           <select
-            className="select-form"
+            style={{width:'90%'}}
+            className={darkMode?"dark-mode-input":"main-input"}
             required
             onChange={(e) => setMainOffice(e.target.value)}
           >
@@ -123,7 +129,8 @@ const Register = () => {
           <Form.Label>Correo electrónico</Form.Label>
           <br></br>
           <input
-            className="input-form"
+            style={{width:'90%'}}
+            className={darkMode?"dark-mode-input":"main-input"}
             {...email}
             type="email"
             placeholder="Ingrese su correo electrónico"
@@ -139,7 +146,8 @@ const Register = () => {
           <Form.Label>Contraseña</Form.Label>
           <br></br>
           <input
-            className="input-form"
+            style={{width:'90%'}}
+            className={darkMode?"dark-mode-input":"main-input"}
             {...password}
             type="password"
             placeholder="Ingrese su contraseña"

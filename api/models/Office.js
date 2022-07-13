@@ -12,6 +12,9 @@ const OfficeSchema = new Schema({
   floors: {
     type: [String],
   },
+  maps: {
+    type: [Object],
+  }
 });
 
 module.exports = mongoose.model("Office", OfficeSchema);

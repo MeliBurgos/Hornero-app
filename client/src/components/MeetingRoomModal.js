@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BsFillShareFill, BsDashCircle, BsPlusCircle } from "react-icons/bs";
-import Image from "react-bootstrap/Image";
 import Modal from "react-bootstrap/Modal";
 
 import { getReservations, newReservation } from "../store/reservations";
@@ -85,7 +84,7 @@ const MeetingRoomModal = ({
             {favorites.includes(`${officeNameOk}:${Show.desk}`) ? (
               <button
                 style={{ marginBottom: "8px" }}
-                className={"mx-2 ml-10 main-button-black"}
+                className={darkMode? "mx-2 ml-10 dark-mode-black-button": "mx-2 ml-10 main-button-black"}
                 onClick={() => handleRemoveFromFavorites(Show.desk)}
               >
                 <BsDashCircle size={20} /> Favorito

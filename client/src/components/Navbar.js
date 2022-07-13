@@ -1,17 +1,16 @@
+import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router'
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'
+import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
+import { AiOutlineUser } from "react-icons/ai";
+import { BsList, BsToggleOff, BsToggleOn } from "react-icons/bs"
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import Container from "react-bootstrap/Container"
-import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
-import { AiOutlineUser } from "react-icons/ai";
-import { BsList, BsToggleOff, BsToggleOn } from "react-icons/bs"
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useLocation } from 'react-router'
-import { Link, useParams } from "react-router-dom";
 
-import favouriteDeleter from "../hooks/favouriteDeleter"
 import Friends from './Friends'
 import Favorites from './Favorites';
 import { getUser, userLogout } from '../store/user';
@@ -20,6 +19,7 @@ import { setDarkMode } from '../store/darkMode';
 import { getFriends } from '../store/friends';
 import { getFavorites } from '../store/favorites';
 import { selectedFloor } from '../store/selectedFloor';
+import favouriteDeleter from "../hooks/favouriteDeleter"
 
 const NavigationBar = () => {
 

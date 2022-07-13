@@ -5,29 +5,11 @@ import Card from "react-bootstrap/Card";
 import Popover from "react-bootstrap/Popover";
 import Dropdown from "react-bootstrap/Dropdown";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-
 import TimePicker from "rc-time-picker";
 import "rc-time-picker/assets/index.css";
 import { GoWatch } from "react-icons/go";
-import {
-  AiOutlineArrowRight,
-  AiOutlineArrowLeft,
-  AiOutlineCalendar,
-} from "react-icons/ai";
+import { AiOutlineArrowRight, AiOutlineArrowLeft, AiOutlineCalendar } from "react-icons/ai";
 
-import {
-  getUserReservationsFuturas,
-  getUserReservationsAnteriores,
-} from "../store/userReservations";
-import { selectedFloor } from "../store/selectedFloor";
-import {
-  getReservations,
-  cancelReservation,
-  getAllFutureReservations,
-  getAllPastReservations,
-} from "../store/reservations";
-import MapSelector from "../images/offices/MapSelector.js";
-import DeskSetter from "../hooks/deskSetter";
 import Calendario from "../commons/Calendario";
 import ReserveAlert from "./ReserveAlert";
 import FuturePastModal from "./FuturePastModal";
@@ -35,6 +17,11 @@ import FuturePastModalAdmin from "./FuturePastModalAdmin";
 import { AiFillEdit } from "react-icons/ai";
 import EditOfficeModal from "./EditOfficeModal";
 import MeetingRoomModal from "./MeetingRoomModal";
+import MapSelector from "../images/offices/MapSelector.js";
+import { getUserReservationsFuturas, getUserReservationsAnteriores } from "../store/userReservations"
+import { selectedFloor } from "../store/selectedFloor";
+import { getReservations, cancelReservation, getAllFutureReservations, getAllPastReservations } from "../store/reservations";
+import DeskSetter from "../hooks/deskSetter";
 
 const Office = () => {
   const dispatch = useDispatch();
@@ -69,7 +56,6 @@ const Office = () => {
     .replace(/(?: |\b)(\w)/g, function (key) {
       return key.toUpperCase();
     });
-
 
 
   // chequea si hay alguien conectado sino te manda a login
@@ -254,12 +240,11 @@ const Office = () => {
 
         <Card.Body>
           <div className="contsvg ratio ratio-4x3 map-container">
-            <MapSelector />
+            {selectedOffice&&<MapSelector selectedOffice={selectedOffice}/>}
           </div>
         </Card.Body>
-
+        
         {Show ? Show.meetingRoom ?
-
           <MeetingRoomModal Show={Show}
             setShow={setShow}
             officeNameOk={officeNameOk}

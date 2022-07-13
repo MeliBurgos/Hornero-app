@@ -1,12 +1,12 @@
+import { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector} from 'react-redux'
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Alert from "react-bootstrap/Alert";
-import { Link, useLocation } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
-import useInput from '../hooks/useInput';
-import { useDispatch} from 'react-redux'
+
 import { userLogin } from '../store/user';
-import { useEffect, useState } from 'react'
+import useInput from '../hooks/useInput';
 
 const Login = () => {
 
@@ -14,6 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [showAlert,setShowAlert] = useState(false)
+  const darkMode = useSelector(state => state.darkMode)
 
   const email = useInput();
   const password = useInput();
@@ -57,7 +58,9 @@ const Login = () => {
       <Form style={{marginTop:'30px'}} onSubmit={handleSubmit} align="center">
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Correo electrónico</Form.Label>
-          <input className="input-form" 
+          <input
+          style={{width:"90%"}}
+          className={darkMode?"dark-mode-input":"main-input"}
           {...email} 
           type="email" 
           placeholder="Ingrese su correo electrónico" 
@@ -66,7 +69,9 @@ const Login = () => {
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Contraseña</Form.Label>
-          <input className="input-form"
+          <input
+          style={{width:"90%"}}
+          className={darkMode?"dark-mode-input":"main-input"}
           {...password} 
           type="password" 
           placeholder="Ingrese su contraseña" 

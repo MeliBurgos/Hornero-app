@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import Alert from "react-bootstrap/Alert";
-import { useDispatch, useSelector } from "react-redux";
 
 import { sendMailToFriend } from "../store/friends";
 

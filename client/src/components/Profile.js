@@ -1,14 +1,13 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
-import { FaUserFriends, FaStar, FaPencilAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import Placeholder from "react-bootstrap/Placeholder";
+import { FaUserFriends, FaStar, FaPencilAlt } from "react-icons/fa";
 
 import Friends from "./Friends";
 import Favorites from "./Favorites";
-
 
 const Profile = () => {
   const [showFriends, setShowFriends] = useState(false);
