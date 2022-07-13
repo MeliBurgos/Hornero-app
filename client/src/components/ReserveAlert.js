@@ -19,11 +19,13 @@ const ReserveAlert = ({
   hour,
 }) => {
   const dispatch = useDispatch();
-  const darkMode = useSelector(state => state.darkMode)
+  const darkMode = useSelector((state) => state.darkMode);
   const user = useSelector((state) => state.user);
   const favorites = useSelector((state) => state.favorites);
   const [showShareModal, setShowShareModal] = useState(false);
   const [profile, setProfile] = useState({})
+
+  const userAdmin = JSON.parse(localStorage.getItem("user"));
 
   const handleRemoveFromFavorites = async (desk) => {
     await dispatch(removeFavorite(`${officeNameOk}:${desk}`));
@@ -101,7 +103,6 @@ const ReserveAlert = ({
       {Show.reserve[0] ? (
         <>
           <p> Reservado por </p>
-
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "5px" }}>
             <img onClick={() => setProfile(Show.reserve[0].user)} style={{ width: "20%", aspectRatio: "1/1", maxWidth: "80px", marginRight: "10px" }} className="profilePhoto" src={Show.reserve[0].user.imgUrl}></img>
             <p onClick={() => setProfile(Show.reserve[0].user)} style={{ margin: "0px" }}>
@@ -143,7 +144,8 @@ const ReserveAlert = ({
             Reservar
           </button>
         ) : (
-          Show.reserve[0].user._id === user._id && (
+          Show.reserve[0].user._id === user._id ||
+          (userAdmin.user.admin === true && (
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <button
                 className={"main-button"}
@@ -158,10 +160,16 @@ const ReserveAlert = ({
                 Cancelar Reserva
               </button>
             </div>
-          )
+          ))
         )}
       </div>
-      {showShareModal && Show.reserve && <ShareModal showModal={showShareModal} setShowModal={setShowShareModal} officeNameOk={officeNameOk} />}
+      {showShareModal && Show.reserve && (
+        <ShareModal
+          showModal={showShareModal}
+          setShowModal={setShowShareModal}
+          officeNameOk={officeNameOk}
+        />
+      )}
     </Alert>
   );
 };

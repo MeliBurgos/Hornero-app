@@ -25,7 +25,7 @@ export const sendMailToFriend = createAsyncThunk("SEND_MAIL_TO_FRIEND", (mailDat
 export const searchFriends = createAsyncThunk("SEARCH_FRIENDS", (searchInput) => {
     return axios.get(`/api/friends/search/${searchInput}`)
         .then(user => user.data)
-})
+}) 
 
 
 const friendsReducer = createReducer([], {

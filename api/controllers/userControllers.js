@@ -8,6 +8,8 @@ const UserControllers = {
     let found = await ReservationsSchema.find({ user: req.params.id });
     res.json(found);
   },
+
+  
 };
 
 

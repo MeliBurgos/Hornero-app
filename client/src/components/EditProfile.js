@@ -1,17 +1,17 @@
-import { AiOutlineSend } from "react-icons/ai"
-import { MdAddAPhoto } from "react-icons/md"
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Button from 'react-bootstrap/Button';
-import Image from 'react-bootstrap/Image'
-import Form from 'react-bootstrap/Form';
-import Alert from "react-bootstrap/Alert"
+import { AiOutlineSend } from "react-icons/ai";
+import { MdAddAPhoto } from "react-icons/md";
+import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
+import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
+import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
 import useInput from "../hooks/useInput";
 
-import ImageModal from "./ImageModal"
+import ImageModal from "./ImageModal";
 
-import { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, userUpdate } from "../store/user";
 
@@ -23,15 +23,15 @@ const EditProfile = () => {
   const darkMode = useSelector((state) => state.darkMode);
   const offices = useSelector((state) => state.offices);
 
-  const [show, setShow] = useState(false)
-  const [showModal, setShowModal] = useState(false)
+  const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const name = useInput();
   const surname = useInput();
   const email = useInput();
   const office = useInput();
   const position = useInput();
-  const [imgUrl, setImgUrl] = useState('')
+  const [imgUrl, setImgUrl] = useState("");
 
   useEffect(() => {
     if (!JSON.parse(localStorage.getItem("user"))) navigate("/");
@@ -40,13 +40,11 @@ const EditProfile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let nombre = name.value.length === 0 ? user.name : name.value;
-    let apellido = surname.value.length === 0 ? user.surname : surname.value
-    let correo = email.value.length === 0 ? user.email : email.value
-    let oficina = office.value.length === 0 ? user.mainofice : office.value
-    let rol = position.value.length === 0 ? user.position : position.value
-    let foto = imgUrl.length === 0 ? user.imgUrl : imgUrl
-
-
+    let apellido = surname.value.length === 0 ? user.surname : surname.value;
+    let correo = email.value.length === 0 ? user.email : email.value;
+    let oficina = office.value.length === 0 ? user.mainofice : office.value;
+    let rol = position.value.length === 0 ? user.position : position.value;
+    let foto = imgUrl.length === 0 ? user.imgUrl : imgUrl;
 
     dispatch(userUpdate(
       [{
@@ -98,12 +96,19 @@ const EditProfile = () => {
           Volver al Home
         </Button>
       </Alert>
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form id="editProfile" onSubmit={(e) => handleSubmit(e)}>
         <div style={{ width: "60%", aspectRatio: "1/1", maxWidth: "400px", margin: "0 auto" }}>
           <img className="profilePhoto" src={imgUrl ? imgUrl : user ? user.imgUrl : "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"}></img>
         </div>
         <div>
-          <button className="main-button mt-2" type={"button"} onClick={() => setShowModal(true)}> <MdAddAPhoto /> </button>
+          <button
+            className="main-button mt-2"
+            type={"button"}
+            onClick={() => setShowModal(true)}
+          >
+            {" "}
+            <MdAddAPhoto />{" "}
+          </button>
         </div>
         <Card.Body>
           <Card.Title>
@@ -176,17 +181,30 @@ const EditProfile = () => {
           </ListGroup.Item>
         </ListGroup>
       </form>
-      <div style={{marginTop:"10px",display:"flex",justifyContent:"space-evenly"}}>
-            <button className={darkMode? "dark-mode-black-button" : "main-button-black"} onClick={()=> navigate("/profile")}>
-              Cancelar
-            </button>
-            <button className="main-button" type="submit" form="editProfile">
-              Aceptar cambios
-            </button>
-          </div>
-      <ImageModal showModal={showModal} setShowModal={setShowModal} setImgUrl={setImgUrl} />
+      <div
+        style={{
+          marginTop: "10px",
+          display: "flex",
+          justifyContent: "space-evenly",
+        }}
+      >
+        <button
+          className={darkMode ? "dark-mode-black-button" : "main-button-black"}
+          onClick={() => navigate("/profile")}
+        >
+          Cancelar
+        </button>
+        <button className="main-button" type="submit" form="editProfile">
+          Aceptar cambios
+        </button>
+      </div>
+      <ImageModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setImgUrl={setImgUrl}
+      />
     </div>
   );
 };
 
-export default EditProfile
+export default EditProfile;
