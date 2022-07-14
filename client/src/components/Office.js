@@ -31,7 +31,8 @@ const Office = () => {
   const favorites = useSelector((state) => state.favorites);
   const reservations = useSelector((state) => state.reservations);
   const darkMode = useSelector((state) => state.darkMode);
-
+  const user = JSON.parse(localStorage.getItem("user"))
+  
   const [Show, setShow] = useState("");
   const [admin, setAdmin] = useState(false);
   const [hour, setHour] = useState("9:00");
@@ -43,8 +44,6 @@ const Office = () => {
   );
   const [showReservas, setShowReservas] = useState(false);
   const [showAllReservas, setShowAllReservas] = useState(false);
-
-  const userAdmin = JSON.parse(localStorage.getItem("user")).user.admin;
 
   let items = [];
 
@@ -134,7 +133,7 @@ const Office = () => {
   // abre modal de reservas futuras
   const handleShowFuturas = async () => {
     try {
-      if (userAdmin) {
+      if (user.user.admin) {
         await dispatch(getAllFutureReservations(selectedOffice._id));
         setShowAllReservas("futuras");
       } else {
@@ -148,7 +147,7 @@ const Office = () => {
   //abre modal de reservas pasadas
   const handleShowPasadas = async () => {
     try {
-      if (userAdmin) {
+      if (user.user.admin) {
         await dispatch(getAllPastReservations(selectedOffice._id));
         setShowAllReservas("anteriores");
       } else {
@@ -198,7 +197,7 @@ const Office = () => {
       <div style={{marginTop:"20%"}} className="text-center w-100">
         <Card.Title className="mb-3">
           {officeNameOk}{" "}
-          {userAdmin ? <AiFillEdit onClick={() => setAdmin(true)} /> : null}
+          {(user && user.user.admin) ? <AiFillEdit onClick={() => setAdmin(true)} /> : null}
         </Card.Title>
         <Card.Text className="mb-3">{selectedOffice.address} </Card.Text>
         <Dropdown onSelect={(n) => handleFloorSelector(n, officeName)}>
@@ -281,7 +280,7 @@ const Office = () => {
           <button style={{ maxWidth: "400px", margin: "3%" }} onClick={handleShowPasadas} className="main-button"><AiOutlineArrowLeft /> Reservas pasadas</button>
         </span>
           
-        {userAdmin ? (
+        {(user && user.user.admin) ? (
           <FuturePastModalAdmin
             showAllReservas={showAllReservas}
             setShowAllReservas={setShowAllReservas}

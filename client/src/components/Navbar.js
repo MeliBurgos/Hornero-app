@@ -9,7 +9,7 @@ import { FaKey } from "react-icons/fa"
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import ToggleButton from 'react-bootstrap/ToggleButton';
+import Button from 'react-bootstrap/Button';
 import Container from "react-bootstrap/Container"
 
 import Friends from './Friends'
@@ -34,12 +34,9 @@ const NavigationBar = () => {
   const location = useLocation();
   favouriteDeleter(location)
 
-  const user = localStorage.getItem('user')
+  const user = JSON.parse(localStorage.getItem('user'))
   const offices = useSelector((state) => state.offices)
   const Floor = useSelector((state) => state.selectedFloor)
-
-
-  const userAdmin = JSON.parse(localStorage.getItem("user")).user.admin;
 
 
   const handleClick = (office) => {
@@ -90,18 +87,18 @@ const NavigationBar = () => {
         <Navbar expand="md" fixed="top" style={{ backgroundColor: darkMode ? "#444444" : "white", boxShadow: "0 2px 2px gray" }}>
           <Container>
 
-          {!userAdmin ? (
-            <Link to={checked ? "/home" : "/profile"}>
-            <ToggleButton
-              id="toggle-check"
-              type="checkbox"
+          {!user.user.admin ? (
+            <Link to="/profile">
+            <Button
+              id="bs-button"
               variant={darkMode ? "outline-light" : "outline-secondary"}
-              checked={darkMode ? false : checked}
-              onClick={() => setChecked(!checked)}> <AiOutlineUser /> </ToggleButton>
+              onClick={() => setChecked(!checked)}> <AiOutlineUser /> </Button>
           </Link>
           ) : (
-             <Link to={checked ? "/home" : "/admin"}>
-            <button onClick={()=> setChecked(!checked)} className='main-button'><FaKey/></button>
+             <Link to="/admin">
+            <Button 
+            onClick={()=> setChecked(!checked)} 
+            variant={darkMode ? "outline-light" : "outline-secondary"}><FaKey/></Button>
             </Link>
           )}
 

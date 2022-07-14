@@ -33,7 +33,6 @@ router.post("/register", (req, res) => {
             user
               .save()
                 .then((result) => {
-                    console.log(result);
                     res.status(201).json({
                         message: "Usuario creado correctamente",
                         user: result,
@@ -68,10 +67,25 @@ router.post("/login", (req, res) => {
                             expiresIn: "1h",
                         }
                     );
+
+                    let userToSend = users[0]
+                    userToSend = {
+                      email: userToSend.email,
+                      favorites: userToSend.favorites,
+                      friends: userToSend.friends,
+                      imgUrl: userToSend.imgUrl,
+                      mainOffice: userToSend.mainOffice,
+                      name: userToSend.name,
+                      surname: userToSend.surname,
+                      position: userToSend.position,
+                      reservations: userToSend.reservations,
+                      _id: userToSend._id,
+                    }
+                    if(users[0].admin) userToSend = {...userToSend,admin:true} 
                     return res.status(200).json({
                         message: "Autenticación correcta",
                         token: token,
-                        user: users[0]
+                        user: userToSend
                     });
                 }
                 return res.status(401).json({

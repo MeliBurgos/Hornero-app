@@ -33,6 +33,7 @@ router.put("/admin/users/:id", AdminControlls.update);
 router.get("/admin/users", AdminControlls.get);
 //busca todas las reservas
 router.get("/admin/reservations/all", ReservationControlls.getAllReservations);
+router.delete("/admin/users/:id", AdminControlls.delete);
 
 router.get(
   "/reservations/office/:id/date",

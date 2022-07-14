@@ -1,4 +1,5 @@
 const UserSchema = require("../models/Users");
+const ReservationsSchema = require("../models/Reservations")
 
 
 const adminController = {
@@ -15,6 +16,11 @@ const adminController = {
   get: async (req, res) => {
     let foundAllUsers = await UserSchema.find({});
     res.json(foundAllUsers)
+  },
+  delete: async (req, res) => {
+    let deleted = await UserSchema.findByIdAndDelete(req.params.id)
+    await ReservationsSchema.remove({user: req.params.id})
+    res.json(deleted)
   }
 
 }
