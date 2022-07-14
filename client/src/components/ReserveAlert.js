@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Alert from "react-bootstrap/Alert";
 import { BsFillShareFill, BsDashCircle, BsPlusCircle } from "react-icons/bs";
 
-import ShareModal from "./ShareModal";
-import ProfileModal from "./ProfileModal"
+import ShareModal from "../commons/ShareModal";
+import ProfileModal from "../commons/ProfileModal"
 import { getReservations, newReservation } from "../store/reservations";
 import { getFavorites, removeFavorite, addFavorite } from "../store/favorites";
 
@@ -21,25 +21,34 @@ const ReserveAlert = ({
   const darkMode = useSelector((state) => state.darkMode);
   const user = useSelector((state) => state.user);
   const favorites = useSelector((state) => state.favorites);
+  const reservations = useSelector((state) => state.reservations);
   const [showShareModal, setShowShareModal] = useState(false);
   const [profile, setProfile] = useState({})
 
   const userAdmin = JSON.parse(localStorage.getItem("user"));
 
   const handleRemoveFromFavorites = async (desk) => {
-    await dispatch(removeFavorite(`${officeNameOk}:${desk}`));
-    dispatch(getFavorites());
+    try {
+      await dispatch(removeFavorite(`${officeNameOk}:${desk}`));
+      await dispatch(getFavorites());
+    } catch(err) {
+      console.log(err)
+    }
   };
 
   const handleAddToFavorites = async (desk) => {
-    await dispatch(addFavorite(`${officeNameOk}:${desk}`));
-    dispatch(getFavorites());
+    try {
+      await dispatch(addFavorite(`${officeNameOk}:${desk}`));
+      await dispatch(getFavorites());
+    } catch(err) {
+      console.log(err)
+  }
   };
  
   //confirmacion de la reserva
   const reserveConfirmation = async () => {
     try {
-      await dispatch(
+      const newReserv = await dispatch(
         newReservation({
           start: `${date}T${hour}`,
           user: user._id,
@@ -55,7 +64,8 @@ const ReserveAlert = ({
           end: "18:00",
           office: officeId,
           start: `${date}T${hour}`,
-          user: user
+          user: user,
+          _id: newReserv.payload.data._id
         }]
       })
     } catch (error) {

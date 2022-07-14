@@ -5,7 +5,7 @@ import { BsTrashFill, BsShareFill } from "react-icons/bs";
 import { useState } from "react";
 
 
-import ShareModal from "./ShareModal";
+import ShareModal from "../commons/ShareModal";
 
 const FuturePastModalAdmin = ({
   showAllReservas,
@@ -25,8 +25,8 @@ const FuturePastModalAdmin = ({
         <Modal.Header className={darkMode ? "dark-mode" : "light"} closeButton>
           <Modal.Title>
             {showAllReservas === "anteriores"
-              ? "Reservas Pasadas"
-              : "Reservas Futuras"}
+              ? "Reservas pasadas"
+              : "Reservas futuras"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className={darkMode ? "dark-mode" : "light"}>

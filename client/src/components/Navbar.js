@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md"
 import { AiOutlineUser } from "react-icons/ai";
 import { BsList, BsToggleOff, BsToggleOn } from "react-icons/bs"
+import { FaKey } from "react-icons/fa"
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -88,8 +89,8 @@ const NavigationBar = () => {
         <Navbar expand="md" fixed="top" style={{ backgroundColor: darkMode ? "#444444" : "white", boxShadow: "0 2px 2px gray" }}>
           <Container>
 
-          {userAdmin.user.admin === false ? (
-            <Link to={checked ? "/" : "/profile"}>
+          {!userAdmin ? (
+            <Link to={checked ? "/home" : "/profile"}>
             <ToggleButton
               id="toggle-check"
               type="checkbox"
@@ -98,7 +99,9 @@ const NavigationBar = () => {
               onClick={() => setChecked(!checked)}> <AiOutlineUser /> </ToggleButton>
           </Link>
           ) : (
-            <button className='main-button'>Admin</button>
+             <Link to={checked ? "/home" : "/admin"}>
+            <button onClick={()=> setChecked(!checked)} className='main-button'><FaKey/></button>
+            </Link>
           )}
 
 
