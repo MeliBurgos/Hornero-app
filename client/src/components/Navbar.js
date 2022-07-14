@@ -39,7 +39,7 @@ const NavigationBar = () => {
   const Floor = useSelector((state) => state.selectedFloor)
 
 
-  const userAdmin = JSON.parse(localStorage.getItem("user"));
+  const userAdmin = JSON.parse(localStorage.getItem("user")).user.admin;
 
 
   const handleClick = (office) => {
@@ -82,6 +82,7 @@ const NavigationBar = () => {
   }
 
   if (!user) return <></>
+
 
   return (
     <>

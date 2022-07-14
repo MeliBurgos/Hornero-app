@@ -25,6 +25,7 @@ const Admin = () => {
   const user = useSelector((state) => state.user)
   const showedUsers = searchUsers.value.length >= 3 ? filteredUsers : allUsers;
   const darkMode = useSelector((state) => state.darkMode);
+  const reservations = useSelector((state) => state.reservations);
   const [profile, setProfile] = useState(false);
   const [utilidad, setUtilidad] = useState('')
   const adminReservations = useSelector(state => state.adminReservations)
