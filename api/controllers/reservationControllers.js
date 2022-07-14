@@ -1,4 +1,5 @@
-
+const ReservationsSchema = require("../models/Reservations");
+const UserSchema = require("../models/Users");
 
 const ReservationsController = {
   //crea una reserva
@@ -71,6 +72,12 @@ const ReservationsController = {
     }).populate('office');
     res.json(found);
   },  
+
+  //todas las reservas (admin)
+  getAllReservations: async (req, res) =>{
+    let found = await ReservationsSchema.find({allDay:true}).populate('office');
+    res.json(found);
+  },
 };
 
 

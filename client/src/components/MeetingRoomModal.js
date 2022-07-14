@@ -5,8 +5,8 @@ import Modal from "react-bootstrap/Modal";
 
 import { getReservations, newReservation } from "../store/reservations";
 import { getFavorites, removeFavorite, addFavorite } from "../store/favorites";
-import ProfileModal from "./ProfileModal"
-import ShareModal from "./ShareModal";
+import ProfileModal from "../commons/ProfileModal"
+import ShareModal from "../commons/ShareModal";
 
 
 const MeetingRoomModal = ({
@@ -45,7 +45,7 @@ const MeetingRoomModal = ({
   //confirmacion de la reserva
   const reserveConfirmation = async () => {
     try {
-      await dispatch(
+      const newReserv = await dispatch(
         newReservation({
           start: `${date}T${hour}`,
           end: `${modules[modules.indexOf(hour) + 1] ? modules[modules.indexOf(hour) + 1] : "18:00"}`,
@@ -64,6 +64,7 @@ const MeetingRoomModal = ({
           office: selectedOffice._id,
           start: `${date}T${hour}`,
           user: user,
+          _id: newReserv.payload.data._id
         }]
       })
     } catch (error) {

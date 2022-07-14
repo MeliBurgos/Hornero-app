@@ -31,6 +31,8 @@ router.delete("/reservations/:id", ReservationControlls.delete);
 const AdminControlls = require("../controllers/adminControllers");
 router.put("/admin/users/:id", AdminControlls.update);
 router.get("/admin/users", AdminControlls.get);
+//busca todas las reservas
+router.get("/admin/reservations/all", ReservationControlls.getAllReservations);
 
 router.get(
   "/reservations/office/:id/date",

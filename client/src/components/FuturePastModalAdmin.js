@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import useInput from "../hooks/useInput";
 
 
-import ShareModal from "./ShareModal";
+import ShareModal from "../commons/ShareModal";
 
 const FuturePastModalAdmin = ({
   showAllReservas,
