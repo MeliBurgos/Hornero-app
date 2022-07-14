@@ -5,7 +5,7 @@ import Table from "react-bootstrap/Table";
 import { BsFillTrashFill, BsFillChatTextFill, BsPlusCircle } from "react-icons/bs";
 
 import AddFriend from "./AddFriend";
-import ProfileModal from "./ProfileModal";
+import ProfileModal from "../commons/ProfileModal";
 import SendMessage from "./SendMessage";
 import { getFriends, removeFriend } from "../store/friends";
 import useInput from "../hooks/useInput";
