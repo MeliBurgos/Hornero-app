@@ -5,10 +5,10 @@ import Table from "react-bootstrap/Table";
 import Placeholder from "react-bootstrap/Placeholder";
 import { FaKey, FaUser } from "react-icons/fa";
 import { AiOutlineUser, AiFillPieChart } from "react-icons/ai";
-import { BsListCheck } from "react-icons/bs";
+import { BsListCheck, BsFillTrashFill } from "react-icons/bs";
 
 import ProfileModal from "../commons/ProfileModal";
-import { promoteUserToAdmin, removeUserToAdmin, getAllUsers } from "../store/admin";
+import { promoteUserToAdmin, removeUserToAdmin, getAllUsers, deleteUser } from "../store/admin";
 import { getAllReservations } from "../store/adminReservations";
 import useInput from "../hooks/useInput";
 
@@ -25,7 +25,6 @@ const Admin = () => {
   const user = useSelector((state) => state.user)
   const showedUsers = searchUsers.value.length >= 3 ? filteredUsers : allUsers;
   const darkMode = useSelector((state) => state.darkMode);
-  const reservations = useSelector((state) => state.reservations);
   const [profile, setProfile] = useState(false);
   const [utilidad, setUtilidad] = useState('')
   const adminReservations = useSelector(state => state.adminReservations)
@@ -50,6 +49,10 @@ const Admin = () => {
     {name:'ultimo año',value:-365},
   ]
 
+  useEffect(() => {
+    if (!JSON.parse(localStorage.getItem("user"))) navigate("/")
+    else if (!JSON.parse(localStorage.getItem("user")).user.admin) navigate("/home");
+  }, []);
 
   const handleSetAdmin = (id) => {
     dispatch(promoteUserToAdmin(id)).then(() => {
@@ -103,10 +106,22 @@ const Admin = () => {
       })
       setShowedReservations(finalFilter)
       const selectedOffice = offices.find(element => element.name === office.value)
-      setTotalDesks(selectedOffice.totalDesks*Math.abs(timeRange.value))
+      
+      if(selectedOffice) {
+        setTotalDesks(selectedOffice.totalDesks*Math.abs(timeRange.value))
+      }
+      else {
+        let desksArray = offices.reduce((pv,cv) => pv+cv.totalDesks,0)
+        setTotalDesks(desksArray*Math.abs(timeRange.value))
+      }
     }
   },[office.value, timeRange.value])
 
+
+  const handledeleteUser = async (userId) => {
+    await dispatch(deleteUser(userId))
+    dispatch(getAllUsers())
+  }
 
   if (profile) {
     return <ProfileModal profile={profile} setProfile={setProfile} />;
@@ -145,7 +160,6 @@ const Admin = () => {
             style={{ fontFamily: "heeboregular", fontWeigth: 700 }}
             className={darkMode ? "dark-mode mt-2" : "light mt-2"}
             responsive
-            hover
             size="sm"
           >
             <thead>
@@ -156,28 +170,34 @@ const Admin = () => {
               </tr>
             </thead>
             <tbody>
-              {showedUsers[0] && showedUsers.map((user, i) => (
+              {showedUsers[0] && showedUsers.map((lineUser, i) => (
                 <tr key={i}>
                   <td>{i + 1}</td>
-                  <td
-                    onClick={() => setProfile(user)}
-                  >{`${user.name} ${user.surname}`}</td>
-                  <td>{user.mainOffice}</td>
-                  {showedUsers.includes(user._id) ? (
+                  <td style={{cursor: "pointer"}}
+                    onClick={() => setProfile(lineUser)}
+                  >{`${lineUser.name} ${lineUser.surname}`}</td>
+                  <td>{lineUser.mainOffice}</td>
+                  {lineUser._id === user._id ? (
+                    <>
                     <td />
+                    <td />
+                    </>
                   ) : (
+                    <>
                     <td>
-                      {user.admin ?
+                      {lineUser.admin ?
                         <FaKey
                           style={{ cursor: "pointer" }}
-                          size={28}
-                          onClick={() => handleRemoveAdmin(user._id)}
+                          size={24}
+                          onClick={() => handleRemoveAdmin(lineUser._id)}
                         /> : <FaUser
                           style={{ cursor: "pointer" }}
-                          size={28}
-                          onClick={() => handleSetAdmin(user._id)}
+                          size={24}
+                          onClick={() => handleSetAdmin(lineUser._id)}
                         />}
                     </td>
+                  <td><BsFillTrashFill onClick={() => handledeleteUser(lineUser._id)} size={24}/></td>
+                  </>
                   )}
                 </tr>
               ))}
@@ -194,7 +214,7 @@ const Admin = () => {
           }
           onChange={office.onChange}
         >
-          <option>{defaultValue}</option>
+          <option selected="selected" disabled>{defaultValue}</option>
           <option>{allOffices}</option>
           {offices[0] &&
             offices.map((office, i) => (
@@ -208,7 +228,7 @@ const Admin = () => {
           }
           onChange={timeRange.onChange}
         >
-          <option>{defaultTimeValue}</option>
+          <option selected="selected" disabled>{defaultTimeValue}</option>
           {
             timeList.map((time, i) => (
               <option value={time.value} key={i}>{time.name}</option>

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import Alert from "react-bootstrap/Alert";
 
 import { userRegister } from "../store/user";
 import { getOffices } from "../store/offices";
@@ -19,10 +20,14 @@ const Register = () => {
   const password = useInput();
   const [position, setPosition] = useState("");
   const [mainOffice, setMainOffice] = useState("");
+  const [show,setShow] = useState(false)
 
   const user = JSON.parse(localStorage.getItem("user"));
   const offices = useSelector((state) => state.offices);
   const darkMode = useSelector((state) => state.darkMode);
+
+  const defaultPosition = 'Seleccione su rol'
+  const defaultMainOffice = 'Seleccione su oficina principal'
 
   useEffect(() => {
     if (user) {
@@ -30,12 +35,13 @@ const Register = () => {
         navigate("/home");
       }
     }
-    dispatch(getOffices()).then((res) => (offices = res));
+    dispatch(getOffices());
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if(position === '') return setShow('Debes seleccionar un rol')
+    if(mainOffice === '') return setShow('Debes seleccionar una oficina')
     dispatch(
       userRegister({
         name: name.value[0].toUpperCase() + name.value.toLowerCase().slice(1),
@@ -45,7 +51,13 @@ const Register = () => {
         position: position,
         mainOffice: mainOffice,
       })
-    ).then(() => navigate("/"));
+    ).then((regUser) => {
+      if(regUser.error){
+        if(regUser.error.message === 'Request failed with status code 409') setShow('El correo electrónico ya existe')
+      }
+      else navigate("/")
+    })
+    .catch(err => console.log("CATCH",err));
   };
 
   const roles = [
@@ -101,7 +113,7 @@ const Register = () => {
             required
             onChange={(e) => setPosition(e.target.value)}
           >
-            <option>Seleccione su rol</option>
+            <option selected="selected" disabled>{defaultPosition}</option>
             {roles.map((rol, i) => (
               <option key={i} value={rol}>
                 {rol}
@@ -119,7 +131,7 @@ const Register = () => {
             required
             onChange={(e) => setMainOffice(e.target.value)}
           >
-            <option>Seleccione su oficina principal</option>
+            <option selected="selected" disabled>{defaultMainOffice}</option>
             {Object.values(offices).map((e, i) => (
               <option key={i}>{e.name}</option>
             ))}
@@ -162,7 +174,9 @@ const Register = () => {
             ¿Ya eres usuario? <Link to="/">&nbsp;Iniciar Sesión</Link>
           </Form.Text>
         </Form.Group>
-
+        <Alert variant="warning" show={show} onClose={()=>setShow(false)} dismissible>
+        {show}
+        </Alert>
         <button className="main-button" type="submit">
           Enviar
         </button>
