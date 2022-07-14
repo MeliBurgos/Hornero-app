@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Image from "react-bootstrap/Image"
@@ -14,13 +14,47 @@ const Home = () => {
   const navigate = useNavigate()
   const user = useSelector((state) => state.user)
   const darkMode = useSelector(state => state.darkMode)
+  const [isReadyForInstall, setIsReadyForInstall] = useState(false);
 
   // si no hay nadie conectado te manda al login
   useEffect(() => {
     if(!JSON.parse(localStorage.getItem('user'))) navigate('/')
   },[])
 
+  useEffect(() => {
+  window.addEventListener("beforeinstallprompt", (event) => {
+    // Prevent the mini-infobar from appearing on mobile.
+    event.preventDefault();
+    console.log("👍", "beforeinstallprompt", event);
+    // Stash the event so it can be triggered later.
+    window.deferredPrompt = event;
+    // Remove the 'hidden' class from the install button container.
+    setIsReadyForInstall(true);
+  });
+  }, []);
+
+  async function downloadApp() {
+    console.log("👍", "butInstall-clicked");
+    const promptEvent = window.deferredPrompt;
+    if (!promptEvent) {
+      // The deferred prompt isn't available.
+      console.log("oops, no prompt event guardado en window");
+      return;
+    }
+    // Show the install prompt.
+    promptEvent.prompt();
+    // Log the result
+    const result = await promptEvent.userChoice;
+    console.log("👍", "userChoice", result);
+    // Reset the deferred prompt variable, since
+    // prompt() can only be called once.
+    window.deferredPrompt = null;
+    // Hide the install button.
+    setIsReadyForInstall(false);
+  }
+
   return (
+    <>
     <div className="text-center" style={{marginTop: "20%"}}>
       <h5>Hola {user ? user.name : 
           <Placeholder as="p" animation="wave">
@@ -45,9 +79,13 @@ const Home = () => {
         <hr className="w-100"></hr>
         <h5>Todo en la palma de tu mano</h5>
       </div>
+      <hr className="w-100"></hr>
+        <div style={{ width: "75px" }}> </div>
+      <div className="text-center" style={{ paddingBottom: "10px" }}>
+        { isReadyForInstall && <button className="main-button" onClick={downloadApp} >Descarga</button> }      
+      </div>
     </div>
-
-
+      </>
   );
 };
 
