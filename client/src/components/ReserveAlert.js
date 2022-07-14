@@ -24,7 +24,7 @@ const ReserveAlert = ({
   const [showShareModal, setShowShareModal] = useState(false);
   const [profile, setProfile] = useState({})
 
-  const userAdmin = JSON.parse(localStorage.getItem("user"));
+ const userAdmin = JSON.parse(localStorage.getItem("user")).user.admin
 
   const handleRemoveFromFavorites = async (desk) => {
     await dispatch(removeFavorite(`${officeNameOk}:${desk}`));
@@ -144,7 +144,7 @@ const ReserveAlert = ({
           </button>
         ) : (
           ((Show.reserve[0].user._id === user._id ||
-          userAdmin.user.admin === true) && (
+          userAdmin) && (
             <div style={{ display: "flex", justifyContent: "space-around" }}>
               <button
                 className={"main-button"}
