@@ -14,6 +14,9 @@ const OfficeSchema = new Schema({
   },
   maps: {
     type: [Object],
+  },
+  totalDesks: {
+    type: Number,
   }
 });
 

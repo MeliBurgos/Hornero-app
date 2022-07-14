@@ -6,7 +6,7 @@ import ListGroup from "react-bootstrap/ListGroup"
 import { FaUserFriends } from "react-icons/fa";
 import { BsFillChatTextFill } from "react-icons/bs"
 
-import SendMessage from "./SendMessage"
+import SendMessage from "../components/SendMessage"
 import { addFriend, getFriends, removeFriend } from "../store/friends";
 
 const ProfileModal = ({ profile, setProfile }) => {

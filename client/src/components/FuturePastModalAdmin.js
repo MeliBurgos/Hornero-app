@@ -2,10 +2,11 @@ import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import { BsTrashFill, BsShareFill } from "react-icons/bs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import useInput from "../hooks/useInput";
 
 
-import ShareModal from "./ShareModal";
+import ShareModal from "../commons/ShareModal";
 
 const FuturePastModalAdmin = ({
   showAllReservas,
@@ -16,8 +17,28 @@ const FuturePastModalAdmin = ({
   handleCancelReserve,
 }) => {
   const darkMode = useSelector((state) => state.darkMode);
-  const allReservations = useSelector((state) => state.reservations);
   const [showShareModal, setShowShareModal] = useState(false);
+
+  const allReservations = useSelector((state) => state.reservations);
+ const searchReservation = useInput();
+  const [filteredUsers, setFilteredUsers] = useState([]);
+ const showedUsers = searchReservation.value.length >= 3 ? filteredUsers : allReservations;
+
+ useEffect(() => {
+    if (searchReservation.value.length >= 2) {
+      let newReservList = []
+      let searchLowerCase = searchReservation.value.toLowerCase();
+
+      allReservations.forEach((reserva) => {
+      let fullName = `${reserva.user.name} ${reserva.user.surname}`
+        return fullName.toLowerCase().includes(searchLowerCase) || 
+        reserva.booking.toLowerCase().includes(searchLowerCase) ||
+        reserva.start.toLowerCase().includes(searchLowerCase)
+        ? newReservList.push(reserva) : null}
+      )
+      setFilteredUsers(newReservList)
+    }
+  }, [searchReservation.value, allReservations]);
 
   return (
     <>
@@ -25,11 +46,22 @@ const FuturePastModalAdmin = ({
         <Modal.Header className={darkMode ? "dark-mode" : "light"} closeButton>
           <Modal.Title>
             {showAllReservas === "anteriores"
-              ? "Reservas Pasadas"
-              : "Reservas Futuras"}
+              ? "Reservas pasadas"
+              : "Reservas futuras"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className={darkMode ? "dark-mode" : "light"}>
+
+
+        <form onSubmit={(e) => e.preventDefault()}>
+          <input
+            className={darkMode ? "dark-mode-input" : "main-input"}
+            type="text"
+            {...searchReservation}
+            placeholder="Escribe el nombre y/o apellido"
+          />
+        </form>
+
           <Table className={darkMode ? "dark-mode" : "light"}>
             <thead>
               <tr>
@@ -40,8 +72,8 @@ const FuturePastModalAdmin = ({
               </tr>
             </thead>
             <tbody>
-              { allReservations === null ? ("No hay reservas") : (
-              allReservations.map((reserva, i) => {
+              { showedUsers === null ? ("No hay reservas") : (
+              showedUsers.map((reserva, i) => {
                 return (
                   <tr
                     key={i}
@@ -50,7 +82,7 @@ const FuturePastModalAdmin = ({
                       setShowAllReservas(false);
                       handleFloorSelector(
                         reserva.booking.split("D")[0].slice(1),
-                        reserva.office.name.replace(/\s+/g, "_").toLowerCase()
+                        officeNameOk.replace(/\s+/g, "_").toLowerCase()
                       );
                     }}
                   >
@@ -58,7 +90,7 @@ const FuturePastModalAdmin = ({
                       reserva.start.split("T")[1]
                     }hs`}</td>
                     <td>{reserva.booking}</td>
-                    <td>{reserva.user.name}</td>
+                    <td>{`${reserva.user.name} ${reserva.user.surname}`}</td>
                     {showAllReservas === "futuras" && (
                       <>
                         <td>

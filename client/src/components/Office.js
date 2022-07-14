@@ -122,10 +122,11 @@ const Office = () => {
       const reservas = Show.reserve
       const toDelete = reservas.find(res=> res._id === reserve._id)
       reservas.splice(reservas.indexOf(toDelete),1)
-      const desk = {desk:Show.desk,meetingRoom:Show.meetingRoom,reserve:[]}
+      const desk = {desk:Show.desk,meetingRoom:Show.meetingRoom,reserve:reservas}
+      setShow(desk)
+      console.log(reserve)
       await dispatch(cancelReservation(reserve._id))
       await dispatch(getReservations(selectedOffice._id))
-      setShow({desk:Show.desk,meetingRoom:Show.meetingRoom,reserve:reservas})
     } catch (error) {
       console.log(error);
     }

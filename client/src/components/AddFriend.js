@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import { BsPlusCircle } from "react-icons/bs";
 
-import ProfileModal from "./ProfileModal";
+import ProfileModal from "../commons/ProfileModal";
 import { addFriend, getFriends, searchFriends } from "../store/friends";
 import useInput from "../hooks/useInput";
 

@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import { BsTrashFill, BsShareFill } from "react-icons/bs";
 
-import ShareModal from "./ShareModal";
+import ShareModal from "../commons/ShareModal";
 import { cancelReservation } from "../store/reservations";
 import { getUserReservationsFuturas } from "../store/userReservations";
 
