@@ -90,7 +90,7 @@ const FuturePastModalAdmin = ({
                       reserva.start.split("T")[1]
                     }hs`}</td>
                     <td>{reserva.booking}</td>
-                    <td>{`${reserva.user.name} ${reserva.user.surname}`}</td>
+                    {reserva.user && <td>{`${reserva.user.name} ${reserva.user.surname}`}</td>}
                     {showAllReservas === "futuras" && (
                       <>
                         <td>
